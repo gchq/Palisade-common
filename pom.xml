@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!--
   ~ Copyright 2018 Crown Copyright
   ~
@@ -15,13 +15,13 @@
   ~ limitations under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>uk.gov.gchq.palisade-common</groupId>
-    <artifactId>palisade-common</artifactId>
-    <packaging>pom</packaging>
-    <version>0.0.0.1-SNAPSHOT</version>
+    <groupId>uk.gov.gchq.palisade</groupId>
+    <artifactId>Palisade-common</artifactId>
+    <version>1.1.0-${revision}</version>
+    <description>Palisade common code</description>
+    <!--<packaging>pom</packaging>-->
 
     <developers>
         <developer>
@@ -40,7 +40,7 @@
 
     <properties>
         <!-- Versions -->
-        <java.version>8</java.version>
+        <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <jar.plugin.version>3.1.1</jar.plugin.version>
@@ -57,74 +57,46 @@
         <commons-io.version>2.6</commons-io.version>
         <commons-lang3.version>3.8.1</commons-lang3.version>
         <jersey.version>2.27</jersey.version>
-        <glassfish.hk2.version>2.5.0</glassfish.hk2.version>
-        <glassfish.hk2.javax.inject.version>2.4.0</glassfish.hk2.javax.inject.version>
         <servlet-api.version>4.0.1</servlet-api.version>
         <grizzly.version>2.4.3.1</grizzly.version>
-        <hadoop.version>2.8.5</hadoop.version>
         <avro.version>1.8.2</avro.version>
-        <koryphe.version>1.5.0</koryphe.version>
-        <jetcd.version>0.3.0</jetcd.version>
-        <protobuf.version>3.5.1</protobuf.version>
-        <docker.maven.version>0.28.0</docker.maven.version>
-        <swagger.version>1.5.21</swagger.version>
-        <javassist.version>3.24.1-GA</javassist.version>
-        <reflections.version>0.9.11</reflections.version>
-        <jaxb.api.version>2.2.8</jaxb.api.version>
         <javax.activation.version>1.2.0</javax.activation.version>
 
         <!-- Testing properties -->
-        <hadoop-minicluster.version>3.2.0</hadoop-minicluster.version>
         <junit.version>4.12</junit.version>
         <hamcrest.version>1.3</hamcrest.version>
         <mockito.version>1.10.19</mockito.version>
         <surefire.plugin.version>2.22.1</surefire.plugin.version>
         <failsafe.version>2.22.1</failsafe.version>
-        <skip.surefire.tests>false</skip.surefire.tests>
-        <skip.failsafe.tests>false</skip.failsafe.tests>
         <checkstyle.phase>test</checkstyle.phase>
         <checkstyle.plugin.version>3.0.0</checkstyle.plugin.version>
-        <jcip.annotations.version>1.0-1</jcip.annotations.version>
-        <testcontainers.version>1.10.5</testcontainers.version>
-        <error.prone.version>2.3.3</error.prone.version>
-        <!-- TODO: remove errorprone.javac.version property once JDK9+ migration complete -->
-        <error.prone.javac.version>9+181-r4173-1</error.prone.javac.version>
-        <surefireArgLine/>
-        <failsafeArgLine/>
-        <exclude.tests/>
-
-        <restRedirectorPort>9080</restRedirectorPort>
-        <restPalisadeMetricProviderPort>9080</restPalisadeMetricProviderPort>
-        <restPalisadeServicePort>9080</restPalisadeServicePort>
-        <restPolicyServicePort>9081</restPolicyServicePort>
-        <restResourceServicePort>9082</restResourceServicePort>
-        <restUserServicePort>9083</restUserServicePort>
-        <restDataServicePort>9084</restDataServicePort>
-        <restConfigServicePort>9085</restConfigServicePort>
 
         <!-- Other -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-        <!-- Define SCM properties for use with Release Plugin -->
-        <scm.url>
-            https://github.com/gchq/Palisade
-        </scm.url>
-        <scm.connection>
-            scm:git:https://github.com/gchq/Palisade.git
-        </scm.connection>
-        <scm.developer.connection>
-            scm:git:https://github.com/gchq/Palisade.git
-        </scm.developer.connection>
     </properties>
 
     <scm>
-        <url>${scm.url}</url>
-        <connection>${scm.connection}</connection>
-        <developerConnection>${scm.developer.connection}</developerConnection>
-        <tag>HEAD</tag>
+        <!-- <connection>scm:git:https://github.com/dev-958/ci-example.git</connection> -->
+        <developerConnection>scm:git:ssh://git@github.com:gchq/Palisade-common.git</developerConnection>
+        <url>https://github.com/gchq/Palisade-common</url>
     </scm>
 
+    <distributionManagement>
+        <!-- in order to use this, one must have nexus up and running on a given url -->
+        <repository>
+            <!-- Snapshot repositories can be build on each commit to develop branch -->
+            <id>nexus</id>
+            <name>releases</name>
+            <url>http://ec2-52-49-72-137.eu-west-1.compute.amazonaws.com:31751/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <!-- Snapshot repositories can be build on each commit to develop branch -->
+            <id>nexus</id>
+            <name>snapshots</name>
+            <url>http://ec2-52-49-72-137.eu-west-1.compute.amazonaws.com:31751/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <dependencies>
         <!-- JSON Serialisation/De-serialisation dependencies -->
@@ -158,6 +130,32 @@
             <artifactId>commons-io</artifactId>
             <version>${commons-io.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>11.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
+        </dependency>
+        <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>${slf4j.api.version}</version>
+            </dependency>
         <dependency>
             <groupId>org.apache.avro</groupId>
             <artifactId>avro</artifactId>
@@ -254,96 +252,16 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>${jar.plugin.version}</version>
-                <configuration>
-                    <skipIfEmpty>true</skipIfEmpty>
-                    <archive>
-                        <manifest>
-                            <addDefaultImplementationEntries>true
-                            </addDefaultImplementationEntries>
-                            <addDefaultSpecificationEntries>true
-                            </addDefaultSpecificationEntries>
-                        </manifest>
-                    </archive>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>test-jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire.plugin.version}</version>
-                <configuration>
-                    <argLine>${surefireArgLine}</argLine>
-                    <skipTests>${skip.surefire.tests}</skipTests>
-                    <excludes>
-                        <exclude>${exclude.tests}</exclude>
-                    </excludes>
-                    <systemPropertyVariables>
-                        <restUserServicePort>${restUserServicePort}</restUserServicePort>
-                        <restPolicyServicePort>${restPolicyServicePort}</restPolicyServicePort>
-                        <restRedirectorPort>${restRedirectorPort}</restRedirectorPort>
-                        <restConfigServicePort>${restConfigServicePort}</restConfigServicePort>
-                        <restDataServicePort>${restDataServicePort}</restDataServicePort>
-                        <restPalisadeMetricProviderPort>${restPalisadeMetricProviderPort}</restPalisadeMetricProviderPort>
-                        <restPalisadeServicePort>${restPalisadeServicePort}</restPalisadeServicePort>
-                        <restResourceServicePort>${restResourceServicePort}</restResourceServicePort>
-                        <log4j.configuration>
-                            file:${project.build.testOutputDirectory}/log4j.xml
-                        </log4j.configuration>
-                    </systemPropertyVariables>
-                    <environmentVariables>
-                        <PALISADE_REST_CONFIG_PATH>example/example-model/src/main/resources/configRest.json</PALISADE_REST_CONFIG_PATH>
-                    </environmentVariables>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>${failsafe.version}</version>
-                <executions>
-                    <execution>
-                        <id>integration-test</id>
-                        <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <skipITs>${skip.failsafe.tests}</skipITs>
-                    <argLine>${failsafeArgLine}</argLine>
-                    <excludes>
-                        <exclude>${exclude.tests}</exclude>
-                    </excludes>
-                    <includes>
-                        <include>**/*IntegrationTest.java</include>
-                        <include>**/*IT.java</include>
-                        <include>**/*ITs.java</include>
-                        <include>**/*IntegrationTests.java</include>
-                    </includes>
-                    <environmentVariables></environmentVariables>
-                    <systemPropertyVariables>
-                        <restUserServicePort>${restUserServicePort}</restUserServicePort>
-                        <restPolicyServicePort>${restPolicyServicePort}</restPolicyServicePort>
-                        <restRedirectorPort>${restRedirectorPort}</restRedirectorPort>
-                        <restConfigServicePort>${restConfigServicePort}</restConfigServicePort>
-                        <restDataServicePort>${restDataServicePort}</restDataServicePort>
-                        <restPalisadeMetricProviderPort>${restPalisadeMetricProviderPort}</restPalisadeMetricProviderPort>
-                        <restPalisadeServicePort>${restPalisadeServicePort}</restPalisadeServicePort>
-                        <restResourceServicePort>${restResourceServicePort}</restResourceServicePort>
-                        <log4j.configuration>
-                            file:${project.build.testOutputDirectory}/log4j.xml
-                        </log4j.configuration>
-                    </systemPropertyVariables>
-                    <environmentVariables>
-                        <PALISADE_REST_CONFIG_PATH>example/example-model/src/main/resources/configRest.json</PALISADE_REST_CONFIG_PATH>
-                    </environmentVariables>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
