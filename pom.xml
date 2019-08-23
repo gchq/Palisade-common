@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright 2018 Crown Copyright
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>uk.gov.gchq.palisade</groupId>
+    <artifactId>Palisade-common</artifactId>
+    <version>1.1.0-${revision}</version>
+    <description>Palisade common code</description>
+    <!--<packaging>pom</packaging>-->
+
+    <developers>
+        <developer>
+            <name>PalisadeDevelopers</name>
+            <organization>GCHQ</organization>
+            <organizationUrl>https://github.com/gchq</organizationUrl>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <properties>
+        <!-- Versions -->
+        <java.version>11</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <jar.plugin.version>3.1.1</jar.plugin.version>
+        <compiler.plugin.version>3.8.0</compiler.plugin.version>
+        <javadoc.plugin.version>3.0.1</javadoc.plugin.version>
+        <slf4j.api.version>1.7.25</slf4j.api.version>
+        <slf4j.simple.version>1.7.25</slf4j.simple.version>
+        <jackson.version>2.9.8</jackson.version>
+        <guava.version>27.0.1-jre</guava.version>
+        <commons-io.version>2.6</commons-io.version>
+        <commons-lang3.version>3.8.1</commons-lang3.version>
+        <avro.version>1.8.2</avro.version>
+        <maven-jar-plugin.version>2.2</maven-jar-plugin.version>
+
+        <!-- Testing properties -->
+        <junit.version>4.12</junit.version>
+        <surefire.plugin.version>2.22.1</surefire.plugin.version>
+        <failsafe.version>2.22.1</failsafe.version>
+        <checkstyle.phase>test</checkstyle.phase>
+        <checkstyle.plugin.version>3.0.0</checkstyle.plugin.version>
+
+        <!-- Other -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <scm>
+        <!-- <connection>scm:git:ssh://git@github.com:gchq/Palisade-services.git</connection> -->
+        <developerConnection>scm:git:ssh://git@github.com:gchq/Palisade-services.git</developerConnection>
+        <url>https://github.com/gchq/Palisade-services</url>
+    </scm>
+
+    <distributionManagement>
+        <!-- in order to use this, one must have nexus up and running on a given url -->
+        <repository>
+            <!-- Snapshot repositories can be build on each commit to develop branch -->
+            <id>nexus</id>
+            <name>releases</name>
+            <url>${release.url}</url>
+        </repository>
+        <snapshotRepository>
+            <!-- Snapshot repositories can be build on each commit to develop branch -->
+            <id>nexus</id>
+            <name>snapshots</name>
+            <url>${snapshot.url}</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <dependencies>
+        <!-- JSON Serialisation/De-serialisation dependencies -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jdk8</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.avro</groupId>
+            <artifactId>avro</artifactId>
+            <version>${avro.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.sun.jersey</groupId>
+                    <artifactId>jersey-grizzly2</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.sun.jersey</groupId>
+                    <artifactId>jersey-json</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.sun.jersey</groupId>
+                    <artifactId>jersey-server</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.sun.jersey</groupId>
+                    <artifactId>jersey-client</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.sun.jersey</groupId>
+                    <artifactId>jersey-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>servlet-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.mortbay.jetty</groupId>
+                    <artifactId>jetty-util</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.mortbay.jetty</groupId>
+                    <artifactId>servlet-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.avro</groupId>
+                    <artifactId>avro-ipc</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>io.netty</groupId>
+                    <artifactId>netty</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>avro</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <version>${maven-jar-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>test-jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.avro</groupId>
+                        <artifactId>avro-maven-plugin</artifactId>
+                        <version>${avro.version}</version>
+                        <executions>
+                            <execution>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>schema</goal>
+                                </goals>
+                                <configuration>
+                                    <sourceDirectory>${project.basedir}/src/main/resources/avro</sourceDirectory>
+                                    <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
+                                    <testSourceDirectory>${project.basedir}/src/test/resources/avro
+                                    </testSourceDirectory>
+                                    <testOutputDirectory>${project.basedir}/src/test/java</testOutputDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${compiler.plugin.version}</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <compilerArgs>
+                        <arg>-Xlint:deprecation</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${jar.plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire.plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${failsafe.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${checkstyle.plugin.version}</version>
+                <configuration>
+                    <configLocation>code-style/checkstyle.xml</configLocation>
+                    <encoding>UTF-8</encoding>
+                    <consoleOutput>true</consoleOutput>
+                    <failsOnError>true</failsOnError>
+                    <headerLocation>code-style/licenseHeader.txt
+                    </headerLocation>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>validate</id>
+                        <phase>${checkstyle.phase}</phase>
+                        <configuration>
+                            <configLocation>code-style/checkstyle.xml
+                            </configLocation>
+                            <encoding>UTF-8</encoding>
+                            <consoleOutput>true</consoleOutput>
+                            <failsOnError>true</failsOnError>
+                            <headerLocation>code-style/licenseHeader.txt
+                            </headerLocation>
+                        </configuration>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${javadoc.plugin.version}</version>
+                <configuration>
+                    <header>Palisade ${project.version}</header>
+                    <footer>Palisade ${project.version}</footer>
+                    <doctitle>Palisade ${project.version}</doctitle>
+                    <show>public</show>
+                    <nohelp>true</nohelp>
+                    <tags>
+                        <tag>
+                            <name>apiNote</name>
+                            <placement>a</placement>
+                            <head>API Note:</head>
+                        </tag>
+                        <tag>
+                            <name>implNote</name>
+                            <placement>a</placement>
+                            <head>Implementation note:</head>
+                        </tag>
+                    </tags>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>aggregate</id>
+                        <goals>
+                            <goal>aggregate</goal>
+                        </goals>
+                        <phase>site</phase>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
