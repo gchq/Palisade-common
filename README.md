@@ -62,4 +62,11 @@ We welcome contributions to the project. Detailed information on our ways of wor
 
 ## FAQ
 
-What versions of Java are supported? Java 8 with plans to upgrade to Java 11+ soon.
+What versions of Java are supported? We are currently using Java 11.
+
+##Local Jenkins via docker 
+To spin up Jenkins, have the latest version of docker installed and run this command:
+```bash
+docker run --rm -u root -p 7070:7070 -v jenkins-data:/var/jenkins_home -v $(which docker):/usr/bin/docker -v /var/run/docker.sock:/var/run/docker.sock -v ~/Documents/Palisade-common:~/Documents/Palisade-common jenkins/jenkins:lts
+```
+This will then start up a jenkins instance which you can connect to via: http://127.0.0.1:7070. Log in with the secret code in the output of the jenkins file and set up the repo as a Jenkins pipeline. 
