@@ -120,4 +120,7 @@
     <module name="SuppressionFilter">
         <property name="file" value="code-style/jetcd-suppression.xml" />
     </module>
+    <module name="SuppressionFilter">
+        <property name="file" value="code-style/suppressions.xml" />
+    </module>
 </module>

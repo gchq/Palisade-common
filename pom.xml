@@ -20,7 +20,6 @@
     <artifactId>Palisade-common</artifactId>
     <version>1.1.0-${revision}</version>
     <description>Palisade common code</description>
-    <!--<packaging>pom</packaging>-->
 
     <developers>
         <developer>
@@ -36,6 +35,13 @@
             <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
         </license>
     </licenses>
+
+    <!-- Inherit defaults from Spring Boot -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.6.RELEASE</version>
+    </parent>
 
     <properties>
         <!-- Versions -->
@@ -89,6 +95,19 @@
     </distributionManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
         <!-- JSON Serialisation/De-serialisation dependencies -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -233,6 +252,10 @@
     </profiles>
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

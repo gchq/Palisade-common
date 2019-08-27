@@ -1,8 +1,8 @@
 package uk.gov.gchq.palisade;
 
-import org.junit.Test;
-
-import uk.gov.gchq.palisade.rule.Rules;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static uk.gov.gchq.palisade.Util.applyRulesToItem;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,10 +10,14 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static uk.gov.gchq.palisade.Util.applyRulesToItem;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
+import uk.gov.gchq.palisade.rule.Rules;
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class UtilTest {
 
     @Test
