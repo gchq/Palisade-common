@@ -22,6 +22,11 @@ podTemplate(containers: [
       git branch: "pal-134-move-common-contents", url: 'https://github.com/gchq/Palisade-common.git'
       container('maven') {
           sh 'ls && pwd'
+        configFileProvider(
+        [configFile(fileId: 'MyGlobalSettings', variable: 'MAVEN_SETTINGS')]) {
+        sh 'mvn -s $MAVEN_SETTINGS install'
+        sh 'mvn -s $MAVEN_SETTINGS deploy'
+        }
           sh 'mvn install'
           sh 'mvn deploy'
       }
