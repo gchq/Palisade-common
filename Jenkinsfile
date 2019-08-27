@@ -27,8 +27,8 @@ podTemplate(containers: [
         sh 'mvn -s $MAVEN_SETTINGS install'
         sh 'mvn -s $MAVEN_SETTINGS deploy'
         }
-          sh 'mvn install'
-          sh 'mvn deploy'
+//          sh 'mvn install'
+//          sh 'mvn deploy'
       }
     }
   }
