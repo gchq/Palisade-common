@@ -23,7 +23,7 @@ podTemplate(containers: [
       container('maven') {
           sh 'ls && pwd'
         configFileProvider(
-        [configFile(fileId: 'MyGlobalSettings', variable: 'MAVEN_SETTINGS')]) {
+        [configFile(fileId: '450d38e2-db65-4601-8be0-8621455e93b5', variable: 'MAVEN_SETTINGS')]) {
         sh 'mvn -s $MAVEN_SETTINGS install'
         sh 'mvn -s $MAVEN_SETTINGS deploy'
         }
