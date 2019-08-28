@@ -11,13 +11,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import uk.gov.gchq.palisade.rule.Rules;
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class UtilTest {
 
     @Test
