@@ -27,7 +27,7 @@ podTemplate(containers: [
 //        sh 'mvn -s $MAVEN_SETTINGS install'
 //          mvn deploy -Drevision=RELEASE -P pi
           
-        sh 'mvn -s $MAVEN_SETTINGS deploy:deploy-file -DuniqueVersion=false'
+        sh 'mvn -s $MAVEN_SETTINGS deploy -DuniqueVersion=false'
         }
       }
     }
