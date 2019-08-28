@@ -66,6 +66,7 @@
         <failsafe.version>2.22.1</failsafe.version>
         <checkstyle.phase>test</checkstyle.phase>
         <checkstyle.plugin.version>3.0.0</checkstyle.plugin.version>
+        <revision>SNAPSHOT</revision>
 
         <!-- Other -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
