@@ -16,17 +16,9 @@ target/
 .idea/
 .classpath
 *.pem
-*.DS_Store
 node_modules/
 .project
 .settings
-.terraform/
-terraform.tfvars
-terraform.tfstate
-terraform.tfstate.backup
-terraform.tfstate.lock.info
 
 ##VSCODE default files that dont need to be tracked
-dependency-reduced-pom.xml
-eclipse-formatter.xml
 .vscode/
