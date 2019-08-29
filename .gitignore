@@ -19,6 +19,6 @@ target/
 node_modules/
 .project
 .settings
-
+*.iml
 ##VSCODE default files that dont need to be tracked
 .vscode/
