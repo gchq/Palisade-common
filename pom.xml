@@ -51,7 +51,7 @@
         <commons-io.version>2.6</commons-io.version>
         <commons-lang3.version>3.8.1</commons-lang3.version>
         <avro.version>1.8.2</avro.version>
-        <maven-jar-plugin.version>3.11.1</maven-jar-plugin.version>
+        <maven-jar-plugin.version>2.2</maven-jar-plugin.version>
 
         <!-- Testing properties -->
         <junit.version>4.12</junit.version>
