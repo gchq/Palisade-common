@@ -1,4 +1,4 @@
-# Copyright 2018 Crown Copyright
+# Copyright 2019 Crown Copyright
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,26 +13,12 @@
 # limitations under the License
 
 target/
-*.iml
-.project/
-bin/
-*.class
-*/atlassian-ide*
 .idea/
-.classpath/
+.classpath
 *.pem
-*.DS_Store
-_book
 node_modules/
-.extract/
-.project/
-.settings/
-.terraform/
-terraform.tfvars
-terraform.tfstate
-terraform.tfstate.backup
-dependency-reduced-pom.xml
-
+.project
+.settings
+*.iml
 ##VSCODE default files that dont need to be tracked
-eclipse-formatter.xml
 .vscode/
