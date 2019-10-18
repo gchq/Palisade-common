@@ -46,7 +46,7 @@
         <javadoc.plugin.version>3.0.1</javadoc.plugin.version>
         <slf4j.api.version>1.7.25</slf4j.api.version>
         <slf4j.simple.version>1.7.25</slf4j.simple.version>
-        <jackson.version>2.9.8</jackson.version>
+        <jackson.version>2.10.0</jackson.version>
         <commons-io.version>2.6</commons-io.version>
         <commons-lang3.version>3.8.1</commons-lang3.version>
         <avro.version>1.8.2</avro.version>
