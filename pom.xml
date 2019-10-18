@@ -57,7 +57,8 @@
         <surefire.plugin.version>2.22.1</surefire.plugin.version>
         <failsafe.version>2.22.1</failsafe.version>
         <checkstyle.phase>test</checkstyle.phase>
-        <checkstyle.plugin.version>3.0.0</checkstyle.plugin.version>
+        <checkstyle.plugin.version>3.1.0</checkstyle.plugin.version>
+        <checkstyle.phase>verify</checkstyle.phase>
         <revision>SNAPSHOT</revision>
 
         <!-- Other -->

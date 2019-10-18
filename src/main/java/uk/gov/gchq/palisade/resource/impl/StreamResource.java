@@ -22,8 +22,8 @@ import uk.gov.gchq.palisade.resource.ParentResource;
 import java.util.Map;
 
 public class StreamResource extends AbstractLeafResource {
-    long start;
-    long end;
+    protected long start;
+    protected long end;
 
     public StreamResource() {
     }

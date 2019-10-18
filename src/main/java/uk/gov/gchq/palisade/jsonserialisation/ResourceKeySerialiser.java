@@ -19,9 +19,7 @@ package uk.gov.gchq.palisade.jsonserialisation;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-
 import uk.gov.gchq.palisade.resource.LeafResource;
 import uk.gov.gchq.palisade.resource.Resource;
 

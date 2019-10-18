@@ -20,7 +20,7 @@ package uk.gov.gchq.palisade.exception;
  */
 public class PalisadeWrappedErrorRuntimeException extends RuntimeException {
     private static final long serialVersionUID = 5497060484135689800L;
-    private Error error;
+    private final Error error;
 
     public PalisadeWrappedErrorRuntimeException(final Error error) {
         super(error.getSimpleMessage());
