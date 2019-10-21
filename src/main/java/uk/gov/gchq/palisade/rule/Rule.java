@@ -21,7 +21,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
-
 import uk.gov.gchq.palisade.Context;
 import uk.gov.gchq.palisade.User;
 
@@ -53,9 +52,9 @@ public interface Rule<T> {
     /**
      * Applies the rule logic to redact or modify the record based on the user and context.
      *
-     * @param record        the record to be checked.
-     * @param user          the user
-     * @param context       the query context
+     * @param record  the record to be checked.
+     * @param user    the user
+     * @param context the query context
      * @return the modified record or null if the record should be fully redacted.
      */
     T apply(final T record, final User user, final Context context);

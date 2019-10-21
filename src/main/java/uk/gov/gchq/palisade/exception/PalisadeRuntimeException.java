@@ -23,18 +23,18 @@ import static uk.gov.gchq.palisade.exception.Status.INTERNAL_SERVER_ERROR;
  */
 public class PalisadeRuntimeException extends RuntimeException {
 
-    private Status status = INTERNAL_SERVER_ERROR;
+    private final Status status;
 
     public PalisadeRuntimeException(final String message) {
-        super(message);
+        this(message, INTERNAL_SERVER_ERROR);
     }
 
     public PalisadeRuntimeException(final Throwable cause) {
-        super(cause);
+        this(cause, INTERNAL_SERVER_ERROR);
     }
 
     public PalisadeRuntimeException(final String message, final Throwable cause) {
-        super(message, cause);
+        this(message, cause, INTERNAL_SERVER_ERROR);
     }
 
     public PalisadeRuntimeException(final String message, final Status status) {
@@ -54,9 +54,5 @@ public class PalisadeRuntimeException extends RuntimeException {
 
     public Status getStatus() {
         return status;
-    }
-
-    public void setStatus(final Status status) {
-        this.status = status;
     }
 }

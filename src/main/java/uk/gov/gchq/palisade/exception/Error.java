@@ -21,7 +21,6 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import uk.gov.gchq.palisade.ToStringBuilder;
 import uk.gov.gchq.palisade.util.DebugUtil;
 
