@@ -53,13 +53,13 @@ public final class Util {
     /**
      * Applies a collection of rules to a record stream.
      *
-     * @param records record stream
-     * @param user    user the records are being processed for
-     * @param context the additional context
-     * @param rules   rules collection
-     * @param <T>     record type
+     * @param records          record stream
+     * @param user             user the records are being processed for
+     * @param context          the additional context
+     * @param rules            rules collection
+     * @param <T>              record type
      * @param recordsProcessed a counter for the number of records being processed
-     * @param recordsReturned a counter for the number of records being returned
+     * @param recordsReturned  a counter for the number of records being returned
      * @return filtered stream
      */
     public static <T> Stream<T> applyRulesToStream(final Stream<T> records, final User user, final Context context, final Rules<T> rules, final AtomicLong recordsProcessed, final AtomicLong recordsReturned) {
@@ -74,13 +74,13 @@ public final class Util {
     /**
      * Applies a collection of rules to an item (record/resource).
      *
-     * @param item    resource or record to filter
-     * @param user    user the record is being processed for
-     * @param context the additional context
-     * @param rules   rules collection
-     * @param <T>     record type
+     * @param item             resource or record to filter
+     * @param user             user the record is being processed for
+     * @param context          the additional context
+     * @param rules            rules collection
+     * @param <T>              record type
      * @param recordsProcessed a counter for the number of records being processed
-     * @param recordsReturned a counter for the number of records being returned
+     * @param recordsReturned  a counter for the number of records being returned
      * @return filtered item
      */
     public static <T> T applyRulesToItem(final T item, final User user, final Context context, final Rules<T> rules, final AtomicLong recordsProcessed, final AtomicLong recordsReturned) {

@@ -26,7 +26,6 @@ import uk.gov.gchq.palisade.resource.impl.FileResource;
 
 /**
  * A high level API to define a resource, where a resource could be a system, directory, file, stream, etc.
- *
  * A resource is expected to have a unique identifier.
  */
 @JsonPropertyOrder(value = {"class", "id"}, alphabetic = true)

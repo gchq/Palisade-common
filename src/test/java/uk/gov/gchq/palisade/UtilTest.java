@@ -1,8 +1,8 @@
 package uk.gov.gchq.palisade;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static uk.gov.gchq.palisade.Util.applyRulesToItem;
+import org.junit.Test;
+
+import uk.gov.gchq.palisade.rule.Rules;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,9 +10,10 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static uk.gov.gchq.palisade.Util.applyRulesToItem;
 
-import uk.gov.gchq.palisade.rule.Rules;
 public class UtilTest {
 
     @Test
