@@ -23,7 +23,7 @@ import static uk.gov.gchq.palisade.exception.Status.INTERNAL_SERVER_ERROR;
  */
 public class PalisadeCheckedException extends Exception {
 
-    private Status status = INTERNAL_SERVER_ERROR;
+    private final Status status;
 
     public PalisadeCheckedException(final Throwable cause, final Status status) {
         super(cause);
@@ -41,22 +41,18 @@ public class PalisadeCheckedException extends Exception {
     }
 
     public PalisadeCheckedException(final Throwable cause) {
-        super(cause);
+        this(cause, INTERNAL_SERVER_ERROR);
     }
 
     public PalisadeCheckedException(final String message) {
-        super(message);
+        this(message, INTERNAL_SERVER_ERROR);
     }
 
     public PalisadeCheckedException(final String message, final Throwable cause) {
-        super(message, cause);
+        this(message, cause, INTERNAL_SERVER_ERROR);
     }
 
     public Status getStatus() {
         return status;
-    }
-
-    public void setStatus(final Status status) {
-        this.status = status;
     }
 }

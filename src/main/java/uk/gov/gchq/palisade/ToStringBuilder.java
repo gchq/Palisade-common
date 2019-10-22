@@ -17,7 +17,6 @@
 package uk.gov.gchq.palisade;
 
 import org.apache.commons.lang3.builder.ToStringStyle;
-
 import uk.gov.gchq.palisade.util.DebugUtil;
 
 /**
