@@ -30,9 +30,9 @@ public interface PredicateRule<T> extends Rule<T> {
     /**
      * Applies the rule logic to test whether a record should be redacted based on the user and context.
      *
-     * @param record        the record to be checked.
-     * @param user          the user
-     * @param context       the query context
+     * @param record  the record to be checked.
+     * @param user    the user
+     * @param context the query context
      * @return true if the record should be kept, false if the record should be redacted.
      */
     boolean test(final T record, final User user, final Context context);

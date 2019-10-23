@@ -20,6 +20,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import uk.gov.gchq.palisade.jsonserialisation.JSONSerialiser;
+
 public class ContextTest {
 
     private Context testObject;

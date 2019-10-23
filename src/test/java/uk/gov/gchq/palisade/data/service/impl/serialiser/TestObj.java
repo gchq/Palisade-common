@@ -5,10 +5,10 @@
  */
 package uk.gov.gchq.palisade.data.service.impl.serialiser;
 
-import org.apache.avro.specific.SpecificData;
-import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
+import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.SchemaStore;
+import org.apache.avro.specific.SpecificData;
 
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
@@ -37,18 +37,23 @@ public class TestObj extends org.apache.avro.specific.SpecificRecordBase impleme
 
     /**
      * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
+     *
      * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
      */
     public static BinaryMessageDecoder<TestObj> createDecoder(SchemaStore resolver) {
         return new BinaryMessageDecoder<TestObj>(MODEL$, SCHEMA$, resolver);
     }
 
-    /** Serializes this TestObj to a ByteBuffer. */
+    /**
+     * Serializes this TestObj to a ByteBuffer.
+     */
     public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
         return ENCODER.encode(this);
     }
 
-    /** Deserializes a TestObj from a ByteBuffer. */
+    /**
+     * Deserializes a TestObj from a ByteBuffer.
+     */
     public static TestObj fromByteBuffer(
             java.nio.ByteBuffer b) throws java.io.IOException {
         return DECODER.decode(b);
@@ -71,8 +76,9 @@ public class TestObj extends org.apache.avro.specific.SpecificRecordBase impleme
 
     /**
      * All-args constructor.
+     *
      * @param fieldStr1 The new value for fieldStr1
-     * @param fieldInt The new value for fieldInt
+     * @param fieldInt  The new value for fieldInt
      * @param fieldStr2 The new value for fieldStr2
      */
     public TestObj(java.lang.CharSequence fieldStr1, java.lang.Integer fieldInt, java.lang.CharSequence fieldStr2) {
@@ -119,6 +125,7 @@ public class TestObj extends org.apache.avro.specific.SpecificRecordBase impleme
 
     /**
      * Gets the value of the 'fieldStr1' field.
+     *
      * @return The value of the 'fieldStr1' field.
      */
     public java.lang.CharSequence getFieldStr1() {
@@ -127,6 +134,7 @@ public class TestObj extends org.apache.avro.specific.SpecificRecordBase impleme
 
     /**
      * Sets the value of the 'fieldStr1' field.
+     *
      * @param value the value to set.
      */
     public void setFieldStr1(java.lang.CharSequence value) {
@@ -135,6 +143,7 @@ public class TestObj extends org.apache.avro.specific.SpecificRecordBase impleme
 
     /**
      * Gets the value of the 'fieldInt' field.
+     *
      * @return The value of the 'fieldInt' field.
      */
     public java.lang.Integer getFieldInt() {
@@ -143,6 +152,7 @@ public class TestObj extends org.apache.avro.specific.SpecificRecordBase impleme
 
     /**
      * Sets the value of the 'fieldInt' field.
+     *
      * @param value the value to set.
      */
     public void setFieldInt(java.lang.Integer value) {
@@ -151,6 +161,7 @@ public class TestObj extends org.apache.avro.specific.SpecificRecordBase impleme
 
     /**
      * Gets the value of the 'fieldStr2' field.
+     *
      * @return The value of the 'fieldStr2' field.
      */
     public java.lang.CharSequence getFieldStr2() {
@@ -159,6 +170,7 @@ public class TestObj extends org.apache.avro.specific.SpecificRecordBase impleme
 
     /**
      * Sets the value of the 'fieldStr2' field.
+     *
      * @param value the value to set.
      */
     public void setFieldStr2(java.lang.CharSequence value) {
@@ -167,6 +179,7 @@ public class TestObj extends org.apache.avro.specific.SpecificRecordBase impleme
 
     /**
      * Creates a new TestObj RecordBuilder.
+     *
      * @return A new TestObj RecordBuilder
      */
     public static uk.gov.gchq.palisade.data.service.impl.serialiser.TestObj.Builder newBuilder() {
@@ -175,6 +188,7 @@ public class TestObj extends org.apache.avro.specific.SpecificRecordBase impleme
 
     /**
      * Creates a new TestObj RecordBuilder by copying an existing Builder.
+     *
      * @param other The existing builder to copy.
      * @return A new TestObj RecordBuilder
      */
@@ -184,6 +198,7 @@ public class TestObj extends org.apache.avro.specific.SpecificRecordBase impleme
 
     /**
      * Creates a new TestObj RecordBuilder by copying an existing TestObj instance.
+     *
      * @param other The existing instance to copy.
      * @return A new TestObj RecordBuilder
      */
@@ -201,13 +216,16 @@ public class TestObj extends org.apache.avro.specific.SpecificRecordBase impleme
         private java.lang.Integer fieldInt;
         private java.lang.CharSequence fieldStr2;
 
-        /** Creates a new Builder */
+        /**
+         * Creates a new Builder
+         */
         private Builder() {
             super(SCHEMA$);
         }
 
         /**
          * Creates a Builder by copying an existing Builder.
+         *
          * @param other The existing Builder to copy.
          */
         private Builder(uk.gov.gchq.palisade.data.service.impl.serialiser.TestObj.Builder other) {
@@ -228,6 +246,7 @@ public class TestObj extends org.apache.avro.specific.SpecificRecordBase impleme
 
         /**
          * Creates a Builder by copying an existing TestObj instance
+         *
          * @param other The existing instance to copy.
          */
         private Builder(uk.gov.gchq.palisade.data.service.impl.serialiser.TestObj other) {
@@ -248,6 +267,7 @@ public class TestObj extends org.apache.avro.specific.SpecificRecordBase impleme
 
         /**
          * Gets the value of the 'fieldStr1' field.
+         *
          * @return The value.
          */
         public java.lang.CharSequence getFieldStr1() {
@@ -256,6 +276,7 @@ public class TestObj extends org.apache.avro.specific.SpecificRecordBase impleme
 
         /**
          * Sets the value of the 'fieldStr1' field.
+         *
          * @param value The value of 'fieldStr1'.
          * @return This builder.
          */
@@ -268,6 +289,7 @@ public class TestObj extends org.apache.avro.specific.SpecificRecordBase impleme
 
         /**
          * Checks whether the 'fieldStr1' field has been set.
+         *
          * @return True if the 'fieldStr1' field has been set, false otherwise.
          */
         public boolean hasFieldStr1() {
@@ -277,6 +299,7 @@ public class TestObj extends org.apache.avro.specific.SpecificRecordBase impleme
 
         /**
          * Clears the value of the 'fieldStr1' field.
+         *
          * @return This builder.
          */
         public uk.gov.gchq.palisade.data.service.impl.serialiser.TestObj.Builder clearFieldStr1() {
@@ -287,6 +310,7 @@ public class TestObj extends org.apache.avro.specific.SpecificRecordBase impleme
 
         /**
          * Gets the value of the 'fieldInt' field.
+         *
          * @return The value.
          */
         public java.lang.Integer getFieldInt() {
@@ -295,6 +319,7 @@ public class TestObj extends org.apache.avro.specific.SpecificRecordBase impleme
 
         /**
          * Sets the value of the 'fieldInt' field.
+         *
          * @param value The value of 'fieldInt'.
          * @return This builder.
          */
@@ -307,6 +332,7 @@ public class TestObj extends org.apache.avro.specific.SpecificRecordBase impleme
 
         /**
          * Checks whether the 'fieldInt' field has been set.
+         *
          * @return True if the 'fieldInt' field has been set, false otherwise.
          */
         public boolean hasFieldInt() {
@@ -316,6 +342,7 @@ public class TestObj extends org.apache.avro.specific.SpecificRecordBase impleme
 
         /**
          * Clears the value of the 'fieldInt' field.
+         *
          * @return This builder.
          */
         public uk.gov.gchq.palisade.data.service.impl.serialiser.TestObj.Builder clearFieldInt() {
@@ -326,6 +353,7 @@ public class TestObj extends org.apache.avro.specific.SpecificRecordBase impleme
 
         /**
          * Gets the value of the 'fieldStr2' field.
+         *
          * @return The value.
          */
         public java.lang.CharSequence getFieldStr2() {
@@ -334,6 +362,7 @@ public class TestObj extends org.apache.avro.specific.SpecificRecordBase impleme
 
         /**
          * Sets the value of the 'fieldStr2' field.
+         *
          * @param value The value of 'fieldStr2'.
          * @return This builder.
          */
@@ -346,6 +375,7 @@ public class TestObj extends org.apache.avro.specific.SpecificRecordBase impleme
 
         /**
          * Checks whether the 'fieldStr2' field has been set.
+         *
          * @return True if the 'fieldStr2' field has been set, false otherwise.
          */
         public boolean hasFieldStr2() {
@@ -355,6 +385,7 @@ public class TestObj extends org.apache.avro.specific.SpecificRecordBase impleme
 
         /**
          * Clears the value of the 'fieldStr2' field.
+         *
          * @return This builder.
          */
         public uk.gov.gchq.palisade.data.service.impl.serialiser.TestObj.Builder clearFieldStr2() {
