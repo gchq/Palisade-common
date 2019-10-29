@@ -63,6 +63,7 @@
         <!-- Other -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <depends.phase>validate</depends.phase>
     </properties>
 
     <scm>
@@ -146,7 +147,37 @@
         </dependency>
     </dependencies>
 
+
     <profiles>
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.servicemix.tooling</groupId>
+                        <artifactId>depends-maven-plugin</artifactId>
+                        <version>1.4.0</version>
+                        <executions>
+                            <execution>
+                                <configuration>
+                                    <outputFile>mvn_dependency_tree.txt</outputFile>
+                                    <includeScope>false</includeScope>
+                                    <includeType>false</includeType>
+                                </configuration>
+                                <id>depends</id>
+                                <phase>${depends.phase}</phase>
+                                <goals>
+                                    <goal>generate-depends-file</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         <profile>
             <id>avro</id>
             <build>
