@@ -26,7 +26,11 @@ podTemplate(containers: [
             container('maven') {
                 configFileProvider(
                         [configFile(fileId: '450d38e2-db65-4601-8be0-8621455e93b5', variable: 'MAVEN_SETTINGS')]) {
-                    sh 'mvn -s $MAVEN_SETTINGS deploy -Pdefault -Pavro'
+                    if ($ { env.BRANCH_NAME } == "develop") {
+                        sh 'mvn -s $MAVEN_SETTINGS deploy -Pdefault -Pavro'
+                    } else {
+                        sh "echo - no deploy"
+                    }
                 }
             }
         }
