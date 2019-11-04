@@ -22,7 +22,7 @@ podTemplate(containers: [
             sh "echo ${env.BRANCH_NAME}"
         }
         stage('Install a Maven project') {
-            git branch: "${env.BRANCH_NAME}", url: 'https://github.com/gchq/Palisade-services.git'
+            git branch: "${env.BRANCH_NAME}", url: 'https://github.com/gchq/Palisade-common.git'
             container('docker-cmds') {
                 configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
                     sh 'mvn -s $MAVEN_SETTINGS install'
