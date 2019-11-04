@@ -21,12 +21,21 @@ podTemplate(containers: [
         stage('Bootstrap') {
             sh "echo ${env.BRANCH_NAME}"
         }
+        stage('Install a Maven project') {
+            git branch: "${env.BRANCH_NAME}", url: 'https://github.com/gchq/Palisade-services.git'
+            container('docker-cmds') {
+                configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
+                    sh 'mvn -s $MAVEN_SETTINGS install'
+                }
+            }
+        }
         stage('Build a Maven project') {
             git branch: "${env.BRANCH_NAME}", url: 'https://github.com/gchq/Palisade-common.git'
             container('maven') {
                 configFileProvider(
                         [configFile(fileId: '450d38e2-db65-4601-8be0-8621455e93b5', variable: 'MAVEN_SETTINGS')]) {
-                    if ("${env.BRANCH_NAME}" == "develop") {
+                    if (("${env.BRANCH_NAME}" == "develop") ||
+                            ("${env.BRANCH_NAME}" == "master")) {
                         sh 'mvn -s $MAVEN_SETTINGS deploy -Pdefault -Pavro'
                     } else {
                         sh "echo - no deploy"
