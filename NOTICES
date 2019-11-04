@@ -31,7 +31,7 @@ Junit (junit:junit:4.12):
 - Eclipse Public License 1.0
 
 
-SLF4J (org.slf4j:slf4j-api:1.7.25, org.slf4j:slf4j-log4j12:1.7.25)
+SLF4J (org.slf4j:slf4j-api:1.7.25)
 
 - MIT License
 
