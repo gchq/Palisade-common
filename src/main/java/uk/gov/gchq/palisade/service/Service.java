@@ -45,9 +45,6 @@ import java.util.concurrent.CompletableFuture;
 )
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public interface Service {
-    default CompletableFuture<?> process(final Request request) {
-        throw new IllegalArgumentException("Request type was not recognised: " + request.getClass().getName());
-    }
 
     /**
      * Gives the initial configuration to a service to allow it to configure itself. This method is called by the
