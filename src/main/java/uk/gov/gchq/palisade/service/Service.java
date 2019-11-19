@@ -28,6 +28,7 @@ import uk.gov.gchq.palisade.service.request.Request;
 
 import java.util.concurrent.CompletableFuture;
 
+
 /**
  * This class defines the top level services API.
  * <p>
@@ -41,9 +42,6 @@ import java.util.concurrent.CompletableFuture;
 )
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public interface Service {
-    default CompletableFuture<?> process(final Request request) {
-        throw new IllegalArgumentException("Request type was not recognised: " + request.getClass().getName());
-    }
 
     @JsonGetter("class")
     default String _getClass() {
