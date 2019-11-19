@@ -24,11 +24,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import uk.gov.gchq.palisade.service.request.Request;
-
-import java.util.concurrent.CompletableFuture;
-
-
 /**
  * This class defines the top level services API.
  * <p>
