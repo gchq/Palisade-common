@@ -32,11 +32,11 @@ podTemplate(containers: [
             } else { //just a normal branch
                 git branch: "${env.BRANCH_NAME}", url: 'https://github.com/gchq/Palisade-common.git'
             }
-//            container('maven') {
-//                configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
-//                    sh 'mvn -s $MAVEN_SETTINGS install'
-//                }
-//            }
+            container('maven') {
+                configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
+                    sh 'mvn -s $MAVEN_SETTINGS install'
+                }
+            }
         }
         stage('SonarQube analysis') {
             container('maven') {
