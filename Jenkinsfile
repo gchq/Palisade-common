@@ -37,7 +37,15 @@ podTemplate(containers: [
                     sh 'mvn -s $MAVEN_SETTINGS install'
                 }
             }
+            stage('SonarQube analysis') {
+                withSonarQubeEnv(installationName: 'sonar') {
+                    // You can override the credential to be used
+                    sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
+                }
+            }
         }
+
+
         stage('Build a Maven project') {
             x = env.BRANCH_NAME
 
