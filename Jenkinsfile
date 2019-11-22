@@ -42,7 +42,6 @@ podTemplate(containers: [
             container('maven') {
                 configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
                     withSonarQubeEnv(installationName: 'sonar') {
-                        // You can override the credential to be used
                         sh 'mvn -s $MAVEN_SETTINGS org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar -Dsonar.scm.disabled=true'
                     }
                 }
