@@ -43,6 +43,7 @@ podTemplate(containers: [
                 configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
                     withSonarQubeEnv(installationName: 'sonar') {
                         sh 'cat $MAVEN_SETTINGS'
+                        sh 'env'
                         sh 'mvn -s $MAVEN_SETTINGS org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
                     }
                 }
