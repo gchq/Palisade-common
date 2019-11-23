@@ -44,7 +44,7 @@ podTemplate(containers: [
                     withSonarQubeEnv(installationName: 'sonar') {
                         sh 'cat $MAVEN_SETTINGS'
                         sh 'env'
-                        sh 'mvn -s $MAVEN_SETTINGS org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar -Dsonar.host.url="http:\/\/nowhere:7654"'
+                        sh 'mvn -s $MAVEN_SETTINGS org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar -Dsonar.host.url="http://nowhere:7654"'
                     }
                 }
             }
