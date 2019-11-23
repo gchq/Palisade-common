@@ -43,7 +43,7 @@ podTemplate(containers: [
                 configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
                     withSonarQubeEnv(installationName: 'sonar') {
                         //the actual sonar qube server address is overridden in the maven settings configuration injected above
-                        sh 'env -u SONAR_HOST_URL; printenv; mvn -s $MAVEN_SETTINGS org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
+                        sh 'env -u SONAR_HOST_URL mvn -s $MAVEN_SETTINGS org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
                     }
                 }
             }
