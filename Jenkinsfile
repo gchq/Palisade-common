@@ -40,9 +40,13 @@ podTemplate(containers: [
         }
         stage('SonarQube analysis') {
             container('maven') {
-                configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
-                    withSonarQubeEnv(installationName: 'sonar') {
-                        sh 'mvn -s $MAVEN_SETTINGS org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
+                withCredentials(certificate(keystoreVariable: 'ROOT_CA', credentialsID: '83abe470-4231-4a09-b88b-8bb10598507c')) {
+                    configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
+                        withSonarQubeEnv(installationName: 'sonar') {
+                            sh 'echo $ROOT_CA'
+                            sh 'ls -l $ROOT_CA'
+                            sh 'mvn -s $MAVEN_SETTINGS org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
+                        }
                     }
                 }
             }
