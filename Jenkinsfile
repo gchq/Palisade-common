@@ -40,7 +40,7 @@ podTemplate(containers: [
         }
         stage('SonarQube analysis') {
             container('maven') {
-                withCredentials([certificate(keystoreVariable: 'ROOT_CA', credentialsID: '83abe470-4231-4a09-b88b-8bb10598507c')]) {
+                withCredentials([certificate(keystoreVariable: 'ROOT_CA', credentialsId: '83abe470-4231-4a09-b88b-8bb10598507c')]) {
                     configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
                         withSonarQubeEnv(installationName: 'sonar') {
                             sh 'echo $ROOT_CA'
