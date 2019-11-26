@@ -58,6 +58,8 @@
         <failsafe.version>2.22.1</failsafe.version>
         <checkstyle.plugin.version>3.1.0</checkstyle.plugin.version>
         <checkstyle.phase>verify</checkstyle.phase>
+        <mockito.core>3.1.0</mockito.core>
+        <common-maths>3.1.1</common-maths>
         <revision>SNAPSHOT</revision>
 
         <!-- Other -->
@@ -144,13 +146,13 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>3.1.0</version>
+            <version>${mockito.core}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-math3</artifactId>
-            <version>3.1.1</version>
+            <version>${common-maths}</version>
             <scope>test</scope>
         </dependency>
 
