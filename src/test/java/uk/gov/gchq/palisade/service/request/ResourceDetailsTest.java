@@ -45,8 +45,6 @@ public class ResourceDetailsTest {
     @DataPoints
     public static final List<ResourceDetails> resourceDataPoints = new ArrayList<>();
 
-    ;
-
     static {
         // Valid file names
         filenameDataPoints.add(new Pair<>("employee_file0.avro", new Pair<>("employee", "avro")));
