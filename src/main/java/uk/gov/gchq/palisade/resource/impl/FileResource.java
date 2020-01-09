@@ -24,6 +24,7 @@ import java.util.Map;
 public class FileResource extends AbstractLeafResource {
 
     public FileResource() {
+        //no-args constructor needed
     }
 
     @Override

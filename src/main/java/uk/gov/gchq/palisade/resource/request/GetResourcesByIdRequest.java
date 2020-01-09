@@ -26,8 +26,9 @@ public class GetResourcesByIdRequest extends Request {
 
     private String resourceId;
 
-    // no-args constructor required
+
     public GetResourcesByIdRequest() {
+        // no-args constructor required
     }
 
     /**

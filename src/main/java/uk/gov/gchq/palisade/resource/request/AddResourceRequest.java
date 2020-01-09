@@ -36,8 +36,8 @@ public class AddResourceRequest extends Request {
     private LeafResource resource;
     private ConnectionDetail connectionDetail;
 
-    // no-args constructor required
     public AddResourceRequest() {
+        // no-args constructor required
     }
 
     /**

@@ -40,6 +40,7 @@ public class DataRequestResponse extends Request {
     private Map<LeafResource, ConnectionDetail> resources;
 
     public DataRequestResponse() {
+        //no-args constructor needed
     }
 
     public DataRequestResponse token(final String token) {

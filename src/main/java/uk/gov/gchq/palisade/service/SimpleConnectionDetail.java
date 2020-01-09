@@ -38,6 +38,7 @@ public class SimpleConnectionDetail implements ConnectionDetail {
     private Service service;
 
     public SimpleConnectionDetail() {
+        //no-args constructor needed
     }
 
     public SimpleConnectionDetail service(final Service service) {

@@ -30,8 +30,8 @@ import static java.util.Objects.requireNonNull;
 public class GetResourcesBySerialisedFormatRequest extends Request {
     private String serialisedFormat;
 
-    // no-args constructor required
     public GetResourcesBySerialisedFormatRequest() {
+        // no-args constructor required
     }
 
     /**

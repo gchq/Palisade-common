@@ -29,6 +29,7 @@ public class RequestId {
     private String id;
 
     public RequestId() {
+        //no-args constructor needed.
     }
 
     public RequestId id(final String id) {

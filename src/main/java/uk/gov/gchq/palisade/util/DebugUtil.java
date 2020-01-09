@@ -51,7 +51,7 @@ public final class DebugUtil {
     public static void updateDebugMode() {
         try {
             isDebug = Boolean.valueOf(System.getProperty(DEBUG, DEBUG_DEFAULT).trim());
-            if (isDebug) {
+            if (Boolean.TRUE.equals(isDebug)) {
                 LOGGER.debug("Debug has been enabled in SystemProperties");
             }
         } catch (final Exception e) {
