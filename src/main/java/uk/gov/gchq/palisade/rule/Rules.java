@@ -193,7 +193,7 @@ public class Rules<T> {
                     }
 
                     if (!builder.isEquals()) {
-                        break;
+                       return false;
                     }
                 }
             }
