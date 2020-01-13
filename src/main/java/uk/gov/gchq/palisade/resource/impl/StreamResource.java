@@ -26,7 +26,7 @@ public class StreamResource extends AbstractLeafResource {
     protected long end;
 
     public StreamResource() {
-        //no-args constructor needed
+        //no-args constructor needed for serialization only
     }
 
     @Override

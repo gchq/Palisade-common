@@ -29,7 +29,7 @@ public class RequestId {
     private String id;
 
     public RequestId() {
-        //no-args constructor needed.
+        //no-args constructor needed for serialization only
     }
 
     public RequestId id(final String id) {

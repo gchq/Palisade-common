@@ -24,7 +24,7 @@ import java.util.Map;
 public class FileResource extends AbstractLeafResource {
 
     public FileResource() {
-        //no-args constructor needed
+        //no-args constructor needed for serialization only
     }
 
     @Override

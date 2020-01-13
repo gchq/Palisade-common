@@ -28,7 +28,7 @@ public class GetResourcesByIdRequest extends Request {
 
 
     public GetResourcesByIdRequest() {
-        // no-args constructor required
+        //no-args constructor needed for serialization only
     }
 
     /**

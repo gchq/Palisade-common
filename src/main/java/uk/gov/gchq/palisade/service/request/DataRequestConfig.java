@@ -40,7 +40,7 @@ public class DataRequestConfig extends Request {
     private Map<LeafResource, Rules> rules;
 
     public DataRequestConfig() {
-        //no-args constructor needed
+        //no-args constructor needed for serialization only
     }
 
     public DataRequestConfig user(final User user) {

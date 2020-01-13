@@ -31,7 +31,7 @@ public class GetResourcesBySerialisedFormatRequest extends Request {
     private String serialisedFormat;
 
     public GetResourcesBySerialisedFormatRequest() {
-        // no-args constructor required
+        //no-args constructor needed for serialization only
     }
 
     /**

@@ -21,7 +21,7 @@ import uk.gov.gchq.palisade.resource.ParentResource;
 
 public class SystemResource extends AbstractResource implements ParentResource {
     public SystemResource() {
-        //no-args constructor needed
+        //no-args constructor needed for serialization only
     }
 
     @Override

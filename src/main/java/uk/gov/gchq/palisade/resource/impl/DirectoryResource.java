@@ -28,7 +28,7 @@ public class DirectoryResource extends AbstractResource implements ChildResource
     private ParentResource parent;
 
     public DirectoryResource() {
-        //no-args constructor needed
+        //no-args constructor needed for serialization only
     }
 
     @Override

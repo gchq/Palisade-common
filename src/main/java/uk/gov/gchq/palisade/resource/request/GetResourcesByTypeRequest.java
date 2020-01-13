@@ -31,7 +31,7 @@ public class GetResourcesByTypeRequest extends Request {
     private String type;
 
     public GetResourcesByTypeRequest() {
-        // no-args constructor required
+        //no-args constructor needed for serialization only
     }
 
     /**

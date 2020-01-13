@@ -37,7 +37,7 @@ public class AddResourceRequest extends Request {
     private ConnectionDetail connectionDetail;
 
     public AddResourceRequest() {
-        // no-args constructor required
+        //no-args constructor needed for serialization only
     }
 
     /**
