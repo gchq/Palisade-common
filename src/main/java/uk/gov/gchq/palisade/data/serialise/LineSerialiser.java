@@ -47,9 +47,7 @@ public abstract class LineSerialiser<T> implements Serialiser<T> {
         if (nonNull(itr)) {
             PrintWriter printOut = new PrintWriter(new OutputStreamWriter(output, CHARSET));
             try {
-                itr.forEachRemaining(item -> {
-                    printOut.println(serialiseLine(item));
-                });
+                itr.forEachRemaining(item -> printOut.println(serialiseLine(item)));
             } finally {
                 printOut.flush();
             }

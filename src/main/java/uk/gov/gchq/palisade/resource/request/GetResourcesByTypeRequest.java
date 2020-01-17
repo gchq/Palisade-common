@@ -30,8 +30,8 @@ import static java.util.Objects.requireNonNull;
 public class GetResourcesByTypeRequest extends Request {
     private String type;
 
-    // no-args constructor required
     public GetResourcesByTypeRequest() {
+        //no-args constructor needed for serialization only
     }
 
     /**

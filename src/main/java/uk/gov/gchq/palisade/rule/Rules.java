@@ -24,6 +24,7 @@ import uk.gov.gchq.palisade.ToStringBuilder;
 import uk.gov.gchq.palisade.jsonserialisation.JSONSerialiser;
 
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.function.Function;
@@ -42,13 +43,13 @@ public class Rules<T> {
     public static final String NO_RULES_SET = "no rules set";
 
     private String message;
-    private LinkedHashMap<String, Rule<T>> rules;
+    private Map<String, Rule<T>> rulesHashMap;
 
     /**
      * Constructs an empty instance of {@link Rules}.
      */
     public Rules() {
-        rules = new LinkedHashMap<>();
+        rulesHashMap = new LinkedHashMap<>();
         message = NO_RULES_SET;
     }
 
@@ -58,25 +59,25 @@ public class Rules<T> {
      * @param rules the rules to set
      * @return this Rules instance
      */
-    public Rules<T> rules(final LinkedHashMap<String, Rule<T>> rules) {
+    public Rules<T> rules(final Map<String, Rule<T>> rules) {
         Objects.requireNonNull(rules, "Rules can not be set to null.");
-        this.rules.clear();
-        this.rules.putAll(rules);
+        this.rulesHashMap.clear();
+        this.rulesHashMap.putAll(rules);
         return this;
     }
 
-    public void setRules(final LinkedHashMap<String, Rule<T>> rules) {
+    public void setRules(final Map<String, Rule<T>> rules) {
         rules(rules);
     }
 
-    public LinkedHashMap<String, Rule<T>> getRules() {
+    public Map<String, Rule<T>> getRules() {
         // no need for a null check as it can not be null
-        return rules;
+        return rulesHashMap;
     }
 
-    public Rules<T> addRules(final LinkedHashMap<String, Rule<T>> rules) {
+    public Rules<T> addRules(final Map<String, Rule<T>> rules) {
         Objects.requireNonNull(rules, "Cannot add null to the existing rules.");
-        this.rules.putAll(rules);
+        this.rulesHashMap.putAll(rules);
         return this;
     }
 
@@ -111,7 +112,7 @@ public class Rules<T> {
     public Rules<T> rule(final String id, final Rule<T> rule) {
         Objects.requireNonNull(id, ID_CANNOT_BE_NULL);
         Objects.requireNonNull(rule, RULE_CANNOT_BE_NULL);
-        rules.put(id, rule);
+        rulesHashMap.put(id, rule);
         return this;
     }
 
@@ -125,7 +126,7 @@ public class Rules<T> {
     public Rules<T> predicateRule(final String id, final PredicateRule<T> rule) {
         Objects.requireNonNull(id, ID_CANNOT_BE_NULL);
         Objects.requireNonNull(rule, RULE_CANNOT_BE_NULL);
-        rules.put(id, rule);
+        rulesHashMap.put(id, rule);
         return this;
     }
 
@@ -140,7 +141,7 @@ public class Rules<T> {
     public Rules<T> simplePredicateRule(final String id, final Predicate<T> rule) {
         Objects.requireNonNull(id, ID_CANNOT_BE_NULL);
         Objects.requireNonNull(rule, RULE_CANNOT_BE_NULL);
-        rules.put(id, new WrappedRule<>(rule));
+        rulesHashMap.put(id, new WrappedRule<>(rule));
         return this;
     }
 
@@ -155,7 +156,7 @@ public class Rules<T> {
     public Rules<T> simpleFunctionRule(final String id, final Function<T, T> rule) {
         Objects.requireNonNull(id, ID_CANNOT_BE_NULL);
         Objects.requireNonNull(rule, RULE_CANNOT_BE_NULL);
-        rules.put(id, new WrappedRule<>(rule));
+        rulesHashMap.put(id, new WrappedRule<>(rule));
         return this;
     }
 
@@ -165,42 +166,39 @@ public class Rules<T> {
      * @return {@code true} if this rule set contains at least one rule
      */
     public boolean containsRules() {
-        return !rules.isEmpty();
+        return !rulesHashMap.isEmpty();
     }
 
     @Override
     public boolean equals(final Object o) {
         boolean rtn = (this == o);
-        if (!rtn) {
-            if (o != null && this.getClass() == o.getClass()) {
+        if (!rtn && (o != null && this.getClass() == o.getClass())) {
 
-                final Rules<?> that = (Rules<?>) o;
+            final Rules<?> that = (Rules<?>) o;
 
-                final EqualsBuilder builder = new EqualsBuilder()
-                        .append(message, that.message)
-                        .append(this.rules.keySet(), that.getRules().keySet());
+            final EqualsBuilder builder = new EqualsBuilder()
+                    .append(message, that.message)
+                    .append(this.rulesHashMap.keySet(), that.getRules().keySet());
 
-                if (builder.isEquals()) {
-                    for (final Entry<String, Rule<T>> entry : this.rules.entrySet()) {
-                        final String ruleName = entry.getKey();
-                        final Rule thisRule = entry.getValue();
-                        final Rule thatRule = that.getRules().get(ruleName);
+            if (builder.isEquals()) {
+                for (final Entry<String, Rule<T>> entry : this.rulesHashMap.entrySet()) {
+                    final String ruleName = entry.getKey();
+                    final Rule thisRule = entry.getValue();
+                    final Rule thatRule = that.getRules().get(ruleName);
 
-                        builder.append(thisRule.getClass(), thatRule.getClass());
-                        if (builder.isEquals()) {
-                            // This is expensive - but we don't have any other way of doing it
-                            builder.append(JSONSerialiser.serialise(thisRule), JSONSerialiser.serialise(thatRule));
-                        }
+                    builder.append(thisRule.getClass(), thatRule.getClass());
+                    if (builder.isEquals()) {
+                        // This is expensive - but we don't have any other way of doing it
+                        builder.append(JSONSerialiser.serialise(thisRule), JSONSerialiser.serialise(thatRule));
+                    }
 
-                        if (!builder.isEquals()) {
-                            break;
-                        }
+                    if (!builder.isEquals()) {
+                       return false;
                     }
                 }
-                rtn = builder.isEquals();
             }
+            rtn = builder.isEquals();
         }
-
         return rtn;
     }
 
@@ -208,7 +206,7 @@ public class Rules<T> {
     public int hashCode() {
         final HashCodeBuilder builder = new HashCodeBuilder(17, 37)
                 .append(message);
-        rules.forEach((s, tRule) -> builder.append(s).append(JSONSerialiser.serialise(tRule)));
+        rulesHashMap.forEach((s, tRule) -> builder.append(s).append(JSONSerialiser.serialise(tRule)));
         return builder.toHashCode();
     }
 
@@ -216,7 +214,7 @@ public class Rules<T> {
     public String toString() {
         return new ToStringBuilder(this)
                 .append("message", message)
-                .append("rules", rules)
+                .append("rules", rulesHashMap)
                 .build();
     }
 }
