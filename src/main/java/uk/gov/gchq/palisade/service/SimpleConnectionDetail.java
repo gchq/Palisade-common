@@ -31,6 +31,7 @@ public class SimpleConnectionDetail implements ConnectionDetail {
     private String uri;
 
     public SimpleConnectionDetail() {
+        //no-args constructor needed for serialization only
     }
 
     public SimpleConnectionDetail uri(final String uri) {

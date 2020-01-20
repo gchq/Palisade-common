@@ -68,7 +68,7 @@ public final class Util {
             return records;
         }
 
-        return records.map(record -> applyRulesToItem(record, user, context, rules, recordsProcessed, recordsReturned)).filter(record -> null != record);
+        return records.map(record -> applyRulesToItem(record, user, context, rules, recordsProcessed, recordsReturned)).filter(Objects::nonNull);
     }
 
     /**
@@ -152,13 +152,10 @@ public final class Util {
         while (count < retryCount) {
             try {
                 return function.call();
-            } catch (Throwable t) {
-                //wrap if checked
-                if (t instanceof RuntimeException) {
-                    lastCause = (RuntimeException) t;
-                } else {
-                    lastCause = new RuntimeException(t);
-                }
+            } catch (RuntimeException r) {
+                lastCause = r;
+            } catch (Exception e) {
+                lastCause = new RuntimeException(e);
             }
 
             //failed so increment count and retry

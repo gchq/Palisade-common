@@ -32,6 +32,7 @@ public class UserId implements Cloneable {
      * Constructs an empty {@link UserId}.
      */
     public UserId() {
+        //no-args constructor needed for serialization only
     }
 
     /**

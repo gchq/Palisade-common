@@ -43,9 +43,9 @@ import static java.util.Objects.requireNonNull;
  */
 public class WrappedRule<T> implements Rule<T> {
     public static final String WRAPPED_RULE_WAS_INITIALISED_WITH_NULL = "WrappedRule was initialised with null.";
-    public static final String RULE = "rule";
-    public static final String FUNCTION = "function";
-    public static final String PREDICATE = "predicate";
+    public static final String RULE_STRING = "rule";
+    public static final String FUNCTION_STRING = "function";
+    public static final String PREDICATE_STRING = "predicate";
     private Rule<T> rule;
     private Function<T, T> function;
     private Predicate<T> predicate;
@@ -62,7 +62,7 @@ public class WrappedRule<T> implements Rule<T> {
      * @param rule the {@link Rule} to wrap.
      */
     public WrappedRule(final Rule<T> rule) {
-        requireNonNull(rule, WRAPPED_RULE_WAS_INITIALISED_WITH_NULL + RULE);
+        requireNonNull(rule, WRAPPED_RULE_WAS_INITIALISED_WITH_NULL + RULE_STRING);
         this.rule = rule;
     }
 
@@ -73,7 +73,7 @@ public class WrappedRule<T> implements Rule<T> {
      * @param function the simple {@link Function} rule to wrap.
      */
     public WrappedRule(final Function<T, T> function) {
-        requireNonNull(function, WRAPPED_RULE_WAS_INITIALISED_WITH_NULL + FUNCTION);
+        requireNonNull(function, WRAPPED_RULE_WAS_INITIALISED_WITH_NULL + FUNCTION_STRING);
         this.function = function;
     }
 
@@ -84,7 +84,7 @@ public class WrappedRule<T> implements Rule<T> {
      * @param predicate the simple {@link Predicate} rule to wrap.
      */
     public WrappedRule(final Predicate<T> predicate) {
-        requireNonNull(predicate, WRAPPED_RULE_WAS_INITIALISED_WITH_NULL + PREDICATE);
+        requireNonNull(predicate, WRAPPED_RULE_WAS_INITIALISED_WITH_NULL + PREDICATE_STRING);
         this.predicate = predicate;
     }
 
@@ -181,10 +181,10 @@ public class WrappedRule<T> implements Rule<T> {
             tsb.appendToString(this.rule.toString());
         }
         if (nonNull(function)) {
-            tsb.append(FUNCTION, function);
+            tsb.append(FUNCTION_STRING, function);
         }
         if (nonNull(predicate)) {
-            tsb.append(PREDICATE, predicate);
+            tsb.append(PREDICATE_STRING, predicate);
         }
         return tsb.build();
     }

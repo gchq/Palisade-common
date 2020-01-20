@@ -27,7 +27,7 @@ import static java.util.Objects.requireNonNull;
 public class ResourceDetails {
 
     public static final Pattern FILENAME_PATTERN = Pattern.compile("(?<type>.+)_(?<name>.+)\\.(?<format>.+)");
-    public static final String FORMAT = "TYPE_FILENAME.FORMAT";
+    public static final String FORMAT_STRING = "TYPE_FILENAME.FORMAT";
     private String fileName;
     private String type;
     private String format;
@@ -48,7 +48,7 @@ public class ResourceDetails {
         //check match
         Matcher match = validateNameRegex(fileString);
         if (!match.matches()) {
-            throw new IllegalArgumentException("Filename doesn't comply with " + FORMAT + ": " + fileName);
+            throw new IllegalArgumentException("Filename doesn't comply with " + FORMAT_STRING + ": " + fileName);
         }
 
         return new ResourceDetails(fileName, match.group("type"), match.group("format"));
