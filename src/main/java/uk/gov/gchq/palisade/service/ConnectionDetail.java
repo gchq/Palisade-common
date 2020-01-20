@@ -17,6 +17,7 @@
 package uk.gov.gchq.palisade.service;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
@@ -24,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 /**
  * A High level API for passing details of how to connect to a resource
  */
+@JsonPropertyOrder(value = {"class", "host", "port"}, alphabetic = true)
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.CLASS,
         include = As.EXISTING_PROPERTY,
@@ -31,7 +33,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
         defaultImpl = SimpleConnectionDetail.class
 )
 public interface ConnectionDetail {
-    <S extends Service> S createService();
+    String createConnection();
 
     @JsonGetter("class")
     default String _getClass() {

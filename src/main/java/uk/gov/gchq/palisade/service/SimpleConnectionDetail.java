@@ -16,12 +16,9 @@
 
 package uk.gov.gchq.palisade.service;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-
 import uk.gov.gchq.palisade.ToStringBuilder;
+
+import java.util.Objects;
 
 import static java.util.Objects.requireNonNull;
 
@@ -30,40 +27,30 @@ import static java.util.Objects.requireNonNull;
  * of {@link Service}
  */
 public class SimpleConnectionDetail implements ConnectionDetail {
-    @JsonTypeInfo(
-            use = JsonTypeInfo.Id.CLASS,
-            include = As.PROPERTY,
-            property = "class"
-    )
-    private Service service;
+
+    private String uri;
 
     public SimpleConnectionDetail() {
     }
 
-    public SimpleConnectionDetail service(final Service service) {
-        requireNonNull(service, "The service can not be set to null");
-        this.service = service;
+    public SimpleConnectionDetail uri(final String uri) {
+        requireNonNull(uri, "The host value can not be set to null");
+        this.uri = uri;
         return this;
     }
 
-    public Service getService() {
-        requireNonNull(service, "The service has not been set.");
-        return service;
+    public String getUri() {
+        requireNonNull(uri, "The host has not been set.");
+        return uri;
     }
 
-    public void setService(final Service service) {
-        service(service);
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public <S extends Service> S createService() {
-        return (S) service;
+    public void setHost(final String uri) {
+        uri(uri);
     }
 
     @Override
-    public String _getClass() {
-        return null;
+    public String createConnection() {
+        return uri;
     }
 
     @Override
@@ -71,29 +58,22 @@ public class SimpleConnectionDetail implements ConnectionDetail {
         if (this == o) {
             return true;
         }
-
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof SimpleConnectionDetail)) {
             return false;
         }
-
         final SimpleConnectionDetail that = (SimpleConnectionDetail) o;
-
-        return new EqualsBuilder()
-                .append(service, that.service)
-                .isEquals();
+        return uri.equals(that.getUri());
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 41)
-                .append(service)
-                .toHashCode();
+        return Objects.hash(uri);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .append("service", service)
+                .append("uri", uri)
                 .toString();
     }
 }
