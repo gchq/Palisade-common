@@ -36,8 +36,6 @@ public interface ConnectionDetail {
 
     String createConnection();
 
-    <S extends Service> S createService();
-
     @JsonGetter("class")
     default String _getClass() {
         return getClass().getName();

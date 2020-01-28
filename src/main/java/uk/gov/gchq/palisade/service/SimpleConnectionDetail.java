@@ -29,7 +29,6 @@ import static java.util.Objects.requireNonNull;
 public class SimpleConnectionDetail implements ConnectionDetail {
 
     private String uri;
-    private Service service;
 
     public SimpleConnectionDetail() {
         //no-args constructor needed for serialization only
@@ -53,25 +52,6 @@ public class SimpleConnectionDetail implements ConnectionDetail {
     @Override
     public String createConnection() {
         return uri;
-    }
-
-    public SimpleConnectionDetail service(final Service service) {
-        requireNonNull(service, "The service can not be set to null");
-        this.service = service;
-        return this;
-    }
-
-    public Service getService() {
-        requireNonNull(service, "The service has not been set.");
-        return service;
-    }
-
-    public void setService(final Service service) {
-        service(service);
-    }
-
-    public <S extends Service> S createService() {
-        return (S) service;
     }
 
     @Override

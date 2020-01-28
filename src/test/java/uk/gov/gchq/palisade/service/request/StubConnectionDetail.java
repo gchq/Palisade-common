@@ -29,23 +29,14 @@ public class StubConnectionDetail implements ConnectionDetail {
     }
 
     public StubConnectionDetail() {
-
     }
 
     private String con;
-
     private Service serviceToCreate;
-
-
 
     @Override
     public String createConnection() {
-        return null;
-    }
-
-    @Override
-    public <S extends Service> S createService() {
-        return null;
+        return con;
     }
 
     public String getCon() {
