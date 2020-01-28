@@ -43,6 +43,11 @@ public class StubConnectionDetail implements ConnectionDetail {
         return null;
     }
 
+    @Override
+    public <S extends Service> S createService() {
+        return null;
+    }
+
     public String getCon() {
         return con;
     }

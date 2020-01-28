@@ -33,7 +33,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
         defaultImpl = SimpleConnectionDetail.class
 )
 public interface ConnectionDetail {
+
     String createConnection();
+
     <S extends Service> S createService();
 
     @JsonGetter("class")
