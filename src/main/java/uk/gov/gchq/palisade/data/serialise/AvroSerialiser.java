@@ -62,7 +62,7 @@ public class AvroSerialiser<O> implements Serialiser<O> {
     public Stream<O> deserialise(final InputStream input) throws IOException {
         DataFileStream<O> in;
         in = new DataFileStream<>(input, new ReflectDatumReader<>(schema));
-        in.close();
+
         //Don't use try-with-resources here! This input stream needs to stay open until it is closed manually by the
         //stream it is feeding below
         return StreamSupport.stream(in.spliterator(), false);
@@ -86,6 +86,8 @@ public class AvroSerialiser<O> implements Serialiser<O> {
                     dataFileWriter.append(next);
                 }
 
+            } catch (Exception ex) {
+                LOGGER.error("Error occurred: {}", ex.getMessage());
             } finally {
                 try {
                     dataFileWriter.flush();
