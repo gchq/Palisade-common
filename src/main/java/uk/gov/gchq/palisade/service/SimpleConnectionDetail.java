@@ -45,13 +45,13 @@ public class SimpleConnectionDetail implements ConnectionDetail {
         return uri;
     }
 
-    public void setHost(final String uri) {
+    public void setUri(final String uri) {
         uri(uri);
     }
 
     @Override
     public String createConnection() {
-        return uri;
+        return getUri();
     }
 
     @Override
