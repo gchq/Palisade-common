@@ -88,6 +88,7 @@ public class AvroSerialiser<O> implements Serialiser<O> {
 
             } catch (Exception ex) {
                 LOGGER.error("Error occurred: {}", ex.getMessage());
+                throw new RuntimeException(ex);
             } finally {
                 try {
                     dataFileWriter.flush();
