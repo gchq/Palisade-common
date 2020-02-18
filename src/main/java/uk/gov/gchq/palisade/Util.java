@@ -68,7 +68,7 @@ public final class Util {
             return records;
         }
 
-        return records.map(record -> applyRulesToItem(record, user, context, rules, recordsProcessed, recordsReturned)).filter(Objects::nonNull);
+        return records.map(record -> applyRulesToItem(record, user, context, rules)).peek(processed -> recordsProcessed.incrementAndGet()).filter(Objects::nonNull).peek(returned -> recordsReturned.incrementAndGet());
     }
 
     /**
@@ -79,14 +79,10 @@ public final class Util {
      * @param context          the additional context
      * @param rules            rules collection
      * @param <T>              record type
-     * @param recordsProcessed a counter for the number of records being processed
-     * @param recordsReturned  a counter for the number of records being returned
-     * @return filtered item
+     * @return item with rules applied
      */
-    public static <T> T applyRulesToItem(final T item, final User user, final Context context, final Rules<T> rules, final AtomicLong recordsProcessed, final AtomicLong recordsReturned) {
-        recordsProcessed.incrementAndGet();
-        if (null == rules || rules.getRules().isEmpty()) {
-            recordsReturned.incrementAndGet();
+    public static <T> T applyRulesToItem(final T item, final User user, final Context context, final Rules<T> rules) {
+        if (isNull(rules) || isNull(rules.getRules()) || rules.getRules().isEmpty()) {
             return item;
         }
         T updateItem = item;
@@ -96,7 +92,6 @@ public final class Util {
                 break;
             }
         }
-        recordsReturned.incrementAndGet();
         return updateItem;
     }
 
