@@ -17,14 +17,9 @@
 package uk.gov.gchq.palisade.service;
 
 import uk.gov.gchq.palisade.resource.LeafResource;
-import uk.gov.gchq.palisade.resource.request.AddResourceRequest;
-import uk.gov.gchq.palisade.resource.request.GetResourcesByIdRequest;
-import uk.gov.gchq.palisade.resource.request.GetResourcesByResourceRequest;
-import uk.gov.gchq.palisade.resource.request.GetResourcesBySerialisedFormatRequest;
-import uk.gov.gchq.palisade.resource.request.GetResourcesByTypeRequest;
+import uk.gov.gchq.palisade.resource.Resource;
 
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * <p>
@@ -33,9 +28,9 @@ import java.util.concurrent.CompletableFuture;
  * <p>
  * The resource service is the Palisade component that determines what resources are available that meet a specific
  * (type of) request and how they should be accessed. This interface details several methods for obtaining a list of
- * resources, e.g. by type or by data format. The methods of this service all return {@link CompletableFuture}s of
- * {@link Map}s which link a valid {@link LeafResource} with a {@link ConnectionDetail} object. The ${@code
- * ConnectionDetail} objects contain information on how to set up a connection to retrieve a particular resource.
+ * resources, e.g. by type or by data format. The methods of this service return {@link Map}s which link a valid {@link LeafResource}
+ * with a {@link ConnectionDetail} object.
+ * The ${@code ConnectionDetail} objects contain information on how to set up a connection to retrieve a particular resource.
  * Implementations of this service do not deal with the filtering or application of security policy to the resources.
  * Therefore, a result returned from a method call on this interface doesn't guarantee that the user will be allowed to
  * access it by policy. Other components of the Palisade system will enforce the necessary policy controls to prevent
@@ -57,21 +52,21 @@ public interface ResourceService extends Service {
      * directory could be considered child resources and calling this method on the directory resource would fetch the
      * details on the contained files.
      *
-     * @param request the details of the resource to request
-     * @return a {@link CompletableFuture} that upon completion will contain a map of how to retrieve the available
+     * @param resource the resource being requested.
+     * @return a {@link Map} of the {@link LeafResource} and {@link ConnectionDetail} of how to retrieve the available
      * resources
      */
-    CompletableFuture<Map<LeafResource, ConnectionDetail>> getResourcesByResource(final GetResourcesByResourceRequest request);
+    Map<LeafResource, ConnectionDetail> getResourcesByResource(final Resource resource);
 
     /**
      * Retrieve resource and connection details by resource ID. The request object allows the client to specify the
      * resource ID and obtain the connection details once the returned future has completed.
      *
-     * @param request the details of which ID to request
-     * @return a {@link CompletableFuture} that upon completion will contain details on how to retrieve the requested
-     * resource.
+     * @param id the String value of the resourceId being requested.
+     * @return a {@link Map} of the {@link LeafResource} and {@link ConnectionDetail} of how to retrieve the available
+     * resources matching the id
      */
-    CompletableFuture<Map<LeafResource, ConnectionDetail>> getResourcesById(final GetResourcesByIdRequest request);
+    Map<LeafResource, ConnectionDetail> getResourcesById(final String id);
 
     /**
      * Obtain a list of resources that match a specific resource type. This method allows a client to obtain potentially
@@ -79,11 +74,11 @@ public interface ResourceService extends Service {
      * request all "employee contact card" records. Please note the warning in the class documentation above, that just
      * because a resource is available does not guarantee that the requesting client has the right to access it.
      *
-     * @param request request object detailing the type of resource to retrieve.
-     * @return {@link CompletableFuture} that upon completion will contain the connection details for all resources
-     * matching a type
+     * @param type the String value of the resourceType being requested.
+     * @return a {@link Map} of the {@link LeafResource} and {@link ConnectionDetail} of how to retrieve the available
+     * resources matching the type
      */
-    CompletableFuture<Map<LeafResource, ConnectionDetail>> getResourcesByType(final GetResourcesByTypeRequest request);
+    Map<LeafResource, ConnectionDetail> getResourcesByType(final String type);
 
     /**
      * Find all resources that match a particular data format. Resources of a particular data format may not share a
@@ -91,21 +86,20 @@ public interface ResourceService extends Service {
      * retrieve all the resources Palisade knows about that conform to one particular format. Note that this method can
      * potentially return large ${@code Map}s with many mappings.
      *
-     * @param request the request detailing the specific format for retrieval
-     * @return a {@link CompletableFuture} that upon completion will contain the details on how to retrieve the
-     * resources
+     * @param format the String value of the resourceSerialisedFormat being requested.
+     * @return a {@link Map} of the {@link LeafResource} and {@link ConnectionDetail} of how to retrieve the available
+     * resources mtaching the format
      */
-    CompletableFuture<Map<LeafResource, ConnectionDetail>> getResourcesBySerialisedFormat(final GetResourcesBySerialisedFormatRequest request);
+    Map<LeafResource, ConnectionDetail> getResourcesBySerialisedFormat(final String format);
 
     /**
      * Informs Palisade about a specific resource that it may return to users. This lets Palisade clients request access
      * to that resource and allows Palisade to provide policy controlled access to it via the other methods in this
      * interface.
      *
-     * @param request details of the resource that Palisade can manage access to
-     * @return a {@link CompletableFuture} that will complete as true once the resource has been added to this {@link
-     * ResourceService}
+     * @param resource details of the resource that Palisade can manage access to.
+     * @return the {@link Resource} object that has been added to the {@link ResourceService}
      */
-    CompletableFuture<Boolean> addResource(final AddResourceRequest request);
+    Resource addResource(final Resource resource);
 
 }
