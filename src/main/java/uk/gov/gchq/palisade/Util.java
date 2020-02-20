@@ -68,7 +68,11 @@ public final class Util {
             return records;
         }
 
-        return records.map(record -> applyRulesToItem(record, user, context, rules)).peek(processed -> recordsProcessed.incrementAndGet()).filter(Objects::nonNull).peek(returned -> recordsReturned.incrementAndGet());
+        return records
+                .peek(processed -> recordsProcessed.incrementAndGet())
+                .map(record -> applyRulesToItem(record, user, context, rules))
+                .filter(Objects::nonNull)
+                .peek(returned -> recordsReturned.incrementAndGet());
     }
 
     /**
