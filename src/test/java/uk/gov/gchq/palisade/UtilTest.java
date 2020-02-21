@@ -19,44 +19,32 @@ public class UtilTest {
     @Test
     public void shouldReturnResourceIfNoRules() throws Exception {
         //when
-        final AtomicLong recordsProcessed = new AtomicLong(0);
-        final AtomicLong recordsReturned = new AtomicLong(0);
-        final String actual1 = applyRulesToItem("String", null, null, null, recordsProcessed, recordsReturned);
-        final String actual2 = applyRulesToItem("String", null, null, new Rules<>(), recordsProcessed, recordsReturned);
+        final String actual1 = applyRulesToItem("String", null, null, null);
+        final String actual2 = applyRulesToItem("String", null, null, new Rules<>());
         //then
         assertEquals("String", actual1);
         assertEquals("String", actual2);
-        assertEquals(2, recordsProcessed.get());
-        assertEquals(2, recordsReturned.get());
     }
 
     @Test
     public void shouldUpdateRecord() throws Exception {
         //given
-        final AtomicLong recordsProcessed = new AtomicLong(0);
-        final AtomicLong recordsReturned = new AtomicLong(0);
         final Rules<String> rules = new Rules<String>().rule("r1", (record, user, context) -> "fromRule");
         //when
-        final String actual1 = applyRulesToItem("String", null, null, rules, recordsProcessed, recordsReturned);
+        final String actual1 = applyRulesToItem("String", null, null, rules);
         assertEquals("fromRule", actual1);
-        assertEquals(1, recordsProcessed.get());
-        assertEquals(1, recordsReturned.get());
     }
 
     @Test
     public void shouldUpdateRecordFromAllRules() throws Exception {
         //given
-        final AtomicLong recordsProcessed = new AtomicLong(0);
-        final AtomicLong recordsReturned = new AtomicLong(0);
         final Rules<String> rules = new Rules<String>()
                 .rule("r1", (record, user, context) -> "fromRule")
                 .rule("r2", (record, user, context) -> record.concat("2ndRule"));
         //when
-        final String actual1 = applyRulesToItem("String", null, null, rules, recordsProcessed, recordsReturned);
+        final String actual1 = applyRulesToItem("String", null, null, rules);
         //then
         assertEquals("fromRule" + "2ndRule", actual1);
-        assertEquals(1, recordsProcessed.get());
-        assertEquals(1, recordsReturned.get());
     }
 
     @Test
