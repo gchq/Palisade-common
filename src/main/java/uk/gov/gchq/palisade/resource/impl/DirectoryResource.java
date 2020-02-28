@@ -62,14 +62,14 @@ public class DirectoryResource extends AbstractResource implements ChildResource
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof DirectoryResource)) {
             return false;
         }
         if (!super.equals(o)) {
             return false;
         }
-        final DirectoryResource resource = (DirectoryResource) o;
-        return Objects.equals(parent, resource.parent);
+        final DirectoryResource that = (DirectoryResource) o;
+        return Objects.equals(parent, that.parent);
     }
 
     @Override

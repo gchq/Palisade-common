@@ -66,15 +66,15 @@ public class StreamResource extends AbstractLeafResource {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof StreamResource)) {
             return false;
         }
         if (!super.equals(o)) {
             return false;
         }
         final StreamResource that = (StreamResource) o;
-        return start == that.start &&
-                end == that.end;
+        return Objects.equals(start, that.start) &&
+                Objects.equals(end, that.end);
     }
 
     @Override
