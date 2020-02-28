@@ -16,10 +16,12 @@
 
 package uk.gov.gchq.palisade.resource.impl;
 
+import uk.gov.gchq.palisade.ToStringBuilder;
 import uk.gov.gchq.palisade.resource.AbstractLeafResource;
 import uk.gov.gchq.palisade.resource.ParentResource;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class StreamResource extends AbstractLeafResource {
     protected long start;
@@ -57,5 +59,35 @@ public class StreamResource extends AbstractLeafResource {
     @Override
     public StreamResource parent(final ParentResource parent) {
         return (StreamResource) super.parent(parent);
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        final StreamResource that = (StreamResource) o;
+        return start == that.start &&
+                end == that.end;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), start, end);
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .appendSuper(super.toString())
+                .append("start", start)
+                .append("end", end)
+                .toString();
     }
 }
