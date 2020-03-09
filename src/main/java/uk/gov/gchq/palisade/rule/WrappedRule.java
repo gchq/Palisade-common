@@ -27,8 +27,8 @@ import uk.gov.gchq.palisade.ToStringBuilder;
 import uk.gov.gchq.palisade.User;
 
 import java.util.Objects;
-import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
@@ -47,7 +47,7 @@ public class WrappedRule<T> implements Rule<T> {
     public static final String FUNCTION_STRING = "function";
     public static final String PREDICATE_STRING = "predicate";
     private Rule<T> rule;
-    private Function<T, T> function;
+    private UnaryOperator<T> function;
     private Predicate<T> predicate;
 
     /**
@@ -70,9 +70,9 @@ public class WrappedRule<T> implements Rule<T> {
      * Constructs a {@link WrappedRule} with a given simple function rule to apply.
      * Note - using this means your rule will not be given the User or Context.
      *
-     * @param function the simple {@link Function} rule to wrap.
+     * @param function the simple {@link UnaryOperator} rule to wrap.
      */
-    public WrappedRule(final Function<T, T> function) {
+    public WrappedRule(final UnaryOperator<T> function) {
         requireNonNull(function, WRAPPED_RULE_WAS_INITIALISED_WITH_NULL + FUNCTION_STRING);
         this.function = function;
     }
@@ -90,7 +90,7 @@ public class WrappedRule<T> implements Rule<T> {
 
     @JsonCreator
     public WrappedRule(@JsonProperty("rule") final Rule<T> rule,
-                       @JsonProperty("function") final Function<T, T> function,
+                       @JsonProperty("function") final UnaryOperator<T> function,
                        @JsonProperty("predicate") final Predicate<T> predicate) {
         this.rule = rule;
         this.function = function;
@@ -99,7 +99,7 @@ public class WrappedRule<T> implements Rule<T> {
         checkNullCount(rule, function, predicate);
     }
 
-    private void checkNullCount(final Rule<T> rule, final Function<T, T> function, final Predicate<T> predicate) {
+    private void checkNullCount(final Rule<T> rule, final UnaryOperator<T> function, final Predicate<T> predicate) {
         //needs improving with Jackson
         int nullCount = 0;
         if (rule == null) {
@@ -138,7 +138,7 @@ public class WrappedRule<T> implements Rule<T> {
     }
 
     @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "class")
-    public Function<T, T> getFunction() {
+    public UnaryOperator<T> getFunction() {
         return function;
     }
 

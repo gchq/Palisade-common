@@ -27,8 +27,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
-import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
 
 /**
  * This class is used to encapsulate the list of {@link Rule}s that apply to a resource and is provided with a user
@@ -153,7 +153,7 @@ public class Rules<T> {
      * @param rule the simple function rule
      * @return this Rules instance
      */
-    public Rules<T> simpleFunctionRule(final String id, final Function<T, T> rule) {
+    public Rules<T> simpleFunctionRule(final String id, final UnaryOperator<T> rule) {
         Objects.requireNonNull(id, ID_CANNOT_BE_NULL);
         Objects.requireNonNull(rule, RULE_CANNOT_BE_NULL);
         rulesHashMap.put(id, new WrappedRule<>(rule));
