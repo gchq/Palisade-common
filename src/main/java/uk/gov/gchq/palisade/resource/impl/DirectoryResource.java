@@ -58,6 +58,26 @@ public class DirectoryResource extends AbstractResource implements ChildResource
     }
 
     @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof DirectoryResource)) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        final DirectoryResource that = (DirectoryResource) o;
+        return Objects.equals(parent, that.parent);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), parent);
+    }
+
+    @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .appendSuper(super.toString())
