@@ -41,6 +41,7 @@ import static java.util.Objects.requireNonNull;
  * when you need to set simple rules that don't require the {@link User} or {@link Context}.
  * @param <T> The type of the record. In normal cases the raw data will be deserialised
  *            by the record reader before being passed to the {@link Rule#apply(Object, User, Context)}.
+
  */
 public class WrappedRule<T> implements Rule<T> {
     public static final String WRAPPED_RULE_WAS_INITIALISED_WITH_NULL = "WrappedRule was initialised with null.";
