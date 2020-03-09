@@ -34,6 +34,7 @@ import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static java.util.Objects.requireNonNull;
 
+
 @JsonPropertyOrder(value = {"class", "rule", "function", "predicate"}, alphabetic = true)
 /**
  * A {@link WrappedRule} is helper implementation of {@link Rule}. It is useful
