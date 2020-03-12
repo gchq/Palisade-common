@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE suppressions PUBLIC
+        "-//Checkstyle//DTD SuppressionFilter Configuration 1.0//EN"
+        "https://checkstyle.org/dtds/suppressions_1_0.dtd">
+<!-- Exclude any checks on the TestObj as it is autogeneated by Avro  -->
+<suppressions>
+    <suppress files="TestObj.java" checks=".*"/>
+</suppressions>

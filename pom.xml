@@ -261,6 +261,9 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>${checkstyle.plugin.version}</version>
                 <configuration>
+                    <suppressionsLocation>code-style/checkstyle-suppressions.xml</suppressionsLocation>
+                    <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
+                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
                     <configLocation>code-style/checkstyle.xml</configLocation>
                     <encoding>UTF-8</encoding>
                     <consoleOutput>true</consoleOutput>
@@ -273,6 +276,7 @@
                         <id>validate</id>
                         <phase>${checkstyle.phase}</phase>
                         <configuration>
+                            <includeTestSourceDirectory>true</includeTestSourceDirectory>
                             <configLocation>code-style/checkstyle.xml
                             </configLocation>
                             <encoding>UTF-8</encoding>

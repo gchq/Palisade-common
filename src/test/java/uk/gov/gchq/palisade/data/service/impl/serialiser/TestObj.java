@@ -3,6 +3,7 @@
  * <p>
  * DO NOT EDIT DIRECTLY
  */
+
 package uk.gov.gchq.palisade.data.service.impl.serialiser;
 
 import org.apache.avro.message.BinaryMessageDecoder;
