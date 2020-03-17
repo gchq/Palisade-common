@@ -40,7 +40,7 @@ import uk.gov.gchq.palisade.User;
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public interface CacheWarmerFactory {
 
-    User warm(final CacheWarmerFactory cacheWarmerFactory);
+    User warm();
 
     @JsonGetter("class")
     default String _getClass() {
