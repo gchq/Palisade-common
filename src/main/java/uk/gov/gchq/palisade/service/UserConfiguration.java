@@ -22,5 +22,4 @@ public interface UserConfiguration {
 
     List<? extends CacheWarmerFactory> getCacheWarmerFactory();
 
-    void setCacheWarmerFactory(final List<? extends CacheWarmerFactory> cacheWarmerFactory);
 }
