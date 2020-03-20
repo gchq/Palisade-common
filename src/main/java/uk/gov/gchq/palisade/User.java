@@ -44,11 +44,29 @@ import static java.util.Objects.requireNonNull;
         include = JsonTypeInfo.As.EXISTING_PROPERTY,
         property = "class"
 )
-public class User implements Cloneable {
+public class User {
     private UserId userId;
 
     private Set<String> roles = new HashSet<>();
     private Set<String> auths = new HashSet<>();
+
+    /**
+     * Constructs an empty {@link User}.
+     */
+    public User() {
+        //no-args constructor needed for serialization only
+    }
+
+    /**
+     * Copy constructor for a {@link User}.
+     * @param user the {@link User} that will be copied.
+     */
+    User(final User user) {
+        requireNonNull(user, "User to be cloned cannot be null");
+        userId = user.getUserId();
+        roles = user.getRoles();
+        auths = user.getAuths();
+    }
 
     /**
      * Sets the userId to a {@link UserId} with the given userId string.
@@ -176,19 +194,6 @@ public class User implements Cloneable {
         requireNonNull(roles, "Cannot add null roles.");
         this.roles.addAll(roles);
         return this;
-    }
-
-    public User clone() {
-        User clone;
-        try {
-            clone = (User) super.clone();
-        } catch (final CloneNotSupportedException e) {
-            clone = new User();
-        }
-        clone.userId(getUserId().clone());
-        clone.roles(getRoles());
-        clone.auths(getAuths());
-        return clone;
     }
 
     @Override
