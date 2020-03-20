@@ -58,8 +58,8 @@ public class User {
     }
 
     /**
-     * Constructs a clone of the {@link User}.
-     * @param user the {@link User} that will be cloned.
+     * Copy constructor for a {@link User}.
+     * @param user the {@link User} that will be copied.
      */
     User(final User user) {
         requireNonNull(user, "User to be cloned cannot be null");

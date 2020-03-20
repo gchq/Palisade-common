@@ -36,8 +36,8 @@ public class UserId {
     }
 
     /**
-     * Constructs a clone of the {@link UserId}.
-     * @param userId the {@link UserId} that will be cloned.
+     * Copy constructor for a {@link UserId}.
+     * @param userId the {@link UserId} that will be copied.
      */
     UserId(final UserId userId) {
         requireNonNull(userId, "UserId to be cloned cannot be null");
