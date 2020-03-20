@@ -62,6 +62,7 @@ public class User {
      * @param user the {@link User} that will be cloned.
      */
     User(final User user) {
+        requireNonNull(user, "User to be cloned cannot be null");
         userId = user.getUserId();
         roles = user.getRoles();
         auths = user.getAuths();

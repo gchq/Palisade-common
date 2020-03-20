@@ -19,7 +19,7 @@ package uk.gov.gchq.palisade;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import java.util.Objects;
+import static java.util.Objects.requireNonNull;
 
 /**
  * A {@link UserId} uniquely identifies a {@link uk.gov.gchq.palisade.User}.
@@ -40,6 +40,7 @@ public class UserId {
      * @param userId the {@link UserId} that will be cloned.
      */
     UserId(final UserId userId) {
+        requireNonNull(userId, "UserId to be cloned cannot be null");
         id = userId.getId();
     }
 
@@ -50,7 +51,7 @@ public class UserId {
      * @return the UserId object
      */
     public UserId id(final String id) {
-        Objects.requireNonNull(id, "The UserId id field can not be set null.");
+        requireNonNull(id, "The UserId id field can not be set null.");
         this.id = id;
         return this;
     }
@@ -60,7 +61,7 @@ public class UserId {
     }
 
     public String getId() {
-        Objects.requireNonNull(id, "The UserId id field has not been initialised.");
+        requireNonNull(id, "The UserId id field has not been initialised.");
         return id;
     }
 
