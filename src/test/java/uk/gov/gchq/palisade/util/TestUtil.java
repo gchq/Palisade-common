@@ -1,3 +1,19 @@
+/*
+ * Copyright 2020 Crown Copyright
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package uk.gov.gchq.palisade.util;
 
 import org.slf4j.Logger;
@@ -11,7 +27,7 @@ import java.util.stream.Stream;
 public class TestUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(TestUtil.class);
 
-    public static File TMP_DIRECTORY;
+    public static final File TMP_DIRECTORY;
 
     static {
         final String tmpDirectoryProperty = System.getProperty("java.io.tmpdir");
@@ -34,10 +50,10 @@ public class TestUtil {
      * @return true if streams are equal
      */
     public static <T> boolean streamEqual(final Stream<? extends T> expected, final Stream<? extends T> actual) {
-        Stream<? extends T> sort_expected = expected.sorted();
-        Stream<? extends T> sort_actual = actual.sorted();
-        List<? extends T> lhs = sort_expected.collect(Collectors.toList());
-        List<? extends T> rhs = sort_actual.collect(Collectors.toList());
+        Stream<? extends T> sortExpected = expected.sorted();
+        Stream<? extends T> sortActual = actual.sorted();
+        List<? extends T> lhs = sortExpected.collect(Collectors.toList());
+        List<? extends T> rhs = sortActual.collect(Collectors.toList());
         return lhs.equals(rhs);
     }
 }

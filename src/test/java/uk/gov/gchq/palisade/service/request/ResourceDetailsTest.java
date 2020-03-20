@@ -41,27 +41,28 @@ public class ResourceDetailsTest {
     public static final String PATH = "path/to/nowhere/";
 
     @DataPoints
-    public static final List<Pair<String, Pair<String, String>>> filenameDataPoints = new ArrayList<>();
+    public static final List<Pair<String, Pair<String, String>>> FILENAME_DATA_POINTS = new ArrayList<>();
+
     @DataPoints
-    public static final List<ResourceDetails> resourceDataPoints = new ArrayList<>();
+    public static final List<ResourceDetails> RESOURCE_DATA_POINTS = new ArrayList<>();
 
     static {
         // Valid file names
-        filenameDataPoints.add(new Pair<>("employee_file0.avro", new Pair<>("employee", "avro")));
-        filenameDataPoints.add(new Pair<>("emplo   yee_file0.avro", new Pair<>("emplo   yee", "avro")));
-        filenameDataPoints.add(new Pair<>("employee_fi   le0.av   ro", new Pair<>("employee", "av   ro")));
+        FILENAME_DATA_POINTS.add(new Pair<>("employee_file0.avro", new Pair<>("employee", "avro")));
+        FILENAME_DATA_POINTS.add(new Pair<>("emplo   yee_file0.avro", new Pair<>("emplo   yee", "avro")));
+        FILENAME_DATA_POINTS.add(new Pair<>("employee_fi   le0.av   ro", new Pair<>("employee", "av   ro")));
         // Invalid file names
-        filenameDataPoints.add(new Pair<>("file0.avro", null));
-        filenameDataPoints.add(new Pair<>("employee_file0", null));
-        filenameDataPoints.add(new Pair<>("_.", null));
-        filenameDataPoints.add(new Pair<>("", null));
-        filenameDataPoints.add(new Pair<>(".avro", null));
+        FILENAME_DATA_POINTS.add(new Pair<>("file0.avro", null));
+        FILENAME_DATA_POINTS.add(new Pair<>("employee_file0", null));
+        FILENAME_DATA_POINTS.add(new Pair<>("_.", null));
+        FILENAME_DATA_POINTS.add(new Pair<>("", null));
+        FILENAME_DATA_POINTS.add(new Pair<>(".avro", null));
     }
 
     static {
-        for (Pair<String, ?> filename : filenameDataPoints) {
+        for (Pair<String, ?> filename : FILENAME_DATA_POINTS) {
             if (filename.getValue() != null) {
-                resourceDataPoints.add(ResourceDetails.getResourceDetailsFromFileName(filename.getKey()));
+                RESOURCE_DATA_POINTS.add(ResourceDetails.getResourceDetailsFromFileName(filename.getKey()));
             }
         }
     }
@@ -71,7 +72,7 @@ public class ResourceDetailsTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Theory
-    public void throwIfInvalidFileName(Pair<String, Pair<String, String>> dataPoint) {
+    public void throwIfInvalidFileName(final Pair<String, Pair<String, String>> dataPoint) {
         // Given - invalid filename
         String fileName = dataPoint.getKey();
         Pair<String, String> expected = dataPoint.getValue();
@@ -85,7 +86,7 @@ public class ResourceDetailsTest {
     }
 
     @Theory
-    public void shouldExtractFileName(Pair<String, Pair<String, String>> dataPoint) {
+    public void shouldExtractFileName(final Pair<String, Pair<String, String>> dataPoint) {
         // Given - valid filename
         String fileName = dataPoint.getKey();
         Pair<String, String> expected = dataPoint.getValue();
@@ -104,7 +105,7 @@ public class ResourceDetailsTest {
     }
 
     @Theory
-    public void shouldPassValidNames(Pair<String, Pair<String, String>> dataPoint) {
+    public void shouldPassValidNames(final Pair<String, Pair<String, String>> dataPoint) {
         // Given
         String fileName = dataPoint.getKey();
         Pair<String, String> expected = dataPoint.getValue();
@@ -113,19 +114,19 @@ public class ResourceDetailsTest {
     }
 
     @Theory
-    public void reflexiveEquals(ResourceDetails x) {
+    public void reflexiveEquals(final ResourceDetails x) {
         // Then
         assertThat(x, equalTo(x));
     }
 
     @Theory
-    public void nullNotEquals(ResourceDetails x) {
+    public void nullNotEquals(final ResourceDetails x) {
         // Then
         assertThat(x, not(equalTo(nullValue())));
     }
 
     @Theory
-    public void symmetricEquals(ResourceDetails x, ResourceDetails y) {
+    public void symmetricEquals(final ResourceDetails x, final ResourceDetails y) {
         // Given
         assumeThat(x, equalTo(y));
         // Then
@@ -133,7 +134,7 @@ public class ResourceDetailsTest {
     }
 
     @Theory
-    public void transitiveEquals(ResourceDetails x, ResourceDetails y, ResourceDetails z) {
+    public void transitiveEquals(final ResourceDetails x, final ResourceDetails y, final ResourceDetails z) {
         // Given
         assumeThat(x, equalTo(y));
         assumeThat(y, equalTo(z));
@@ -142,13 +143,13 @@ public class ResourceDetailsTest {
     }
 
     @Theory
-    public void consistentHashCode(ResourceDetails x) {
+    public void consistentHashCode(final ResourceDetails x) {
         // Then
         assertThat(x.hashCode(), equalTo(x.hashCode()));
     }
 
     @Theory
-    public void equalHashCodeWhenEqual(ResourceDetails x, ResourceDetails y) {
+    public void equalHashCodeWhenEqual(final ResourceDetails x, final ResourceDetails y) {
         // Given
         assumeThat(x, equalTo(y));
         // Then
