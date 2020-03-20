@@ -20,6 +20,6 @@ import java.util.List;
 
 public interface UserConfiguration {
 
-    List<? extends CacheWarmerFactory> getCacheWarmerFactory();
+    List<? extends CacheWarmerFactory> getUsers();
 
 }
