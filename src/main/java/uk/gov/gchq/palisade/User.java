@@ -44,7 +44,7 @@ import static java.util.Objects.requireNonNull;
         include = JsonTypeInfo.As.EXISTING_PROPERTY,
         property = "class"
 )
-public class User implements Cloneable {
+public class User {
     private UserId userId;
 
     private Set<String> roles = new HashSet<>();

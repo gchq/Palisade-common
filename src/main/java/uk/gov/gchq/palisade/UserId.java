@@ -24,7 +24,7 @@ import java.util.Objects;
 /**
  * A {@link UserId} uniquely identifies a {@link uk.gov.gchq.palisade.User}.
  */
-public class UserId implements Cloneable {
+public class UserId {
 
     private String id;
 
