@@ -26,13 +26,16 @@ public class WrappedRuleTest {
 
     @Test
     public void shouldConstruct1ArgumentWithNoErrors() throws Exception {
+        // Given
         WrappedRule rule1 = new WrappedRule<>(null, null, null);
-        Assert.assertNotNull(rule1);
         WrappedRule rule2 = new WrappedRule<>(new TestRule(), null, null);
-        Assert.assertNotNull(rule2);
         WrappedRule rule3 = new WrappedRule<>(null, o -> o.toString(), null);
-        Assert.assertNotNull(rule3);
         WrappedRule rule4 = new WrappedRule<>(null, null, o -> true);
+
+        // Then
+        Assert.assertNotNull(rule1);
+        Assert.assertNotNull(rule2);
+        Assert.assertNotNull(rule3);
         Assert.assertNotNull(rule4);
     }
 
