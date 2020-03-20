@@ -61,7 +61,7 @@ public class User implements Cloneable {
      * Constructs a clone of the {@link User}.
      * @param user the {@link User} that will be cloned.
      */
-    User(User user) {
+    User(final User user) {
         userId = user.getUserId();
         roles = user.getRoles();
         auths = user.getAuths();

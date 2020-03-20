@@ -39,7 +39,7 @@ public class UserId implements Cloneable {
      * Constructs a clone of the {@link UserId}.
      * @param userId the {@link UserId} that will be cloned.
      */
-    UserId(UserId userId) {
+    UserId(final UserId userId) {
         id = userId.getId();
     }
 
