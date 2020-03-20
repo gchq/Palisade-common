@@ -51,6 +51,23 @@ public class User implements Cloneable {
     private Set<String> auths = new HashSet<>();
 
     /**
+     * Constructs an empty {@link User}.
+     */
+    public User() {
+        //no-args constructor needed for serialization only
+    }
+
+    /**
+     * Constructs a clone of the {@link User}.
+     * @param user the {@link User} that will be cloned.
+     */
+    User(User user) {
+        userId = user.getUserId();
+        roles = user.getRoles();
+        auths = user.getAuths();
+    }
+
+    /**
      * Sets the userId to a {@link UserId} with the given userId string.
      *
      * @param userId the unique user ID string.
@@ -176,19 +193,6 @@ public class User implements Cloneable {
         requireNonNull(roles, "Cannot add null roles.");
         this.roles.addAll(roles);
         return this;
-    }
-
-    public User clone() {
-        User clone;
-        try {
-            clone = (User) super.clone();
-        } catch (final CloneNotSupportedException e) {
-            clone = new User();
-        }
-        clone.userId(getUserId().clone());
-        clone.roles(getRoles());
-        clone.auths(getAuths());
-        return clone;
     }
 
     @Override

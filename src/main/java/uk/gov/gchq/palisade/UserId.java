@@ -36,6 +36,14 @@ public class UserId implements Cloneable {
     }
 
     /**
+     * Constructs a clone of the {@link UserId}.
+     * @param userId the {@link UserId} that will be cloned.
+     */
+    UserId(UserId userId) {
+        id = userId.getId();
+    }
+
+    /**
      * Updates the id of the UserID
      *
      * @param id a non null String representing the id of the user
@@ -54,17 +62,6 @@ public class UserId implements Cloneable {
     public String getId() {
         Objects.requireNonNull(id, "The UserId id field has not been initialised.");
         return id;
-    }
-
-    public UserId clone() {
-        UserId clone;
-        try {
-            clone = (UserId) super.clone();
-        } catch (final CloneNotSupportedException e) {
-            clone = new UserId();
-        }
-        clone.id = id;
-        return clone;
     }
 
     @Override
