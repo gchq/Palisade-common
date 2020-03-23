@@ -25,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import uk.gov.gchq.palisade.User;
+import uk.gov.gchq.palisade.service.request.Policy;
 
 /**
  * This class defines the top level of the cache warming.
@@ -40,7 +41,9 @@ import uk.gov.gchq.palisade.User;
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public interface CacheWarmerFactory {
 
-    User warm();
+    User userWarm();
+
+    Policy policyWarm();
 
     @JsonGetter("class")
     default String _getClass() {
