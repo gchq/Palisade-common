@@ -112,7 +112,7 @@ public class WrappedRule<T> implements Rule<T> {
         if (predicate == null) {
             nullCount++;
         }
-        if (nullCount < 2) {
+        if (nullCount != 2) {
             throw new IllegalArgumentException("Only one constructor parameter can be non-null");
         }
     }
