@@ -27,16 +27,26 @@ public class WrappedRuleTest {
     @Test
     public void shouldConstruct1ArgumentWithNoErrors() throws Exception {
         // Given
-        WrappedRule rule1 = new WrappedRule<>(null, null, null);
-        WrappedRule rule2 = new WrappedRule<>(new TestRule(), null, null);
-        WrappedRule rule3 = new WrappedRule<>(null, o -> o.toString(), null);
-        WrappedRule rule4 = new WrappedRule<>(null, null, o -> true);
+        WrappedRule rule1 = new WrappedRule<>(new TestRule(), null, null);
+        WrappedRule rule2 = new WrappedRule<>(null, o -> o.toString(), null);
+        WrappedRule rule3 = new WrappedRule<>(null, null, o -> true);
 
         // Then
-        Assert.assertNotNull(rule1);
-        Assert.assertNotNull(rule2);
-        Assert.assertNotNull(rule3);
-        Assert.assertNotNull(rule4);
+        Assert.assertNotNull(rule1.getRule());
+        Assert.assertNotNull(rule2.getFunction());
+        Assert.assertNotNull(rule3.getPredicate());
+    }
+
+    @Test
+    public void shouldNotConstruct0Arguments() {
+        try {
+            // When
+            new WrappedRule<>(null, null, null);
+            Assert.fail("exception expected");
+        } catch (IllegalArgumentException e) {
+            // Then
+            assertEquals("Only one constructor parameter can be non-null", e.getMessage());
+        }
     }
 
     @Test
