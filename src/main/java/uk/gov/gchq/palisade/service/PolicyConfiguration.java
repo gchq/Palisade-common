@@ -16,9 +16,13 @@
 
 package uk.gov.gchq.palisade.service;
 
+import uk.gov.gchq.palisade.resource.Resource;
+
 import java.util.List;
 
 public interface PolicyConfiguration {
 
     List<? extends CacheWarmerFactory> getPolicies();
+
+    Resource createResource();
 }
