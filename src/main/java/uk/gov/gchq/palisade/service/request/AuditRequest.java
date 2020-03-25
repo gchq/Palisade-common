@@ -144,6 +144,31 @@ public class AuditRequest extends Request {
         }
 
         @Override
+        public boolean equals(final Object o) {
+            if (this == o) {
+                return true;
+            }
+
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+
+            if (!super.equals(o)) {
+                return false;
+            }
+
+            final RegisterRequestCompleteAuditRequest that = (RegisterRequestCompleteAuditRequest) o;
+            return Objects.equals(user, that.user) &&
+                    Objects.equals(leafResources, that.leafResources) &&
+                    Objects.equals(context, that.context);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(super.hashCode(), user, leafResources, context);
+        }
+
+        @Override
         public String toString() {
             return new StringJoiner(", ", RegisterRequestCompleteAuditRequest.class.getSimpleName() + "[", "]")
                     .add(super.toString())
@@ -227,6 +252,33 @@ public class AuditRequest extends Request {
          */
         public static IUserId create(final RequestId original) {
             return user -> resourceId -> context -> exception -> serviceClass -> new RegisterRequestExceptionAuditRequest(null, original, user, resourceId, context, exception, serviceClass);
+        }
+
+        @Override
+        public boolean equals(final Object o) {
+            if (this == o) {
+                return true;
+            }
+
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+
+            if (!super.equals(o)) {
+                return false;
+            }
+
+            final RegisterRequestExceptionAuditRequest that = (RegisterRequestExceptionAuditRequest) o;
+            return Objects.equals(userId, that.userId) &&
+                    Objects.equals(resourceId, that.resourceId) &&
+                    Objects.equals(context, that.context) &&
+                    Objects.equals(exception, that.exception) &&
+                    Objects.equals(serviceClass, that.serviceClass);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(super.hashCode(), userId, resourceId, context, exception, serviceClass);
         }
 
         @Override
@@ -326,6 +378,34 @@ public class AuditRequest extends Request {
         }
 
         @Override
+        public boolean equals(final Object o) {
+            if (this == o) {
+                return true;
+            }
+
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+
+            if (!super.equals(o)) {
+                return false;
+            }
+
+            final ReadRequestCompleteAuditRequest that = (ReadRequestCompleteAuditRequest) o;
+            return numberOfRecordsReturned == that.numberOfRecordsReturned &&
+                    numberOfRecordsProcessed == that.numberOfRecordsProcessed &&
+                    Objects.equals(user, that.user) &&
+                    Objects.equals(leafResource, that.leafResource) &&
+                    Objects.equals(context, that.context) &&
+                    Objects.equals(rulesApplied, that.rulesApplied);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(super.hashCode(), user, leafResource, context, rulesApplied, numberOfRecordsReturned, numberOfRecordsProcessed);
+        }
+
+        @Override
         public String toString() {
             return new StringJoiner(", ", ReadRequestCompleteAuditRequest.class.getSimpleName() + "[", "]")
                     .add(super.toString())
@@ -390,6 +470,31 @@ public class AuditRequest extends Request {
          */
         public static IToken create(final RequestId original) {
             return token -> leafResource -> exception -> new ReadRequestExceptionAuditRequest(null, original, token, leafResource, exception);
+        }
+
+        @Override
+        public boolean equals(final Object o) {
+            if (this == o) {
+                return true;
+            }
+
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+
+            if (!super.equals(o)) {
+                return false;
+            }
+
+            final ReadRequestExceptionAuditRequest that = (ReadRequestExceptionAuditRequest) o;
+            return Objects.equals(token, that.token) &&
+                    Objects.equals(leafResource, that.leafResource) &&
+                    Objects.equals(exception, that.exception);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(super.hashCode(), token, leafResource, exception);
         }
 
         @Override
