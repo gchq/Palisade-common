@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Crown Copyright
+ * Copyright 2020 Crown Copyright
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ package uk.gov.gchq.palisade.service.request;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.ToStringBuilder;
 import uk.gov.gchq.palisade.User;
 import uk.gov.gchq.palisade.resource.Resource;
@@ -27,6 +28,7 @@ import uk.gov.gchq.palisade.rule.Rule;
 import uk.gov.gchq.palisade.rule.Rules;
 
 import java.util.Objects;
+import java.util.StringJoiner;
 import java.util.UUID;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
@@ -196,11 +198,12 @@ public class Policy<T> {
     }
 
     @Override
+    @Generated
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Policy)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
         final Policy<?> policy = (Policy<?>) o;
@@ -210,16 +213,18 @@ public class Policy<T> {
     }
 
     @Override
+    @Generated
     public int hashCode() {
         return Objects.hash(recordRules, resourceRules, owner);
     }
 
     @Override
+    @Generated
     public String toString() {
-        return new ToStringBuilder(this)
-                .append("resourceRules", resourceRules)
-                .append("recordRules", recordRules)
-                .append("owner", owner)
+        return new StringJoiner(", ", Policy.class.getSimpleName() + "[", "]")
+                .add("recordRules=" + recordRules)
+                .add("resourceRules=" + resourceRules)
+                .add("owner=" + owner)
                 .toString();
     }
 }
