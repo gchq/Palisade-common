@@ -22,7 +22,18 @@ import java.util.List;
 
 public interface PolicyConfiguration {
 
+    /**
+     * Gets a {@link List} of the {@link PolicyCacheWarmerFactory} implemented
+     * objects that have been created from a yaml file.
+     *
+     * @return a {@link List} of the objects that have implemented {@link PolicyCacheWarmerFactory}.
+     */
     List<? extends PolicyCacheWarmerFactory> getPolicies();
 
+    /**
+     * Creates a {@link Resource} that will be passed to the Policy-Service
+     *
+     * @return the {@link Resource} that has been created.
+     */
     Resource createResource();
 }

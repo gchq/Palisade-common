@@ -40,6 +40,11 @@ import uk.gov.gchq.palisade.service.request.Policy;
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public interface PolicyCacheWarmerFactory {
 
+    /**
+     * Creates a {@link Policy} using the data within an implementation of the {@link PolicyCacheWarmerFactory}.
+     *
+     * @return the {@link Policy} that has been created.
+     */
     Policy policyWarm();
 
     @JsonGetter("class")

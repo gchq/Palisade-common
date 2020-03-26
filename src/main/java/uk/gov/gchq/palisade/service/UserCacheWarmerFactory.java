@@ -40,6 +40,11 @@ import uk.gov.gchq.palisade.User;
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public interface UserCacheWarmerFactory {
 
+    /**
+     * Creates a {@link User} using the data within an implementation of the {@link UserCacheWarmerFactory}.
+     *
+     * @return the {@link User} that has been created.
+     */
     User userWarm();
 
     @JsonGetter("class")
