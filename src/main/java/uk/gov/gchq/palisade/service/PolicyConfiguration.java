@@ -22,7 +22,7 @@ import java.util.List;
 
 public interface PolicyConfiguration {
 
-    List<? extends CacheWarmerFactory> getPolicies();
+    List<? extends PolicyCacheWarmerFactory> getPolicies();
 
     Resource createResource();
 }
