@@ -54,15 +54,21 @@ public class Policy<T> {
         resourceRules = new Rules<>();
     }
 
+    private static String generateUUID() {
+        return UUID.randomUUID().toString();
+    }
+
+    @Generated
     public Policy<T> recordRules(final Rules<T> recordRules) {
         requireNonNull(recordRules, "The record level rules cannot be set to null.");
-        this.recordRules = recordRules;
+        this.setRecordRules(recordRules);
         return this;
     }
 
+    @Generated
     public Policy<T> resourceRules(final Rules<Resource> resourceRules) {
         requireNonNull(resourceRules, "The resource level rules cannot be set to null.");
-        this.resourceRules = resourceRules;
+        this.setResourceRules(resourceRules);
         return this;
     }
 
@@ -71,26 +77,26 @@ public class Policy<T> {
         return "Resource level rules: " + getResourceRules().getMessage() + ", record level rules: " + getRecordRules().getMessage();
     }
 
+    @Generated
     public Rules<T> getRecordRules() {
-        // will never be null
         return recordRules;
     }
 
+    @Generated
     public void setRecordRules(final Rules<T> recordRules) {
-        recordRules(recordRules);
+        requireNonNull(recordRules);
+        this.recordRules = recordRules;
     }
 
+    @Generated
     public Rules<Resource> getResourceRules() {
-        // will never be null
         return resourceRules;
     }
 
+    @Generated
     public void setResourceRules(final Rules<Resource> resourceRules) {
-        resourceRules(resourceRules);
-    }
-
-    private static String generateUUID() {
-        return UUID.randomUUID().toString();
+        requireNonNull(resourceRules);
+        this.resourceRules = resourceRules;
     }
 
     private void addMessage(final String newMessage, final Rules rules) {
@@ -202,7 +208,7 @@ public class Policy<T> {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Policy)) {
             return false;
         }
         final Policy<?> policy = (Policy<?>) o;
