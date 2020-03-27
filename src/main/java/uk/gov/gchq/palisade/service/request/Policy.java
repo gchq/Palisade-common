@@ -57,6 +57,11 @@ public class Policy<T> {
         resourceRules = new Rules<>();
     }
 
+    /**
+     * Generates UUID
+     *
+     * @return UUID.randomUUID
+     */
     private static String generateUUID() {
         return UUID.randomUUID().toString();
     }
