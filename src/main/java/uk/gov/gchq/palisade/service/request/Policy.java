@@ -39,58 +39,105 @@ import static java.util.Objects.requireNonNull;
  * service but not needed by the rest of the palisade services. That includes
  * separating the rules that need to be applied at the resource level or the record level.
  *
- * @param <T> The Java class that the rules expect the records of data to be in
- *            the format of, e.g. if T was String then a policy has Rules of type Resource for coarse filtering
- *            and Rules of type String for fine grain filtering of files where each record is a String
+ * @param <T> The Java class that the rules expect the records of data to be in            the format of, e.g. if T was String then a policy has Rules of type Resource for coarse filtering            and Rules of type String for fine grain filtering of files where each record is a String
  */
 public class Policy<T> {
     private Rules<T> recordRules;
     private Rules<Resource> resourceRules;
     private User owner;
 
+    /**
+     * Instantiates a new Policy.
+     */
     // no-args constructor required
     public Policy() {
         recordRules = new Rules<>();
         resourceRules = new Rules<>();
     }
 
+    /**
+     * Generates UUID
+     *
+     * @return UUID.randomUUID
+     */
+    private static String generateUUID() {
+        return UUID.randomUUID().toString();
+    }
+
+    /**
+     * Record rules policy.
+     *
+     * @param recordRules the record rules
+     * @return the policy
+     */
+    @Generated
     public Policy<T> recordRules(final Rules<T> recordRules) {
-        requireNonNull(recordRules, "The record level rules cannot be set to null.");
-        this.recordRules = recordRules;
+        this.setRecordRules(recordRules);
         return this;
     }
 
+    /**
+     * Resource rules policy.
+     *
+     * @param resourceRules the resource rules
+     * @return the policy
+     */
+    @Generated
     public Policy<T> resourceRules(final Rules<Resource> resourceRules) {
-        requireNonNull(resourceRules, "The resource level rules cannot be set to null.");
-        this.resourceRules = resourceRules;
+        this.setResourceRules(resourceRules);
         return this;
     }
 
+    /**
+     * Gets message.
+     *
+     * @return the message
+     */
     @JsonIgnore
     public String getMessage() {
         return "Resource level rules: " + getResourceRules().getMessage() + ", record level rules: " + getRecordRules().getMessage();
     }
 
+    /**
+     * Gets record rules.
+     *
+     * @return the record rules
+     */
+    @Generated
     public Rules<T> getRecordRules() {
-        // will never be null
         return recordRules;
     }
 
+    /**
+     * Sets record rules.
+     *
+     * @param recordRules the record rules
+     */
+    @Generated
     public void setRecordRules(final Rules<T> recordRules) {
-        recordRules(recordRules);
+        requireNonNull(recordRules);
+        this.recordRules = recordRules;
     }
 
+    /**
+     * Gets resource rules.
+     *
+     * @return the resource rules
+     */
+    @Generated
     public Rules<Resource> getResourceRules() {
-        // will never be null
         return resourceRules;
     }
 
+    /**
+     * Sets resource rules.
+     *
+     * @param resourceRules the resource rules
+     */
+    @Generated
     public void setResourceRules(final Rules<Resource> resourceRules) {
-        resourceRules(resourceRules);
-    }
-
-    private static String generateUUID() {
-        return UUID.randomUUID().toString();
+        requireNonNull(resourceRules);
+        this.setResourceRules(resourceRules);
     }
 
     private void addMessage(final String newMessage, final Rules rules) {
@@ -104,6 +151,13 @@ public class Policy<T> {
         }
     }
 
+    /**
+     * Record level rule policy.
+     *
+     * @param message the message
+     * @param rule    the rule
+     * @return the policy
+     */
     public Policy<T> recordLevelRule(final String message, final Rule<T> rule) {
         requireNonNull(message, "The message cannot be null and should indicate what the rule is doing.");
         requireNonNull(rule, "Cannot set a null rule.");
@@ -113,6 +167,13 @@ public class Policy<T> {
         return this;
     }
 
+    /**
+     * Record level predicate rule policy.
+     *
+     * @param message the message
+     * @param rule    the rule
+     * @return the policy
+     */
     public Policy<T> recordLevelPredicateRule(final String message, final PredicateRule<T> rule) {
         requireNonNull(message, "The message cannot be null and should indicate what the rule is doing.");
         requireNonNull(rule, "Cannot set a null rule.");
@@ -122,6 +183,13 @@ public class Policy<T> {
         return this;
     }
 
+    /**
+     * Record level simple predicate rule policy.
+     *
+     * @param message the message
+     * @param rule    the rule
+     * @return the policy
+     */
     public Policy<T> recordLevelSimplePredicateRule(final String message, final Predicate<T> rule) {
         requireNonNull(message, "The message cannot be null and should indicate what the rule is doing.");
         requireNonNull(rule, "Cannot set a null rule.");
@@ -131,6 +199,13 @@ public class Policy<T> {
         return this;
     }
 
+    /**
+     * Record level simple function rule policy.
+     *
+     * @param message the message
+     * @param rule    the rule
+     * @return the policy
+     */
     public Policy<T> recordLevelSimpleFunctionRule(final String message, final UnaryOperator<T> rule) {
         requireNonNull(message, "The message cannot be null and should indicate what the rule is doing.");
         requireNonNull(rule, "Cannot set a null rule.");
@@ -140,6 +215,13 @@ public class Policy<T> {
         return this;
     }
 
+    /**
+     * Resource level rule policy.
+     *
+     * @param message the message
+     * @param rule    the rule
+     * @return the policy
+     */
     public Policy<T> resourceLevelRule(final String message, final Rule<Resource> rule) {
         requireNonNull(message, "The message cannot be null and should indicate what the rule is doing.");
         requireNonNull(rule, "Cannot set a null rule.");
@@ -149,6 +231,13 @@ public class Policy<T> {
         return this;
     }
 
+    /**
+     * Resource level predicate rule policy.
+     *
+     * @param message the message
+     * @param rule    the rule
+     * @return the policy
+     */
     public Policy<T> resourceLevelPredicateRule(final String message, final PredicateRule<Resource> rule) {
         requireNonNull(message, "The message cannot be null and should indicate what the rule is doing.");
         requireNonNull(rule, "Cannot set a null rule.");
@@ -158,6 +247,13 @@ public class Policy<T> {
         return this;
     }
 
+    /**
+     * Resource level simple predicate rule policy.
+     *
+     * @param message the message
+     * @param rule    the rule
+     * @return the policy
+     */
     public Policy<T> resourceLevelSimplePredicateRule(final String message, final Predicate<Resource> rule) {
         requireNonNull(message, "The message cannot be null and should indicate what the rule is doing.");
         requireNonNull(rule, "Cannot set a null rule.");
@@ -167,6 +263,13 @@ public class Policy<T> {
         return this;
     }
 
+    /**
+     * Resource level simple function rule policy.
+     *
+     * @param message the message
+     * @param rule    the rule
+     * @return the policy
+     */
     public Policy<T> resourceLevelSimpleFunctionRule(final String message, final UnaryOperator<Resource> rule) {
         requireNonNull(message, "The message cannot be null and should indicate what the rule is doing.");
         requireNonNull(rule, "Cannot set a null rule.");
@@ -176,21 +279,44 @@ public class Policy<T> {
         return this;
     }
 
+
+    /**
+     * Gets owner.
+     *
+     * @return the owner
+     */
+    @Generated
     public User getOwner() {
-        requireNonNull(owner, "The owner has not been set.");
         return owner;
     }
 
+    /**
+     * Sets owner.
+     *
+     * @param owner the owner
+     */
+    @Generated
     public void setOwner(final User owner) {
-        owner(owner);
+        requireNonNull(owner);
+        this.owner = owner;
     }
 
+    /**
+     * Owner policy.
+     *
+     * @param owner the owner
+     * @return the policy
+     */
     public Policy<T> owner(final User owner) {
-        requireNonNull(owner, "The owner cannot be set to null.");
-        this.owner = owner;
+        this.setOwner(owner);
         return this;
     }
 
+    /**
+     * Gets nullable owner.
+     *
+     * @return the nullable owner
+     */
     @JsonGetter("owner")
     User getNullableOwner() {
         return owner;
@@ -202,7 +328,7 @@ public class Policy<T> {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Policy)) {
             return false;
         }
         final Policy<?> policy = (Policy<?>) o;
