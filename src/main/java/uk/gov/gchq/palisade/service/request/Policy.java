@@ -137,7 +137,7 @@ public class Policy<T> {
     @Generated
     public void setResourceRules(final Rules<Resource> resourceRules) {
         requireNonNull(resourceRules);
-        this.setResourceRules(resourceRules);
+        this.resourceRules = resourceRules;
     }
 
     private void addMessage(final String newMessage, final Rules rules) {
