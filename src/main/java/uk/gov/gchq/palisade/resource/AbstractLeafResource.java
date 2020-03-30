@@ -19,6 +19,7 @@ package uk.gov.gchq.palisade.resource;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.ToStringBuilder;
 
 import java.util.HashMap;
@@ -62,21 +63,55 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
         return this;
     }
 
+
     @Override
+    @Generated
     public String getType() {
-        requireNonNull(type, "The type has not been set for this resource.");
         return type;
     }
 
     @Override
+    @Generated
+    public void setType(final String type) {
+        requireNonNull(type);
+        this.type = type;
+    }
+
+    @Override
+    @Generated
     public String getSerialisedFormat() {
-        requireNonNull(serialisedFormat, "The serialised format has not been set for this resource.");
         return serialisedFormat;
     }
 
+    @Override
+    @Generated
+    public void setSerialisedFormat(final String serialisedFormat) {
+        requireNonNull(serialisedFormat);
+        this.serialisedFormat = serialisedFormat;
+    }
+
+    @Override
+    @Generated
+    public ParentResource getParent() {
+        return parent;
+    }
+
+    @Override
+    @Generated
+    public void setParent(final ParentResource parent) {
+        requireNonNull(parent);
+        this.parent = parent;
+    }
+
+    @Generated
     public Map<String, Object> getAttributes() {
-        // no null check required
         return attributes;
+    }
+
+    @Generated
+    public void setAttributes(final Map<String, Object> attributes) {
+        requireNonNull(attributes);
+        this.attributes = attributes;
     }
 
     public Object getAttribute(final String attributeKey) {
@@ -87,19 +122,6 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
         return this.attributes.containsKey(attributeKey);
     }
 
-    @Override
-    public void setType(final String type) {
-        type(type);
-    }
-
-    @Override
-    public void setSerialisedFormat(final String serialisedFormat) {
-        serialisedFormat(serialisedFormat);
-    }
-
-    public void setAttributes(final Map<String, Object> attributes) {
-        attributes(attributes);
-    }
 
     public void setAttribute(final String attributeKey, final Object attributeValue) {
         attribute(attributeKey, attributeValue);
@@ -111,16 +133,8 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
         return this;
     }
 
-    @Override
-    public ParentResource getParent() {
-        requireNonNull(parent, "The parent has not been set for this resource.");
-        return parent;
-    }
 
-    @Override
-    public void setParent(final ParentResource parent) {
-        parent(parent);
-    }
+
 
     @Override
     public boolean equals(final Object o) {

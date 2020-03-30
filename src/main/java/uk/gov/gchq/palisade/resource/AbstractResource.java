@@ -19,32 +19,38 @@ package uk.gov.gchq.palisade.resource;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.ToStringBuilder;
 
 import java.util.Comparator;
-import java.util.Objects;
+
+import static java.util.Objects.requireNonNull;
 
 public abstract class AbstractResource implements Resource {
+
+    private static Comparator<Resource> comp = Comparator.comparing(Resource::getId);
     protected String id;
 
     public AbstractResource() {
     }
 
     public AbstractResource id(final String id) {
-        Objects.requireNonNull(id, "The ID of a resource cannot be set to null.");
+        requireNonNull(id, "The ID of a resource cannot be set to null.");
         this.id = id;
         return this;
     }
 
     @Override
+    @Generated
     public String getId() {
-        Objects.requireNonNull(id, "The ID has not been set for this resource.");
         return id;
     }
 
     @Override
+    @Generated
     public void setId(final String id) {
-        id(id);
+        requireNonNull(id);
+        this.id = id;
     }
 
     @Override
@@ -78,7 +84,6 @@ public abstract class AbstractResource implements Resource {
                 .toString();
     }
 
-    private static Comparator<Resource> comp = Comparator.comparing(Resource::getId);
 
     @Override
     public int compareTo(final Resource o) {

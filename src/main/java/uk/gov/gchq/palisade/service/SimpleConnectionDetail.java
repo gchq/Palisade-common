@@ -16,9 +16,10 @@
 
 package uk.gov.gchq.palisade.service;
 
-import uk.gov.gchq.palisade.ToStringBuilder;
+import uk.gov.gchq.palisade.Generated;
 
 import java.util.Objects;
+import java.util.StringJoiner;
 
 import static java.util.Objects.requireNonNull;
 
@@ -40,13 +41,15 @@ public class SimpleConnectionDetail implements ConnectionDetail {
         return this;
     }
 
+    @Generated
     public String getUri() {
-        requireNonNull(uri, "The uri has not been set.");
         return uri;
     }
 
+    @Generated
     public void setUri(final String uri) {
-        uri(uri);
+        requireNonNull(uri);
+        this.uri = uri;
     }
 
     @Override
@@ -55,26 +58,29 @@ public class SimpleConnectionDetail implements ConnectionDetail {
     }
 
     @Override
+    @Generated
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof SimpleConnectionDetail)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        final SimpleConnectionDetail that = (SimpleConnectionDetail) o;
-        return uri.equals(that.getUri());
+        SimpleConnectionDetail that = (SimpleConnectionDetail) o;
+        return uri.equals(that.uri);
     }
 
     @Override
+    @Generated
     public int hashCode() {
         return Objects.hash(uri);
     }
 
     @Override
+    @Generated
     public String toString() {
-        return new ToStringBuilder(this)
-                .append("uri", uri)
+        return new StringJoiner(", ", SimpleConnectionDetail.class.getSimpleName() + "[", "]")
+                .add("uri='" + uri + "'")
                 .toString();
     }
 }

@@ -17,15 +17,15 @@
 package uk.gov.gchq.palisade.exception;
 
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import uk.gov.gchq.palisade.ToStringBuilder;
+import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.util.DebugUtil;
 
 import java.lang.reflect.Constructor;
+import java.util.Objects;
+import java.util.StringJoiner;
 
 import static java.util.Objects.requireNonNull;
 
@@ -55,83 +55,94 @@ public final class Error {
         this.exceptionClass = builder.exceptionClass;
     }
 
+    @Generated
     public int getStatusCode() {
         return statusCode;
     }
 
+    @Generated
+    public void setStatusCode(final int statusCode) {
+        requireNonNull(statusCode);
+        this.statusCode = statusCode;
+    }
+
+    @Generated
     public Status getStatus() {
         return status;
     }
 
+    @Generated
+    public void setStatus(final Status status) {
+        requireNonNull(status);
+        this.status = status;
+    }
+
+    @Generated
     public String getSimpleMessage() {
         return simpleMessage;
     }
 
+    @Generated
+    public void setSimpleMessage(final String simpleMessage) {
+        requireNonNull(simpleMessage);
+        this.simpleMessage = simpleMessage;
+    }
+
+    @Generated
     public String getDetailMessage() {
         return detailMessage;
     }
 
-    public void setStatusCode(final int statusCode) {
-        this.statusCode = statusCode;
-    }
-
-    public void setStatus(final Status status) {
-        this.status = status;
-    }
-
-    public void setSimpleMessage(final String simpleMessage) {
-        this.simpleMessage = simpleMessage;
-    }
-
+    @Generated
     public void setDetailMessage(final String detailMessage) {
+        requireNonNull(detailMessage);
         this.detailMessage = detailMessage;
     }
 
+    @Generated
     public Class<? extends RuntimeException> getExceptionClass() {
         return exceptionClass;
     }
 
+    @Generated
     public void setExceptionClass(final Class<? extends RuntimeException> exceptionClass) {
+        requireNonNull(exceptionClass);
         this.exceptionClass = exceptionClass;
     }
 
     @Override
+    @Generated
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
-
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-
-        final Error error = (Error) o;
-
-        return new EqualsBuilder()
-                .append(statusCode, error.statusCode)
-                .append(status, error.status)
-                .append(simpleMessage, error.simpleMessage)
-                .append(detailMessage, error.detailMessage)
-                .isEquals();
+        Error error = (Error) o;
+        return statusCode == error.statusCode &&
+                status == error.status &&
+                simpleMessage.equals(error.simpleMessage) &&
+                detailMessage.equals(error.detailMessage) &&
+                exceptionClass.equals(error.exceptionClass);
     }
 
     @Override
+    @Generated
     public int hashCode() {
-        return new HashCodeBuilder(7, 11)
-                .append(statusCode)
-                .append(status)
-                .append(simpleMessage)
-                .append(detailMessage)
-                .toHashCode();
+        return Objects.hash(statusCode, status, simpleMessage, detailMessage, exceptionClass);
     }
 
+
     @Override
+    @Generated
     public String toString() {
-        return new ToStringBuilder(this)
-                .append("statusCode", statusCode)
-                .append("status", status)
-                .append("simpleMessage", simpleMessage)
-                .append("detailMessage", detailMessage)
+        return new StringJoiner(", ", Error.class.getSimpleName() + "[", "]")
+                .add("statusCode=" + statusCode)
+                .add("status=" + status)
+                .add("simpleMessage='" + simpleMessage + "'")
+                .add("detailMessage='" + detailMessage + "'")
+                .add("exceptionClass=" + exceptionClass)
                 .toString();
     }
 

@@ -15,6 +15,8 @@
  */
 package uk.gov.gchq.palisade.exception;
 
+import uk.gov.gchq.palisade.Generated;
+
 /**
  * Subtype of {@link RuntimeException} that wraps an {@link Error}.
  */
@@ -27,6 +29,7 @@ public class PalisadeWrappedErrorRuntimeException extends RuntimeException {
         this.error = error;
     }
 
+    @Generated
     public Error getError() {
         return error;
     }

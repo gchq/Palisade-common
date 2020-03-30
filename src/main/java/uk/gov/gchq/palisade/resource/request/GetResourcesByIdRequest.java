@@ -15,6 +15,7 @@
  */
 package uk.gov.gchq.palisade.resource.request;
 
+import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.ToStringBuilder;
 import uk.gov.gchq.palisade.service.request.Request;
 
@@ -40,13 +41,15 @@ public class GetResourcesByIdRequest extends Request {
         return this;
     }
 
+    @Generated
     public String getResourceId() {
-        requireNonNull(resourceId, "The resource id has not been set.");
         return resourceId;
     }
 
+    @Generated
     public void setResourceId(final String resourceId) {
-        resourceId(resourceId);
+        requireNonNull(resourceId);
+        this.resourceId = resourceId;
     }
 
     @Override

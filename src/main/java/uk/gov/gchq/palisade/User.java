@@ -18,12 +18,12 @@ package uk.gov.gchq.palisade;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
+import java.util.StringJoiner;
 
 import static java.util.Objects.requireNonNull;
 
@@ -59,6 +59,7 @@ public class User {
 
     /**
      * Copy constructor for a {@link User}.
+     *
      * @param user the {@link User} that will be copied.
      */
     User(final User user) {
@@ -91,13 +92,26 @@ public class User {
         return this;
     }
 
+    @Generated
     public UserId getUserId() {
-        requireNonNull(userId, "The user id has not been set.");
         return userId;
     }
 
+    @Override
+    @Generated
+    public String toString() {
+        return new StringJoiner(", ", User.class.getSimpleName() + "[", "]")
+                .add("userId=" + userId)
+                .add("roles=" + roles)
+                .add("auths=" + auths)
+                .toString();
+    }
+
+
+    @Generated
     public void setUserId(final UserId userId) {
-        userId(userId);
+        requireNonNull(userId);
+        this.userId = userId;
     }
 
     /**
@@ -196,45 +210,29 @@ public class User {
         return this;
     }
 
+    @JsonGetter("class")
+    public String _getClass() {
+        return getClass().getName();
+    }
+
     @Override
+    @Generated
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
-
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-
-        final User user = (User) o;
-
-        return new EqualsBuilder()
-                .append(userId, user.userId)
-                .append(roles, user.roles)
-                .append(auths, user.auths)
-                .isEquals();
+        User user = (User) o;
+        return userId.equals(user.userId) &&
+                roles.equals(user.roles) &&
+                auths.equals(user.auths);
     }
 
     @Override
+    @Generated
     public int hashCode() {
-        return new HashCodeBuilder(11, 19)
-                .append(userId)
-                .append(roles)
-                .append(auths)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("userId", userId)
-                .append("roles", roles)
-                .append("auths", auths)
-                .toString();
-    }
-
-    @JsonGetter("class")
-    public String _getClass() {
-        return getClass().getName();
+        return Objects.hash(userId, roles, auths);
     }
 }

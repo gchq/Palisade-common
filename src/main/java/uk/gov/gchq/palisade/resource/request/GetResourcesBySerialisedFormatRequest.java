@@ -15,6 +15,7 @@
  */
 package uk.gov.gchq.palisade.resource.request;
 
+import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.service.request.Request;
 
 import java.util.Objects;
@@ -44,13 +45,15 @@ public class GetResourcesBySerialisedFormatRequest extends Request {
         return this;
     }
 
+    @Generated
     public String getSerialisedFormat() {
-        requireNonNull(serialisedFormat, "The serialised format has not been set.");
         return serialisedFormat;
     }
 
+    @Generated
     public void setSerialisedFormat(final String serialisedFormat) {
-        serialisedFormat(serialisedFormat);
+        requireNonNull(serialisedFormat);
+        this.serialisedFormat = serialisedFormat;
     }
 
     @Override

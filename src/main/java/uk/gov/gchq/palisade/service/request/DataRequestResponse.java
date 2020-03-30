@@ -19,6 +19,7 @@ package uk.gov.gchq.palisade.service.request;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.ToStringBuilder;
 import uk.gov.gchq.palisade.resource.LeafResource;
 import uk.gov.gchq.palisade.service.ConnectionDetail;
@@ -49,14 +50,6 @@ public class DataRequestResponse extends Request {
         return this;
     }
 
-    public void setToken(final String token) {
-        token(token);
-    }
-
-    public String getToken() {
-        requireNonNull(token, "The token has not been set.");
-        return token;
-    }
 
     public DataRequestResponse resource(final LeafResource resource, final ConnectionDetail connectionDetail) {
         requireNonNull(resource, "The resource cannot be null.");
@@ -74,13 +67,26 @@ public class DataRequestResponse extends Request {
         return this;
     }
 
-    public void setResources(final Map<LeafResource, ConnectionDetail> resources) {
-        resources(resources);
+    @Generated
+    public String getToken() {
+        return token;
     }
 
+    @Generated
+    public void setToken(final String token) {
+        requireNonNull(token);
+        this.token = token;
+    }
+
+    @Generated
     public Map<LeafResource, ConnectionDetail> getResources() {
-        requireNonNull(resources, "The Resources have not been set.");
         return resources;
+    }
+
+    @Generated
+    public void setResources(final Map<LeafResource, ConnectionDetail> resources) {
+        requireNonNull(resources);
+        this.resources = resources;
     }
 
     @Override

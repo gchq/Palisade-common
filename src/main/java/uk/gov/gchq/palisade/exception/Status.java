@@ -15,6 +15,8 @@
  */
 package uk.gov.gchq.palisade.exception;
 
+import uk.gov.gchq.palisade.Generated;
+
 import java.util.Arrays;
 
 /**
@@ -101,10 +103,12 @@ public enum Status {
                 .orElseThrow(RuntimeException::new);
     }
 
+    @Generated
     public int getStatusCode() {
         return statusCode;
     }
 
+    @Generated
     public String getReason() {
         return reason;
     }

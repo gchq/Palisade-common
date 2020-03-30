@@ -15,6 +15,8 @@
  */
 package uk.gov.gchq.palisade.exception;
 
+import uk.gov.gchq.palisade.Generated;
+
 import static uk.gov.gchq.palisade.exception.Status.INTERNAL_SERVER_ERROR;
 
 /**
@@ -52,6 +54,7 @@ public class PalisadeCheckedException extends Exception {
         this(message, cause, INTERNAL_SERVER_ERROR);
     }
 
+    @Generated
     public Status getStatus() {
         return status;
     }

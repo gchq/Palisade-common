@@ -17,6 +17,7 @@ package uk.gov.gchq.palisade.resource.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.RequestId;
 import uk.gov.gchq.palisade.ToStringBuilder;
 import uk.gov.gchq.palisade.exception.ForbiddenException;
@@ -60,14 +61,6 @@ public class AddResourceRequest extends Request {
         return this;
     }
 
-    public LeafResource getResource() {
-        requireNonNull(resource, "The resource has not been set.");
-        return resource;
-    }
-
-    public void setResource(final LeafResource resource) {
-        resource(resource);
-    }
 
     @Override
     public RequestId getOriginalRequestId() {
@@ -79,13 +72,26 @@ public class AddResourceRequest extends Request {
         throw new ForbiddenException("Should not call AddResourceRequest.setOriginalRequestId()");
     }
 
+    @Generated
+    public LeafResource getResource() {
+        return resource;
+    }
+
+    @Generated
+    public void setResource(final LeafResource resource) {
+        requireNonNull(resource);
+        this.resource = resource;
+    }
+
+    @Generated
     public ConnectionDetail getConnectionDetail() {
-        requireNonNull(connectionDetail, "The connection details have not been set.");
         return connectionDetail;
     }
 
+    @Generated
     public void setConnectionDetail(final ConnectionDetail connectionDetail) {
-        connectionDetail(connectionDetail);
+        requireNonNull(connectionDetail);
+        this.connectionDetail = connectionDetail;
     }
 
     @Override

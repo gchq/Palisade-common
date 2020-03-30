@@ -15,6 +15,7 @@
  */
 package uk.gov.gchq.palisade.resource.request;
 
+import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.service.request.Request;
 
 import java.util.Objects;
@@ -44,8 +45,8 @@ public class GetResourcesByTypeRequest extends Request {
         return this;
     }
 
+    @Generated
     public String getType() {
-        requireNonNull(type, "The resource type has not been set.");
         return type;
     }
 

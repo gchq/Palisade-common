@@ -16,9 +16,10 @@
 
 package uk.gov.gchq.palisade.service.request;
 
-import uk.gov.gchq.palisade.ToStringBuilder;
+import uk.gov.gchq.palisade.Generated;
 
 import java.util.Objects;
+import java.util.StringJoiner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,6 +40,21 @@ public class ResourceDetails {
         this.fileName = fileName;
         this.type = type;
         this.format = format;
+    }
+
+    @Generated
+    public String getFileName() {
+        return fileName;
+    }
+
+    @Generated
+    public String getType() {
+        return type;
+    }
+
+    @Generated
+    public String getFormat() {
+        return format;
     }
 
     public static ResourceDetails getResourceDetailsFromFileName(final String fileName) {
@@ -63,19 +79,8 @@ public class ResourceDetails {
         return FILENAME_PATTERN.matcher(fileName);
     }
 
-    public String getFileName() {
-        return fileName;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public String getFormat() {
-        return format;
-    }
-
     @Override
+    @Generated
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
@@ -83,24 +88,25 @@ public class ResourceDetails {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        final ResourceDetails that = (ResourceDetails) o;
+        ResourceDetails that = (ResourceDetails) o;
         return fileName.equals(that.fileName) &&
                 type.equals(that.type) &&
                 format.equals(that.format);
     }
 
     @Override
+    @Generated
     public int hashCode() {
         return Objects.hash(fileName, type, format);
     }
 
     @Override
+    @Generated
     public String toString() {
-        return new ToStringBuilder(this)
-                .appendSuper(super.toString())
-                .append("fileName", fileName)
-                .append("type", type)
-                .append("format", format)
+        return new StringJoiner(", ", ResourceDetails.class.getSimpleName() + "[", "]")
+                .add("fileName='" + fileName + "'")
+                .add("type='" + type + "'")
+                .add("format='" + format + "'")
                 .toString();
     }
 }

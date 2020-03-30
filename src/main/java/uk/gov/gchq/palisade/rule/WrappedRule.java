@@ -20,17 +20,16 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import org.apache.commons.lang3.builder.EqualsBuilder;
 
 import uk.gov.gchq.palisade.Context;
-import uk.gov.gchq.palisade.ToStringBuilder;
+import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.User;
 
 import java.util.Objects;
+import java.util.StringJoiner;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 
-import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static java.util.Objects.requireNonNull;
 
@@ -43,6 +42,7 @@ import static java.util.Objects.requireNonNull;
  *            by the record reader before being passed to the {@link Rule#apply(Object, User, Context)}.
  */
 public class WrappedRule<T> implements Rule<T> {
+
     public static final String WRAPPED_RULE_WAS_INITIALISED_WITH_NULL = "WrappedRule was initialised with null.";
     public static final String RULE_STRING = "rule";
     public static final String FUNCTION_STRING = "function";
@@ -133,7 +133,7 @@ public class WrappedRule<T> implements Rule<T> {
         return rtn;
     }
 
-
+    @Generated
     public Rule<T> getRule() {
         return rule;
     }
@@ -149,44 +149,33 @@ public class WrappedRule<T> implements Rule<T> {
     }
 
     @Override
+    @Generated
     public boolean equals(final Object o) {
-        final boolean rtn;
-
-        if (isNull(o)) {
-            rtn = false;
-        } else if (this == o) {
-            rtn = true;
-        } else if (o instanceof WrappedRule) {
-            final WrappedRule that = (WrappedRule) o;
-            rtn = new EqualsBuilder()
-                    .append(this.rule, that.rule)
-                    .append(this.function, that.function)
-                    .append(this.predicate, that.predicate)
-                    .build();
-        } else {
-            rtn = false;
+        if (this == o) {
+            return true;
         }
-
-        return rtn;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        WrappedRule<?> that = (WrappedRule<?>) o;
+        return rule.equals(that.rule) &&
+                function.equals(that.function) &&
+                predicate.equals(that.predicate);
     }
 
     @Override
+    @Generated
     public int hashCode() {
         return Objects.hash(rule, function, predicate);
     }
 
     @Override
+    @Generated
     public String toString() {
-        final ToStringBuilder tsb = new ToStringBuilder(this);
-        if (nonNull(rule)) {
-            tsb.appendToString(this.rule.toString());
-        }
-        if (nonNull(function)) {
-            tsb.append(FUNCTION_STRING, function);
-        }
-        if (nonNull(predicate)) {
-            tsb.append(PREDICATE_STRING, predicate);
-        }
-        return tsb.build();
+        return new StringJoiner(", ", WrappedRule.class.getSimpleName() + "[", "]")
+                .add("rule=" + rule)
+                .add("function=" + function)
+                .add("predicate=" + predicate)
+                .toString();
     }
 }

@@ -16,12 +16,15 @@
 
 package uk.gov.gchq.palisade.resource.impl;
 
+import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.ToStringBuilder;
 import uk.gov.gchq.palisade.resource.AbstractResource;
 import uk.gov.gchq.palisade.resource.ChildResource;
 import uk.gov.gchq.palisade.resource.ParentResource;
 
 import java.util.Objects;
+
+import static java.util.Objects.requireNonNull;
 
 public class DirectoryResource extends AbstractResource implements ChildResource, ParentResource {
 
@@ -41,20 +44,22 @@ public class DirectoryResource extends AbstractResource implements ChildResource
     }
 
     public DirectoryResource parent(final ParentResource parent) {
-        Objects.requireNonNull(parent, "The parent cannot be set to null");
+        requireNonNull(parent, "The parent cannot be set to null");
         this.parent = parent;
         return this;
     }
 
     @Override
+    @Generated
     public ParentResource getParent() {
-        Objects.requireNonNull(parent, "The parent resource has not been set for this resource.");
         return parent;
     }
 
     @Override
+    @Generated
     public void setParent(final ParentResource parent) {
-        parent(parent);
+        requireNonNull(parent);
+        this.parent = parent;
     }
 
     @Override

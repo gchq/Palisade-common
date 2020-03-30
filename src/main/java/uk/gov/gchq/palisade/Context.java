@@ -22,12 +22,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import java.util.StringJoiner;
 
 import static java.util.Objects.requireNonNull;
 
@@ -64,13 +64,16 @@ public class Context {
         return this;
     }
 
-    public void setContents(final Map<String, Object> contents) {
-        contents(contents);
+
+    @Generated
+    public Map<String, Object> getContents() {
+        return contents;
     }
 
-    public Map<String, Object> getContents() {
-        // contents will never be null
-        return contents;
+    @Generated
+    public void setContents(final Map<String, Object> contents) {
+        requireNonNull(contents);
+        this.contents = contents;
     }
 
     @JsonIgnore
@@ -85,6 +88,7 @@ public class Context {
         return this;
     }
 
+
     @JsonIgnore
     public String getPurpose() {
         try {
@@ -94,36 +98,6 @@ public class Context {
         }
     }
 
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        final Context that = (Context) o;
-
-        return new EqualsBuilder()
-                .append(contents, that.contents)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(19, 23)
-                .append(contents)
-                .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("contents", contents)
-                .toString();
-    }
 
     public Object get(final String key) {
         return contents.get(key);
@@ -146,5 +120,32 @@ public class Context {
     @JsonGetter("class")
     public String _getClass() {
         return getClass().getName();
+    }
+
+    @Override
+    @Generated
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Context context = (Context) o;
+        return contents.equals(context.contents);
+    }
+
+    @Override
+    @Generated
+    public int hashCode() {
+        return Objects.hash(contents);
+    }
+
+    @Override
+    @Generated
+    public String toString() {
+        return new StringJoiner(", ", Context.class.getSimpleName() + "[", "]")
+                .add("contents=" + contents)
+                .toString();
     }
 }

@@ -98,46 +98,37 @@ public class Policy<T> {
         return "Resource level rules: " + getResourceRules().getMessage() + ", record level rules: " + getRecordRules().getMessage();
     }
 
-    /**
-     * Gets record rules.
-     *
-     * @return the record rules
-     */
+    @Generated
+    public User getOwner() {
+        return owner;
+    }
+
+    @Generated
+    public void setOwner(final User owner) {
+        requireNonNull(owner);
+        this.owner = owner;
+    }
+
     @Generated
     public Rules<T> getRecordRules() {
         return recordRules;
     }
 
-    /**
-     * Sets record rules.
-     *
-     * @param recordRules the record rules
-     */
     @Generated
     public void setRecordRules(final Rules<T> recordRules) {
         requireNonNull(recordRules);
         this.recordRules = recordRules;
     }
 
-    /**
-     * Gets resource rules.
-     *
-     * @return the resource rules
-     */
     @Generated
     public Rules<Resource> getResourceRules() {
         return resourceRules;
     }
 
-    /**
-     * Sets resource rules.
-     *
-     * @param resourceRules the resource rules
-     */
     @Generated
     public void setResourceRules(final Rules<Resource> resourceRules) {
         requireNonNull(resourceRules);
-        this.setResourceRules(resourceRules);
+        this.resourceRules = resourceRules;
     }
 
     private void addMessage(final String newMessage, final Rules rules) {
@@ -281,38 +272,6 @@ public class Policy<T> {
 
 
     /**
-     * Gets owner.
-     *
-     * @return the owner
-     */
-    @Generated
-    public User getOwner() {
-        return owner;
-    }
-
-    /**
-     * Sets owner.
-     *
-     * @param owner the owner
-     */
-    @Generated
-    public void setOwner(final User owner) {
-        requireNonNull(owner);
-        this.owner = owner;
-    }
-
-    /**
-     * Owner policy.
-     *
-     * @param owner the owner
-     * @return the policy
-     */
-    public Policy<T> owner(final User owner) {
-        this.setOwner(owner);
-        return this;
-    }
-
-    /**
      * Gets nullable owner.
      *
      * @return the nullable owner
@@ -328,13 +287,13 @@ public class Policy<T> {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Policy)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        final Policy<?> policy = (Policy<?>) o;
-        return Objects.equals(recordRules, policy.recordRules) &&
-                Objects.equals(resourceRules, policy.resourceRules) &&
-                Objects.equals(owner, policy.owner);
+        Policy<?> policy = (Policy<?>) o;
+        return recordRules.equals(policy.recordRules) &&
+                resourceRules.equals(policy.resourceRules) &&
+                owner.equals(policy.owner);
     }
 
     @Override

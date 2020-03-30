@@ -16,8 +16,9 @@
 
 package uk.gov.gchq.palisade;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+
+import java.util.Objects;
+import java.util.StringJoiner;
 
 import static java.util.Objects.requireNonNull;
 
@@ -37,6 +38,7 @@ public class UserId {
 
     /**
      * Copy constructor for a {@link UserId}.
+     *
      * @param userId the {@link UserId} that will be copied.
      */
     UserId(final UserId userId) {
@@ -56,43 +58,42 @@ public class UserId {
         return this;
     }
 
-    public void setId(final String id) {
-        id(id);
-    }
-
+    @Generated
     public String getId() {
-        requireNonNull(id, "The UserId id field has not been initialised.");
         return id;
     }
 
+    @Generated
+    public void setId(final String id) {
+        requireNonNull(id);
+        this.id = id;
+    }
+
+
     @Override
+    @Generated
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
-
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-
-        final UserId userId = (UserId) o;
-
-        return new EqualsBuilder()
-                .append(id, userId.id)
-                .isEquals();
+        UserId userId = (UserId) o;
+        return id.equals(userId.id);
     }
 
     @Override
+    @Generated
     public int hashCode() {
-        return new HashCodeBuilder(7, 37)
-                .append(id)
-                .toHashCode();
+        return Objects.hash(id);
     }
 
     @Override
+    @Generated
     public String toString() {
-        return new ToStringBuilder(this)
-                .append("id", id)
+        return new StringJoiner(", ", UserId.class.getSimpleName() + "[", "]")
+                .add("id='" + id + "'")
                 .toString();
     }
 }
