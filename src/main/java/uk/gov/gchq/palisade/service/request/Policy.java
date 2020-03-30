@@ -39,9 +39,7 @@ import static java.util.Objects.requireNonNull;
  * service but not needed by the rest of the palisade services. That includes
  * separating the rules that need to be applied at the resource level or the record level.
  *
- * @param <T> The Java class that the rules expect the records of data to be in
- *            the format of, e.g. if T was String then a policy has Rules of type Resource for coarse filtering
- *            and Rules of type String for fine grain filtering of files where each record is a String
+ * @param <T> The Java class that the rules expect the records of data to be in            the format of, e.g. if T was String then a policy has Rules of type Resource for coarse filtering            and Rules of type String for fine grain filtering of files where each record is a String
  */
 public class Policy<T> {
     private Rules<T> recordRules;
@@ -51,7 +49,7 @@ public class Policy<T> {
     /**
      * Instantiates a new Policy.
      */
-// no-args constructor required
+    // no-args constructor required
     public Policy() {
         recordRules = new Rules<>();
         resourceRules = new Rules<>();
@@ -74,7 +72,6 @@ public class Policy<T> {
      */
     @Generated
     public Policy<T> recordRules(final Rules<T> recordRules) {
-        requireNonNull(recordRules, "The record level rules cannot be set to null.");
         this.setRecordRules(recordRules);
         return this;
     }
@@ -87,7 +84,6 @@ public class Policy<T> {
      */
     @Generated
     public Policy<T> resourceRules(final Rules<Resource> resourceRules) {
-        requireNonNull(resourceRules, "The resource level rules cannot be set to null.");
         this.setResourceRules(resourceRules);
         return this;
     }
@@ -141,7 +137,7 @@ public class Policy<T> {
     @Generated
     public void setResourceRules(final Rules<Resource> resourceRules) {
         requireNonNull(resourceRules);
-        this.resourceRules = resourceRules;
+        this.setResourceRules(resourceRules);
     }
 
     private void addMessage(final String newMessage, final Rules rules) {
@@ -283,13 +279,14 @@ public class Policy<T> {
         return this;
     }
 
+
     /**
      * Gets owner.
      *
      * @return the owner
      */
+    @Generated
     public User getOwner() {
-        requireNonNull(owner, "The owner has not been set.");
         return owner;
     }
 
@@ -298,8 +295,10 @@ public class Policy<T> {
      *
      * @param owner the owner
      */
+    @Generated
     public void setOwner(final User owner) {
-        owner(owner);
+        requireNonNull(owner);
+        this.owner = owner;
     }
 
     /**
@@ -309,8 +308,7 @@ public class Policy<T> {
      * @return the policy
      */
     public Policy<T> owner(final User owner) {
-        requireNonNull(owner, "The owner cannot be set to null.");
-        this.owner = owner;
+        this.setOwner(owner);
         return this;
     }
 
