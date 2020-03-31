@@ -48,11 +48,11 @@ public final class Error {
     }
 
     private Error(final ErrorBuilder builder) {
-        this.statusCode = builder.statusCode;
-        this.status = builder.status;
-        this.simpleMessage = builder.simpleMessage;
-        this.detailMessage = builder.detailMessage;
-        this.exceptionClass = builder.exceptionClass;
+        this.setStatusCode(builder.statusCode);
+        this.setStatus(builder.status);
+        this.setSimpleMessage(builder.simpleMessage);
+        this.setDetailMessage(builder.detailMessage);
+        this.setExceptionClass(builder.exceptionClass);
     }
 
     @Generated
@@ -116,7 +116,7 @@ public final class Error {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Error)) {
             return false;
         }
         Error error = (Error) o;
@@ -132,7 +132,6 @@ public final class Error {
     public int hashCode() {
         return Objects.hash(statusCode, status, simpleMessage, detailMessage, exceptionClass);
     }
-
 
     @Override
     @Generated

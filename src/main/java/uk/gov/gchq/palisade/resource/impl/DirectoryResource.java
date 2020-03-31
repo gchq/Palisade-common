@@ -44,8 +44,7 @@ public class DirectoryResource extends AbstractResource implements ChildResource
     }
 
     public DirectoryResource parent(final ParentResource parent) {
-        requireNonNull(parent, "The parent cannot be set to null");
-        this.parent = parent;
+        this.setParent(parent);
         return this;
     }
 

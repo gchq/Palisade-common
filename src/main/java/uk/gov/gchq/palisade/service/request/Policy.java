@@ -287,7 +287,7 @@ public class Policy<T> {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Policy)) {
             return false;
         }
         Policy<?> policy = (Policy<?>) o;

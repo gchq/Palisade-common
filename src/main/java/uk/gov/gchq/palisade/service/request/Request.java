@@ -39,8 +39,7 @@ public abstract class Request {
     }
 
     public Request originalRequestId(final RequestId originalRequestId) {
-        requireNonNull(originalRequestId, "The originalRequestId cannot be set to null.");
-        this.originalRequestId = originalRequestId;
+        this.setOriginalRequestId(originalRequestId);
         return this;
     }
 
@@ -48,6 +47,7 @@ public abstract class Request {
     public RequestId getId() {
         return id;
     }
+
 
     @Generated
     public RequestId getOriginalRequestId() {
@@ -66,7 +66,7 @@ public abstract class Request {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Request)) {
             return false;
         }
         Request request = (Request) o;

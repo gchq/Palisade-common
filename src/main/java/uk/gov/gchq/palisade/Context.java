@@ -83,7 +83,6 @@ public class Context {
 
     @JsonIgnore
     public Context purpose(final String purpose) {
-        requireNonNull(purpose, "The purpose cannot be set to null");
         contents.put(PURPOSE, purpose);
         return this;
     }
@@ -128,7 +127,7 @@ public class Context {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Context)) {
             return false;
         }
         Context context = (Context) o;

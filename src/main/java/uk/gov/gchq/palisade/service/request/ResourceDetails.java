@@ -48,13 +48,31 @@ public class ResourceDetails {
     }
 
     @Generated
+    public void setFileName(final String fileName) {
+        requireNonNull(fileName);
+        this.fileName = fileName;
+    }
+
+    @Generated
     public String getType() {
         return type;
     }
 
     @Generated
+    public void setType(final String type) {
+        requireNonNull(type);
+        this.type = type;
+    }
+
+    @Generated
     public String getFormat() {
         return format;
+    }
+
+    @Generated
+    public void setFormat(final String format) {
+        requireNonNull(format);
+        this.format = format;
     }
 
     public static ResourceDetails getResourceDetailsFromFileName(final String fileName) {
@@ -85,7 +103,7 @@ public class ResourceDetails {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof ResourceDetails)) {
             return false;
         }
         ResourceDetails that = (ResourceDetails) o;

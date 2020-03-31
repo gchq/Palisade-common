@@ -19,13 +19,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.RequestId;
-import uk.gov.gchq.palisade.ToStringBuilder;
 import uk.gov.gchq.palisade.exception.ForbiddenException;
 import uk.gov.gchq.palisade.resource.LeafResource;
 import uk.gov.gchq.palisade.service.ConnectionDetail;
 import uk.gov.gchq.palisade.service.request.Request;
 
 import java.util.Objects;
+import java.util.StringJoiner;
 
 import static java.util.Objects.requireNonNull;
 
@@ -95,32 +95,35 @@ public class AddResourceRequest extends Request {
     }
 
     @Override
+    @Generated
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof AddResourceRequest)) {
             return false;
         }
         if (!super.equals(o)) {
             return false;
         }
-        final AddResourceRequest that = (AddResourceRequest) o;
+        AddResourceRequest that = (AddResourceRequest) o;
         return resource.equals(that.resource) &&
-                Objects.equals(connectionDetail, that.connectionDetail);
+                connectionDetail.equals(that.connectionDetail);
     }
 
     @Override
+    @Generated
     public int hashCode() {
         return Objects.hash(super.hashCode(), resource, connectionDetail);
     }
 
     @Override
+    @Generated
     public String toString() {
-        return new ToStringBuilder(this)
-                .appendSuper(super.toString())
-                .append("resource", resource)
-                .append("connectionDetail", connectionDetail)
+        return new StringJoiner(", ", AddResourceRequest.class.getSimpleName() + "[", "]")
+                .add("resource=" + resource)
+                .add("connectionDetail=" + connectionDetail)
+                .add(super.toString())
                 .toString();
     }
 }

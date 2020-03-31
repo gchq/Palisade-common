@@ -16,15 +16,13 @@
 
 package uk.gov.gchq.palisade.service.request;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-
 import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.ToStringBuilder;
 import uk.gov.gchq.palisade.resource.LeafResource;
 import uk.gov.gchq.palisade.service.ConnectionDetail;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 
 import static java.util.Objects.requireNonNull;
@@ -90,31 +88,26 @@ public class DataRequestResponse extends Request {
     }
 
     @Override
+    @Generated
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
-
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof DataRequestResponse)) {
             return false;
         }
-
-        final DataRequestResponse that = (DataRequestResponse) o;
-
-        return new EqualsBuilder()
-                .appendSuper(super.equals(o))
-                .append(token, that.token)
-                .append(resources, that.resources)
-                .isEquals();
+        if (!super.equals(o)) {
+            return false;
+        }
+        DataRequestResponse that = (DataRequestResponse) o;
+        return token.equals(that.token) &&
+                resources.equals(that.resources);
     }
 
     @Override
+    @Generated
     public int hashCode() {
-        return new HashCodeBuilder(17, 67)
-                .appendSuper(super.hashCode())
-                .append(token)
-                .append(resources)
-                .toHashCode();
+        return Objects.hash(super.hashCode(), token, resources);
     }
 
     @Override

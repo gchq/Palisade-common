@@ -55,6 +55,7 @@ public class GetResourcesByTypeRequest extends Request {
     }
 
     @Override
+    @Generated
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
@@ -66,18 +67,21 @@ public class GetResourcesByTypeRequest extends Request {
             return false;
         }
         GetResourcesByTypeRequest that = (GetResourcesByTypeRequest) o;
-        return getType().equals(that.getType());
+        return type.equals(that.type);
     }
 
     @Override
+    @Generated
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getType());
+        return Objects.hash(super.hashCode(), type);
     }
 
     @Override
+    @Generated
     public String toString() {
         return new StringJoiner(", ", GetResourcesByTypeRequest.class.getSimpleName() + "[", "]")
                 .add("type='" + type + "'")
+                .add(super.toString())
                 .toString();
     }
 }

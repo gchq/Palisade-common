@@ -76,8 +76,9 @@ public class User {
      * @return this User instance.
      */
     public User userId(final String userId) {
-        requireNonNull(userId, "The user id cannot be set to null.");
-        return userId(new UserId().id(userId));
+        UserId tempUserID = new UserId();
+        tempUserID.setId(userId);
+        return userId(tempUserID);
     }
 
     /**
@@ -87,9 +88,14 @@ public class User {
      * @return this User instance.
      */
     public User userId(final UserId userId) {
-        requireNonNull(userId, "The user id cannot be set to null.");
-        this.userId = userId;
+        this.setUserId(userId);
         return this;
+    }
+
+    @Generated
+    public void setUserId(final UserId userId) {
+        requireNonNull(userId);
+        this.userId = userId;
     }
 
     @Generated
@@ -97,22 +103,6 @@ public class User {
         return userId;
     }
 
-    @Override
-    @Generated
-    public String toString() {
-        return new StringJoiner(", ", User.class.getSimpleName() + "[", "]")
-                .add("userId=" + userId)
-                .add("roles=" + roles)
-                .add("auths=" + auths)
-                .toString();
-    }
-
-
-    @Generated
-    public void setUserId(final UserId userId) {
-        requireNonNull(userId);
-        this.userId = userId;
-    }
 
     /**
      * Adds the user auths.
@@ -221,7 +211,7 @@ public class User {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof User)) {
             return false;
         }
         User user = (User) o;
@@ -234,5 +224,16 @@ public class User {
     @Generated
     public int hashCode() {
         return Objects.hash(userId, roles, auths);
+    }
+
+    @Override
+    @Generated
+    public String toString() {
+        return new StringJoiner(", ", User.class.getSimpleName() + "[", "]")
+                .add("userId=" + userId)
+                .add("roles=" + roles)
+                .add("auths=" + auths)
+                .add(super.toString())
+                .toString();
     }
 }

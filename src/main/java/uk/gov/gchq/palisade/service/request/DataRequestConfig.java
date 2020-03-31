@@ -16,16 +16,16 @@
 
 package uk.gov.gchq.palisade.service.request;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import uk.gov.gchq.palisade.Context;
+import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.ToStringBuilder;
 import uk.gov.gchq.palisade.User;
 import uk.gov.gchq.palisade.resource.LeafResource;
 import uk.gov.gchq.palisade.rule.Rules;
 
 import java.util.Map;
+import java.util.Objects;
 
 import static java.util.Objects.requireNonNull;
 
@@ -89,33 +89,27 @@ public class DataRequestConfig extends Request {
     }
 
     @Override
+    @Generated
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
-
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof DataRequestConfig)) {
             return false;
         }
-
-        final DataRequestConfig that = (DataRequestConfig) o;
-
-        return new EqualsBuilder()
-                .appendSuper(super.equals(o))
-                .append(user, that.user)
-                .append(context, that.context)
-                .append(rules, that.rules)
-                .isEquals();
+        if (!super.equals(o)) {
+            return false;
+        }
+        DataRequestConfig that = (DataRequestConfig) o;
+        return user.equals(that.user) &&
+                context.equals(that.context) &&
+                rules.equals(that.rules);
     }
 
     @Override
+    @Generated
     public int hashCode() {
-        return new HashCodeBuilder(53, 37)
-                .appendSuper(super.hashCode())
-                .append(user)
-                .append(context)
-                .append(rules)
-                .toHashCode();
+        return Objects.hash(super.hashCode(), user, context, rules);
     }
 
     @Override

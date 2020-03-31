@@ -16,14 +16,12 @@
 
 package uk.gov.gchq.palisade.resource;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-
 import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.ToStringBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import static java.util.Objects.requireNonNull;
 
@@ -134,38 +132,29 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
     }
 
 
-
-
     @Override
+    @Generated
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
-
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof AbstractLeafResource)) {
             return false;
         }
-
-        final AbstractLeafResource that = (AbstractLeafResource) o;
-
-        return new EqualsBuilder()
-                .appendSuper(super.equals(o))
-                .append(type, that.type)
-                .append(serialisedFormat, that.serialisedFormat)
-                .append(parent, that.parent)
-                .append(attributes, that.attributes)
-                .isEquals();
+        if (!super.equals(o)) {
+            return false;
+        }
+        AbstractLeafResource that = (AbstractLeafResource) o;
+        return type.equals(that.type) &&
+                serialisedFormat.equals(that.serialisedFormat) &&
+                parent.equals(that.parent) &&
+                attributes.equals(that.attributes);
     }
 
     @Override
+    @Generated
     public int hashCode() {
-        return new HashCodeBuilder(29, 31)
-                .appendSuper(super.hashCode())
-                .append(type)
-                .append(serialisedFormat)
-                .append(parent)
-                .append(attributes)
-                .toHashCode();
+        return Objects.hash(super.hashCode(), type, serialisedFormat, parent, attributes);
     }
 
     @Override

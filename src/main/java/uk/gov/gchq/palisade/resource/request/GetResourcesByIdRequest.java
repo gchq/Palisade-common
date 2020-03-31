@@ -16,10 +16,10 @@
 package uk.gov.gchq.palisade.resource.request;
 
 import uk.gov.gchq.palisade.Generated;
-import uk.gov.gchq.palisade.ToStringBuilder;
 import uk.gov.gchq.palisade.service.request.Request;
 
 import java.util.Objects;
+import java.util.StringJoiner;
 
 import static java.util.Objects.requireNonNull;
 
@@ -53,30 +53,33 @@ public class GetResourcesByIdRequest extends Request {
     }
 
     @Override
+    @Generated
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof GetResourcesByIdRequest)) {
             return false;
         }
         if (!super.equals(o)) {
             return false;
         }
-        final GetResourcesByIdRequest that = (GetResourcesByIdRequest) o;
-        return Objects.equals(resourceId, that.resourceId);
+        GetResourcesByIdRequest that = (GetResourcesByIdRequest) o;
+        return resourceId.equals(that.resourceId);
     }
 
     @Override
+    @Generated
     public int hashCode() {
         return Objects.hash(super.hashCode(), resourceId);
     }
 
     @Override
+    @Generated
     public String toString() {
-        return new ToStringBuilder(this)
-                .appendSuper(super.toString())
-                .append("resourceId", resourceId)
+        return new StringJoiner(", ", GetResourcesByIdRequest.class.getSimpleName() + "[", "]")
+                .add("resourceId='" + resourceId + "'")
+                .add(super.toString())
                 .toString();
     }
 }

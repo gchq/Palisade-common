@@ -57,6 +57,7 @@ public class GetResourcesBySerialisedFormatRequest extends Request {
     }
 
     @Override
+    @Generated
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
@@ -68,18 +69,21 @@ public class GetResourcesBySerialisedFormatRequest extends Request {
             return false;
         }
         GetResourcesBySerialisedFormatRequest that = (GetResourcesBySerialisedFormatRequest) o;
-        return getSerialisedFormat().equals(that.getSerialisedFormat());
+        return serialisedFormat.equals(that.serialisedFormat);
     }
 
     @Override
+    @Generated
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getSerialisedFormat());
+        return Objects.hash(super.hashCode(), serialisedFormat);
     }
 
     @Override
+    @Generated
     public String toString() {
         return new StringJoiner(", ", GetResourcesBySerialisedFormatRequest.class.getSimpleName() + "[", "]")
                 .add("serialisedFormat='" + serialisedFormat + "'")
+                .add(super.toString())
                 .toString();
     }
 }

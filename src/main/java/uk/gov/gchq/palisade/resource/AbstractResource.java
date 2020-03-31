@@ -16,13 +16,11 @@
 
 package uk.gov.gchq.palisade.resource;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-
 import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.ToStringBuilder;
 
 import java.util.Comparator;
+import java.util.Objects;
 
 import static java.util.Objects.requireNonNull;
 
@@ -35,8 +33,7 @@ public abstract class AbstractResource implements Resource {
     }
 
     public AbstractResource id(final String id) {
-        requireNonNull(id, "The ID of a resource cannot be set to null.");
-        this.id = id;
+        this.setId(id);
         return this;
     }
 
@@ -54,27 +51,22 @@ public abstract class AbstractResource implements Resource {
     }
 
     @Override
+    @Generated
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
-
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof AbstractResource)) {
             return false;
         }
-
-        final AbstractResource that = (AbstractResource) o;
-
-        return new EqualsBuilder()
-                .append(id, that.id)
-                .isEquals();
+        AbstractResource that = (AbstractResource) o;
+        return id.equals(that.getId());
     }
 
     @Override
+    @Generated
     public int hashCode() {
-        return new HashCodeBuilder(29, 31)
-                .append(id)
-                .toHashCode();
+        return Objects.hash(id);
     }
 
     @Override

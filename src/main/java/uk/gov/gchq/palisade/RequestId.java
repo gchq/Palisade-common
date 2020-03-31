@@ -34,8 +34,7 @@ public class RequestId {
     }
 
     public RequestId id(final String id) {
-        requireNonNull(id, "The id cannot be set to null.");
-        this.id = id;
+        this.setId(id);
         return this;
     }
 
@@ -56,7 +55,7 @@ public class RequestId {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof RequestId)) {
             return false;
         }
         RequestId requestId = (RequestId) o;

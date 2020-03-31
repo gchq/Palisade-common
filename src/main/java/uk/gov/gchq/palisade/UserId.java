@@ -69,14 +69,13 @@ public class UserId {
         this.id = id;
     }
 
-
     @Override
     @Generated
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof UserId)) {
             return false;
         }
         UserId userId = (UserId) o;

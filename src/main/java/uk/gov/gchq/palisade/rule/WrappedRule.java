@@ -154,7 +154,7 @@ public class WrappedRule<T> implements Rule<T> {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof WrappedRule)) {
             return false;
         }
         WrappedRule<?> that = (WrappedRule<?>) o;
