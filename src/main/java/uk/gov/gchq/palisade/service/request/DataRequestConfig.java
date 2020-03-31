@@ -19,13 +19,13 @@ package uk.gov.gchq.palisade.service.request;
 
 import uk.gov.gchq.palisade.Context;
 import uk.gov.gchq.palisade.Generated;
-import uk.gov.gchq.palisade.ToStringBuilder;
 import uk.gov.gchq.palisade.User;
 import uk.gov.gchq.palisade.resource.LeafResource;
 import uk.gov.gchq.palisade.rule.Rules;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 import static java.util.Objects.requireNonNull;
 
@@ -44,48 +44,52 @@ public class DataRequestConfig extends Request {
     }
 
     public DataRequestConfig user(final User user) {
-        requireNonNull(user, "User cannot be set to null.");
-        this.user = user;
+        this.setUser(user);
         return this;
-    }
-
-    public void setUser(final User user) {
-        user(user);
-    }
-
-    public User getUser() {
-        requireNonNull(user, "The user has not been set.");
-        return user;
     }
 
     public DataRequestConfig context(final Context context) {
-        requireNonNull(context, "Context cannot be set to null.");
-        this.context = context;
+        this.setContext(context);
         return this;
-    }
-
-    public void setContext(final Context context) {
-        context(context);
-    }
-
-    public Context getContext() {
-        requireNonNull(context, "The context has not been set.");
-        return context;
     }
 
     public DataRequestConfig rules(final Map<LeafResource, Rules> rules) {
-        requireNonNull(rules, "The rules are required.");
-        this.rules = rules;
+        this.setRules(rules);
         return this;
     }
 
-    public void setRules(final Map<LeafResource, Rules> rules) {
-        rules(rules);
+
+    @Generated
+    public User getUser() {
+        return user;
     }
 
+    @Generated
+    public void setUser(final User user) {
+        requireNonNull(user);
+        this.user = user;
+    }
+
+    @Generated
+    public Context getContext() {
+        return context;
+    }
+
+    @Generated
+    public void setContext(final Context context) {
+        requireNonNull(context);
+        this.context = context;
+    }
+
+    @Generated
     public Map<LeafResource, Rules> getRules() {
-        requireNonNull(rules, "The Rules have not been set.");
         return rules;
+    }
+
+    @Generated
+    public void setRules(final Map<LeafResource, Rules> rules) {
+        requireNonNull(rules);
+        this.rules = rules;
     }
 
     @Override
@@ -113,12 +117,13 @@ public class DataRequestConfig extends Request {
     }
 
     @Override
+    @Generated
     public String toString() {
-        return new ToStringBuilder(this)
-                .appendSuper(super.toString())
-                .append("user", user)
-                .append("context", context)
-                .append("rules", rules)
+        return new StringJoiner(", ", DataRequestConfig.class.getSimpleName() + "[", "]")
+                .add("user=" + user)
+                .add("context=" + context)
+                .add("rules=" + rules)
+                .add(super.toString())
                 .toString();
     }
 }

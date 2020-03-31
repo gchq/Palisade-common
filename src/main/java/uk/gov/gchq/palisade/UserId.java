@@ -53,8 +53,7 @@ public class UserId {
      * @return the UserId object
      */
     public UserId id(final String id) {
-        requireNonNull(id, "The UserId id field can not be set null.");
-        this.id = id;
+        this.setId(id);
         return this;
     }
 

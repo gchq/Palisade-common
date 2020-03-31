@@ -63,8 +63,7 @@ public class WrappedRule<T> implements Rule<T> {
      * @param rule the {@link Rule} to wrap.
      */
     public WrappedRule(final Rule<T> rule) {
-        requireNonNull(rule, WRAPPED_RULE_WAS_INITIALISED_WITH_NULL + RULE_STRING);
-        this.rule = rule;
+        this.setRule(rule);
     }
 
     /**
@@ -74,8 +73,7 @@ public class WrappedRule<T> implements Rule<T> {
      * @param function the simple {@link UnaryOperator} rule to wrap.
      */
     public WrappedRule(final UnaryOperator<T> function) {
-        requireNonNull(function, WRAPPED_RULE_WAS_INITIALISED_WITH_NULL + FUNCTION_STRING);
-        this.function = function;
+        this.setFunction(function);
     }
 
     /**
@@ -85,19 +83,40 @@ public class WrappedRule<T> implements Rule<T> {
      * @param predicate the simple {@link Predicate} rule to wrap.
      */
     public WrappedRule(final Predicate<T> predicate) {
-        requireNonNull(predicate, WRAPPED_RULE_WAS_INITIALISED_WITH_NULL + PREDICATE_STRING);
-        this.predicate = predicate;
+        this.setPredicate(predicate);
     }
 
     @JsonCreator
     public WrappedRule(@JsonProperty("rule") final Rule<T> rule,
                        @JsonProperty("function") final UnaryOperator<T> function,
                        @JsonProperty("predicate") final Predicate<T> predicate) {
-        this.rule = rule;
-        this.function = function;
-        this.predicate = predicate;
-
+        this.setRule(rule);
+        this.setFunction(function);
+        this.setPredicate(predicate);
         checkNullCount(rule, function, predicate);
+    }
+
+    @Generated
+    public Rule<T> getRule() {
+        return rule;
+    }
+
+    @Generated
+    public void setRule(final Rule<T> rule) {
+        requireNonNull(rule);
+        this.rule = rule;
+    }
+
+    @Generated
+    public void setFunction(final UnaryOperator<T> function) {
+        requireNonNull(function);
+        this.function = function;
+    }
+
+    @Generated
+    public void setPredicate(final Predicate<T> predicate) {
+        requireNonNull(predicate);
+        this.predicate = predicate;
     }
 
     private void checkNullCount(final Rule<T> rule, final UnaryOperator<T> function, final Predicate<T> predicate) {
@@ -131,11 +150,6 @@ public class WrappedRule<T> implements Rule<T> {
             rtn = obj;
         }
         return rtn;
-    }
-
-    @Generated
-    public Rule<T> getRule() {
-        return rule;
     }
 
     @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "class")

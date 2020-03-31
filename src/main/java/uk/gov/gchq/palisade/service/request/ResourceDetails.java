@@ -34,12 +34,31 @@ public class ResourceDetails {
     private String format;
 
     public ResourceDetails(final String fileName, final String type, final String format) {
-        requireNonNull(fileName, "fileName");
-        requireNonNull(type, "type");
-        requireNonNull(format, "format");
-        this.fileName = fileName;
-        this.type = type;
-        this.format = format;
+        this.setFileName(fileName);
+        this.setType(type);
+        this.setFormat(format);
+    }
+
+    public static ResourceDetails getResourceDetailsFromFileName(final String fileName) {
+        //get filename component
+        final String[] split = fileName.split(Pattern.quote("/"));
+        final String fileString = split[split.length - 1];
+        //check match
+        Matcher match = validateNameRegex(fileString);
+        if (!match.matches()) {
+            throw new IllegalArgumentException("Filename doesn't comply with " + FORMAT_STRING + ": " + fileName);
+        }
+
+        return new ResourceDetails(fileName, match.group("type"), match.group("format"));
+    }
+
+    public static boolean isValidResourceName(final String fileName) {
+        requireNonNull(fileName);
+        return validateNameRegex(fileName).matches();
+    }
+
+    private static Matcher validateNameRegex(final String fileName) {
+        return FILENAME_PATTERN.matcher(fileName);
     }
 
     @Generated
@@ -75,27 +94,6 @@ public class ResourceDetails {
         this.format = format;
     }
 
-    public static ResourceDetails getResourceDetailsFromFileName(final String fileName) {
-        //get filename component
-        final String[] split = fileName.split(Pattern.quote("/"));
-        final String fileString = split[split.length - 1];
-        //check match
-        Matcher match = validateNameRegex(fileString);
-        if (!match.matches()) {
-            throw new IllegalArgumentException("Filename doesn't comply with " + FORMAT_STRING + ": " + fileName);
-        }
-
-        return new ResourceDetails(fileName, match.group("type"), match.group("format"));
-    }
-
-    public static boolean isValidResourceName(final String fileName) {
-        requireNonNull(fileName);
-        return validateNameRegex(fileName).matches();
-    }
-
-    private static Matcher validateNameRegex(final String fileName) {
-        return FILENAME_PATTERN.matcher(fileName);
-    }
 
     @Override
     @Generated

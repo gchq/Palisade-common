@@ -43,26 +43,27 @@ public class DataRequestResponse extends Request {
     }
 
     public DataRequestResponse token(final String token) {
-        requireNonNull(token, "The token cannot be null.");
-        this.token = token;
+        this.setToken(token);
         return this;
     }
 
-
     public DataRequestResponse resource(final LeafResource resource, final ConnectionDetail connectionDetail) {
-        requireNonNull(resource, "The resource cannot be null.");
-        requireNonNull(connectionDetail, "The connection details cannot be null.");
-        if (null == resources) {
-            resources = new TreeMap<>();
-        }
-        resources.put(resource, connectionDetail);
+        this.setResource(resource, connectionDetail);
         return this;
     }
 
     public DataRequestResponse resources(final Map<LeafResource, ConnectionDetail> resources) {
-        requireNonNull(resources, "The resources cannot be null.");
-        this.resources = resources;
+        this.setResources(resources);
         return this;
+    }
+
+    public void setResource(final LeafResource resource, final ConnectionDetail connectionDetail) {
+        requireNonNull(resource);
+        requireNonNull(connectionDetail);
+        if (resources == null) {
+            resources = new TreeMap<>();
+        }
+        resources.put(resource, connectionDetail);
     }
 
     @Generated

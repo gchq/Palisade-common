@@ -54,13 +54,11 @@ public class Context {
 
     @JsonCreator
     public Context(@JsonProperty("contents") final Map<String, Object> contents) {
-        requireNonNull(contents, "The contents cannot be set to null.");
-        this.contents = contents;
+        this.setContents(contents);
     }
 
     public Context contents(final Map<String, Object> contents) {
-        requireNonNull(contents, "The contents cannot be set to null.");
-        this.contents = contents;
+        this.setContents(contents);
         return this;
     }
 
@@ -86,7 +84,6 @@ public class Context {
         contents.put(PURPOSE, purpose);
         return this;
     }
-
 
     @JsonIgnore
     public String getPurpose() {

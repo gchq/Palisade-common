@@ -36,8 +36,7 @@ public class GetResourcesByIdRequest extends Request {
      * @return the {@link GetResourcesByIdRequest}
      */
     public GetResourcesByIdRequest resourceId(final String resourceId) {
-        requireNonNull(resourceId, "The resource id cannot be set to null.");
-        this.resourceId = resourceId;
+        this.setResourceId(resourceId);
         return this;
     }
 

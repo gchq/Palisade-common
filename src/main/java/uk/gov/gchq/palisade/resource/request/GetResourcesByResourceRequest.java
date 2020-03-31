@@ -42,8 +42,7 @@ public class GetResourcesByResourceRequest extends Request {
      * @return the {@link GetResourcesByResourceRequest}
      */
     public GetResourcesByResourceRequest resource(final Resource resource) {
-        requireNonNull(resource, "The resource cannot be set to null.");
-        this.resource = resource;
+        this.setResource(resource);
         return this;
     }
 

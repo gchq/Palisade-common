@@ -46,8 +46,7 @@ public class AddResourceRequest extends Request {
      * @return the {@link AddResourceRequest}
      */
     public AddResourceRequest resource(final LeafResource resource) {
-        requireNonNull(resource, "The resource cannot be set to null.");
-        this.resource = resource;
+        this.setResource(resource);
         return this;
     }
 
@@ -56,8 +55,7 @@ public class AddResourceRequest extends Request {
      * @return the {@link AddResourceRequest}
      */
     public AddResourceRequest connectionDetail(final ConnectionDetail connectionDetail) {
-        requireNonNull(connectionDetail, "The connection details cannot be set to null.");
-        this.connectionDetail = connectionDetail;
+        this.setConnectionDetail(connectionDetail);
         return this;
     }
 

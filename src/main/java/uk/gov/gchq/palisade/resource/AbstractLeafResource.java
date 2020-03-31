@@ -36,28 +36,22 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
     }
 
     public AbstractLeafResource type(final String type) {
-        requireNonNull(type, "The type of a resource cannot be set to null.");
-        this.type = type;
+        this.setType(type);
         return this;
     }
 
     public AbstractLeafResource serialisedFormat(final String serialisedFormat) {
-        requireNonNull(serialisedFormat, "The serialised format of a resource cannot be set to null.");
-        this.serialisedFormat = serialisedFormat;
+        this.setSerialisedFormat(serialisedFormat);
         return this;
     }
 
     public AbstractLeafResource attributes(final Map<String, Object> attributes) {
-        requireNonNull(attributes, "The attributes of a resource cannot be set to null.");
-        this.attributes.clear();
-        this.attributes.putAll(attributes);
+        this.setAttributes(attributes);
         return this;
     }
 
     public AbstractLeafResource attribute(final String attributeKey, final Object attributeValue) {
-        requireNonNull(attributeKey, "The attributeKey cannot be set to null.");
-        requireNonNull(attributeKey, "The attributeValue cannot be set to null.");
-        this.attributes.put(attributeKey, attributeValue);
+        this.setAttribute(attributeKey, attributeValue);
         return this;
     }
 
@@ -122,7 +116,10 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
 
 
     public void setAttribute(final String attributeKey, final Object attributeValue) {
-        attribute(attributeKey, attributeValue);
+        requireNonNull(attributeKey, "The attributeKey cannot be set to null.");
+        requireNonNull(attributeKey, "The attributeValue cannot be set to null.");
+        this.attributes.put(attributeKey, attributeValue);
+
     }
 
     public AbstractLeafResource parent(final ParentResource parent) {

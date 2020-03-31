@@ -40,8 +40,7 @@ public class GetResourcesBySerialisedFormatRequest extends Request {
      * @return the {@link GetResourcesBySerialisedFormatRequest}
      */
     public GetResourcesBySerialisedFormatRequest serialisedFormat(final String serialisedFormat) {
-        requireNonNull(serialisedFormat, "The serialised format cannot be set to null.");
-        this.serialisedFormat = serialisedFormat;
+        this.setSerialisedFormat(serialisedFormat);
         return this;
     }
 

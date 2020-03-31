@@ -40,8 +40,7 @@ public class GetResourcesByTypeRequest extends Request {
      * @return the {@link GetResourcesByTypeRequest}
      */
     public GetResourcesByTypeRequest type(final String type) {
-        requireNonNull(type, "The resource type cannot be set to null.");
-        this.type = type;
+        this.setType(type);
         return this;
     }
 
@@ -50,8 +49,10 @@ public class GetResourcesByTypeRequest extends Request {
         return type;
     }
 
+    @Generated
     public void setType(final String type) {
-        type(type);
+        requireNonNull(type);
+        this.type = type;
     }
 
     @Override
