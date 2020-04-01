@@ -16,8 +16,6 @@
 
 package uk.gov.gchq.palisade.service;
 
-import uk.gov.gchq.palisade.resource.Resource;
-
 import java.util.List;
 
 public interface PolicyConfiguration {
@@ -37,11 +35,4 @@ public interface PolicyConfiguration {
      * @return a {@link List} of the objects that have implemented {@link UserCacheWarmerFactory}.
      */
     List<? extends UserCacheWarmerFactory> getUsers();
-
-    /**
-     * Creates a {@link Resource} that will be passed to the Policy-Service
-     *
-     * @return the {@link Resource} that has been created.
-     */
-    Resource createResource();
 }
