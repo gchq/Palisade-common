@@ -43,7 +43,7 @@ public class UserId {
      */
     UserId(final UserId userId) {
         requireNonNull(userId, "UserId to be cloned cannot be null");
-        id = userId.getId();
+        this.setId(userId.getId());
     }
 
     /**
