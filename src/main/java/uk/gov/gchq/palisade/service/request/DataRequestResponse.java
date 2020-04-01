@@ -23,6 +23,7 @@ import uk.gov.gchq.palisade.service.ConnectionDetail;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.StringJoiner;
 import java.util.TreeMap;
 
 import static java.util.Objects.requireNonNull;
@@ -112,11 +113,12 @@ public class DataRequestResponse extends Request {
     }
 
     @Override
+    @Generated
     public String toString() {
-        return new ToStringBuilder(this)
-                .appendSuper(super.toString())
-                .append("token", token)
-                .append("resources", resources)
+        return new StringJoiner(", ", DataRequestResponse.class.getSimpleName() + "[", "]")
+                .add("token='" + token + "'")
+                .add("resources=" + resources)
+                .add(super.toString())
                 .toString();
     }
 }
