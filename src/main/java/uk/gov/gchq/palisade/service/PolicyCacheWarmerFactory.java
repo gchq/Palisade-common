@@ -26,6 +26,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import uk.gov.gchq.palisade.service.request.Policy;
 
+import java.util.List;
+
 /**
  * This class defines the top level of the cache warming.
  * <p>
@@ -43,9 +45,10 @@ public interface PolicyCacheWarmerFactory {
     /**
      * Creates a {@link Policy} using the data within an implementation of the {@link PolicyCacheWarmerFactory}.
      *
-     * @return the {@link Policy} that has been created.
+     * @param users     a {@link List} of {@link UserCacheWarmerFactory} implementations
+     * @return          the {@link Policy} that has been created.
      */
-    Policy policyWarm();
+    Policy policyWarm(List<? extends UserCacheWarmerFactory> users);
 
     @JsonGetter("class")
     default String _getClass() {

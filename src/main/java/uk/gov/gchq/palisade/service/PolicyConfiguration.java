@@ -31,6 +31,14 @@ public interface PolicyConfiguration {
     List<? extends PolicyCacheWarmerFactory> getPolicies();
 
     /**
+     * Gets a {@link List} of the {@link UserCacheWarmerFactory} implemented
+     * objects that have been created from a yaml file.
+     *
+     * @return a {@link List} of the objects that have implemented {@link UserCacheWarmerFactory}.
+     */
+    List<? extends UserCacheWarmerFactory> getUsers();
+
+    /**
      * Creates a {@link Resource} that will be passed to the Policy-Service
      *
      * @return the {@link Resource} that has been created.
