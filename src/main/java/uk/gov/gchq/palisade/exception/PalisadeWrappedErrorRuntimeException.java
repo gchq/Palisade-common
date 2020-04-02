@@ -17,6 +17,8 @@ package uk.gov.gchq.palisade.exception;
 
 import uk.gov.gchq.palisade.Generated;
 
+import java.util.StringJoiner;
+
 /**
  * Subtype of {@link RuntimeException} that wraps an {@link Error}.
  */
@@ -32,5 +34,14 @@ public class PalisadeWrappedErrorRuntimeException extends RuntimeException {
     @Generated
     public Error getError() {
         return error;
+    }
+
+    @Override
+    @Generated
+    public String toString() {
+        return new StringJoiner(", ", PalisadeWrappedErrorRuntimeException.class.getSimpleName() + "[", "]")
+                .add("error=" + error)
+                .add(super.toString())
+                .toString();
     }
 }

@@ -17,12 +17,12 @@
 package uk.gov.gchq.palisade.resource.impl;
 
 import uk.gov.gchq.palisade.Generated;
-import uk.gov.gchq.palisade.ToStringBuilder;
 import uk.gov.gchq.palisade.resource.AbstractResource;
 import uk.gov.gchq.palisade.resource.ChildResource;
 import uk.gov.gchq.palisade.resource.ParentResource;
 
 import java.util.Objects;
+import java.util.StringJoiner;
 
 import static java.util.Objects.requireNonNull;
 
@@ -62,6 +62,7 @@ public class DirectoryResource extends AbstractResource implements ChildResource
     }
 
     @Override
+    @Generated
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
@@ -72,20 +73,22 @@ public class DirectoryResource extends AbstractResource implements ChildResource
         if (!super.equals(o)) {
             return false;
         }
-        final DirectoryResource that = (DirectoryResource) o;
-        return Objects.equals(parent, that.parent);
+        DirectoryResource that = (DirectoryResource) o;
+        return parent.equals(that.parent);
     }
 
     @Override
+    @Generated
     public int hashCode() {
         return Objects.hash(super.hashCode(), parent);
     }
 
     @Override
+    @Generated
     public String toString() {
-        return new ToStringBuilder(this)
-                .appendSuper(super.toString())
-                .append("parent", parent)
+        return new StringJoiner(", ", DirectoryResource.class.getSimpleName() + "[", "]")
+                .add("parent=" + parent)
+                .add(super.toString())
                 .toString();
     }
 }

@@ -17,10 +17,10 @@
 package uk.gov.gchq.palisade.resource;
 
 import uk.gov.gchq.palisade.Generated;
-import uk.gov.gchq.palisade.ToStringBuilder;
 
 import java.util.Comparator;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 import static java.util.Objects.requireNonNull;
 
@@ -32,6 +32,7 @@ public abstract class AbstractResource implements Resource {
     public AbstractResource() {
     }
 
+    @Generated
     public AbstractResource id(final String id) {
         this.setId(id);
         return this;
@@ -70,12 +71,13 @@ public abstract class AbstractResource implements Resource {
     }
 
     @Override
+    @Generated
     public String toString() {
-        return new ToStringBuilder(this)
-                .append("id", id)
+        return new StringJoiner(", ", AbstractResource.class.getSimpleName() + "[", "]")
+                .add("id='" + id + "'")
+                .add(super.toString())
                 .toString();
     }
-
 
     @Override
     public int compareTo(final Resource o) {

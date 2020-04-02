@@ -17,6 +17,8 @@ package uk.gov.gchq.palisade.exception;
 
 import uk.gov.gchq.palisade.Generated;
 
+import java.util.StringJoiner;
+
 import static uk.gov.gchq.palisade.exception.Status.INTERNAL_SERVER_ERROR;
 
 /**
@@ -57,5 +59,14 @@ public class PalisadeRuntimeException extends RuntimeException {
     @Generated
     public Status getStatus() {
         return status;
+    }
+
+    @Override
+    @Generated
+    public String toString() {
+        return new StringJoiner(", ", PalisadeRuntimeException.class.getSimpleName() + "[", "]")
+                .add("status=" + status)
+                .add(super.toString())
+                .toString();
     }
 }

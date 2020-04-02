@@ -17,11 +17,11 @@
 package uk.gov.gchq.palisade.resource;
 
 import uk.gov.gchq.palisade.Generated;
-import uk.gov.gchq.palisade.ToStringBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 import static java.util.Objects.requireNonNull;
 
@@ -35,26 +35,35 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
     public AbstractLeafResource() {
     }
 
+    @Generated
     public AbstractLeafResource type(final String type) {
         this.setType(type);
         return this;
     }
 
+    @Generated
     public AbstractLeafResource serialisedFormat(final String serialisedFormat) {
         this.setSerialisedFormat(serialisedFormat);
         return this;
     }
 
+    @Generated
     public AbstractLeafResource attributes(final Map<String, Object> attributes) {
         this.setAttributes(attributes);
         return this;
     }
 
+    @Generated
     public AbstractLeafResource attribute(final String attributeKey, final Object attributeValue) {
         this.setAttribute(attributeKey, attributeValue);
         return this;
     }
 
+    @Generated
+    public AbstractLeafResource parent(final ParentResource parent) {
+        this.setParent(parent);
+        return this;
+    }
 
     @Override
     @Generated
@@ -122,13 +131,6 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
 
     }
 
-    public AbstractLeafResource parent(final ParentResource parent) {
-        requireNonNull(parent, "The parent cannot be set to null.");
-        this.parent = parent;
-        return this;
-    }
-
-
     @Override
     @Generated
     public boolean equals(final Object o) {
@@ -155,13 +157,14 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
     }
 
     @Override
+    @Generated
     public String toString() {
-        return new ToStringBuilder(this)
-                .appendSuper(super.toString())
-                .append("type", type)
-                .append("serialisedFormat", serialisedFormat)
-                .append("parent", parent)
-                .append("attributes", attributes)
+        return new StringJoiner(", ", AbstractLeafResource.class.getSimpleName() + "[", "]")
+                .add("type='" + type + "'")
+                .add("serialisedFormat='" + serialisedFormat + "'")
+                .add("parent=" + parent)
+                .add("attributes=" + attributes)
+                .add(super.toString())
                 .toString();
     }
 }

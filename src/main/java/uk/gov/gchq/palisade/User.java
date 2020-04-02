@@ -141,7 +141,8 @@ public class User {
 
     @Generated
     public User addRoles(final Set<String> roles) {
-        this.setRoles(roles);
+        requireNonNull(auths, "Cannot add null roles.");
+        this.roles.addAll(roles);
         return this;
     }
 

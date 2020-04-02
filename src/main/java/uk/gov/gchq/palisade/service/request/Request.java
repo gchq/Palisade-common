@@ -38,6 +38,7 @@ public abstract class Request {
         this.id = new RequestId().id(UUID.randomUUID().toString());
     }
 
+    @Generated
     public Request originalRequestId(final RequestId originalRequestId) {
         this.setOriginalRequestId(originalRequestId);
         return this;
