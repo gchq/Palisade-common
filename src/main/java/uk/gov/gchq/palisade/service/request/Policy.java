@@ -220,6 +220,11 @@ public class Policy<T> {
         return "Resource level rules: " + getResourceRules().getMessage() + ", record level rules: " + getRecordRules().getMessage();
     }
 
+    public Policy owner(final User owner) {
+        setOwner(owner);
+        return this;
+    }
+
     /**
      * Gets owner.
      *
