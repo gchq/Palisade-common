@@ -35,7 +35,7 @@ public class RulesTest {
     public void setUp() throws Exception {
         rules = new Rules<String>()
                 .message("Age off and visibility filtering")
-                .rule("ageOffRule", new TestRule()
+                .addRule("ageOffRule", new TestRule()
                 );
         json = JSONSerialiser.serialise(rules, true);
     }
@@ -44,10 +44,10 @@ public class RulesTest {
     public void shouldNotEquals() throws Exception {
         //given
         final Rules<String> one = new Rules<>();
-        one.rule("one", new TestRule());
+        one.addRule("one", new TestRule());
 
         final Rules<String> two = new Rules<>();
-        two.rule("two", new TestRule());
+        two.addRule("two", new TestRule());
 
         //then
         assertFalse(one.equals(two));
@@ -56,10 +56,10 @@ public class RulesTest {
     @Test
     public void shouldEquals() throws Exception {
         final Rules<String> one1 = new Rules<>();
-        one1.rule("one", new TestRule());
+        one1.addRule("one", new TestRule());
 
         final Rules<String> one2 = new Rules<>();
-        one2.rule("one", new TestRule());
+        one2.addRule("one", new TestRule());
 
         assertTrue(one1.equals(one2));
     }

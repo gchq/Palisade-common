@@ -17,8 +17,10 @@
 package uk.gov.gchq.palisade.rule;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
 
 import uk.gov.gchq.palisade.Generated;
+import uk.gov.gchq.palisade.jsonserialisation.JSONSerialiser;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -174,14 +176,32 @@ public class Rules<T> {
     @Override
     public boolean equals(final Object o) {
         boolean rtn = (this == o);
-        if (!rtn && (o != null) && (o instanceof Rules)) {
-            final Rules<?> that = (Rules<?>) o;
-            if (this.getMessage().equals(that.getMessage()) && (this.getRules().equals(that.getRules()))) {
-                rtn = Boolean.TRUE.booleanValue();
-            } else {
-                rtn = Boolean.FALSE.booleanValue();
-            }
+        if (!rtn && (o != null && this.getClass() == o.getClass())) {
 
+            final Rules<?> that = (Rules<?>) o;
+
+            final EqualsBuilder builder = new EqualsBuilder()
+                    .append(message, that.message)
+                    .append(this.rulesHashMap.keySet(), that.getRules().keySet());
+
+            if (builder.isEquals()) {
+                for (final Map.Entry<String, Rule<T>> entry : this.rulesHashMap.entrySet()) {
+                    final String ruleName = entry.getKey();
+                    final Rule thisRule = entry.getValue();
+                    final Rule thatRule = that.getRules().get(ruleName);
+
+                    builder.append(thisRule.getClass(), thatRule.getClass());
+                    if (builder.isEquals()) {
+                        // This is expensive - but we don't have any other way of doing it
+                        builder.append(JSONSerialiser.serialise(thisRule), JSONSerialiser.serialise(thatRule));
+                    }
+
+                    if (!builder.isEquals()) {
+                        return false;
+                    }
+                }
+            }
+            rtn = builder.isEquals();
         }
         return rtn;
     }
