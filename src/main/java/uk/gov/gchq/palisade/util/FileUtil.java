@@ -32,6 +32,9 @@ import static java.util.Objects.requireNonNull;
 
 public class FileUtil {
 
+    private FileUtil() {
+    }
+
     /**
      * Convert the given path to an absolute URI. If the given path represents something on the local file system, then
      * the path will be converted to a full absolute path and converted to a {@code file:} URI, if not then it will be returned verbatim.
