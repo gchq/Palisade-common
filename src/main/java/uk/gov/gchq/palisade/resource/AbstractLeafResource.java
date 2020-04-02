@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Crown Copyright
+ * Copyright 2020 Crown Copyright
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,11 +17,11 @@
 package uk.gov.gchq.palisade.resource;
 
 import uk.gov.gchq.palisade.Generated;
+import uk.gov.gchq.palisade.ToStringBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.StringJoiner;
 
 import static java.util.Objects.requireNonNull;
 
@@ -115,21 +115,27 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
         this.attributes = attributes;
     }
 
+    @Generated
     public Object getAttribute(final String attributeKey) {
         return this.attributes.getOrDefault(attributeKey, null);
     }
 
+    @Generated
     public Boolean isAttributeSet(final String attributeKey) {
         return this.attributes.containsKey(attributeKey);
     }
 
 
+    @Generated
     public void setAttribute(final String attributeKey, final Object attributeValue) {
         requireNonNull(attributeKey, "The attributeKey cannot be set to null.");
         requireNonNull(attributeKey, "The attributeValue cannot be set to null.");
         this.attributes.put(attributeKey, attributeValue);
 
     }
+
+
+
 
     @Override
     @Generated
@@ -157,14 +163,13 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
     }
 
     @Override
-    @Generated
     public String toString() {
-        return new StringJoiner(", ", AbstractLeafResource.class.getSimpleName() + "[", "]")
-                .add("type='" + type + "'")
-                .add("serialisedFormat='" + serialisedFormat + "'")
-                .add("parent=" + parent)
-                .add("attributes=" + attributes)
-                .add(super.toString())
+        return new ToStringBuilder(this)
+                .appendSuper(super.toString())
+                .append("type", type)
+                .append("serialisedFormat", serialisedFormat)
+                .append("parent", parent)
+                .append("attributes", attributes)
                 .toString();
     }
 }
