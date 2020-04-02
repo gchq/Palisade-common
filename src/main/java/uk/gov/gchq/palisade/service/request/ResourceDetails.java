@@ -33,10 +33,10 @@ public class ResourceDetails {
     private String type;
     private String format;
 
-    public ResourceDetails(final String fileName, final String type, final String format) {
-        this.setFileName(fileName);
-        this.setType(type);
-        this.setFormat(format);
+    public ResourceDetails(String fileName, String type, String format) {
+        this.fileName = fileName;
+        this.type = type;
+        this.format = format;
     }
 
     public static ResourceDetails getResourceDetailsFromFileName(final String fileName) {
