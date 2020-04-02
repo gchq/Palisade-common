@@ -42,7 +42,6 @@ import static java.util.Objects.requireNonNull;
  *            by the record reader before being passed to the {@link Rule#apply(Object, User, Context)}.
  */
 public class WrappedRule<T> implements Rule<T> {
-
     public static final String WRAPPED_RULE_WAS_INITIALISED_WITH_NULL = "WrappedRule was initialised with null.";
     public static final String RULE_STRING = "rule";
     public static final String FUNCTION_STRING = "function";
@@ -63,7 +62,8 @@ public class WrappedRule<T> implements Rule<T> {
      * @param rule the {@link Rule} to wrap.
      */
     public WrappedRule(final Rule<T> rule) {
-        this.setRule(rule);
+        requireNonNull(rule, WRAPPED_RULE_WAS_INITIALISED_WITH_NULL + RULE_STRING);
+        this.rule = rule;
     }
 
     /**
@@ -73,7 +73,8 @@ public class WrappedRule<T> implements Rule<T> {
      * @param function the simple {@link UnaryOperator} rule to wrap.
      */
     public WrappedRule(final UnaryOperator<T> function) {
-        this.setFunction(function);
+        requireNonNull(function, WRAPPED_RULE_WAS_INITIALISED_WITH_NULL + FUNCTION_STRING);
+        this.function = function;
     }
 
     /**
@@ -83,51 +84,17 @@ public class WrappedRule<T> implements Rule<T> {
      * @param predicate the simple {@link Predicate} rule to wrap.
      */
     public WrappedRule(final Predicate<T> predicate) {
-        this.setPredicate(predicate);
+        requireNonNull(predicate, WRAPPED_RULE_WAS_INITIALISED_WITH_NULL + PREDICATE_STRING);
+        this.predicate = predicate;
     }
 
     @JsonCreator
     public WrappedRule(@JsonProperty("rule") final Rule<T> rule,
                        @JsonProperty("function") final UnaryOperator<T> function,
                        @JsonProperty("predicate") final Predicate<T> predicate) {
-        this.setRule(rule);
-        this.setFunction(function);
-        this.setPredicate(predicate);
         checkNullCount(rule, function, predicate);
-    }
-
-    @Generated
-    public Rule<T> getRule() {
-        return rule;
-    }
-
-    @Generated
-    public void setRule(final Rule<T> rule) {
-        requireNonNull(rule);
         this.rule = rule;
-    }
-
-    @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "class")
-    @Generated
-    public UnaryOperator<T> getFunction() {
-        return function;
-    }
-
-    @Generated
-    public void setFunction(final UnaryOperator<T> function) {
-        requireNonNull(function);
         this.function = function;
-    }
-
-    @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "class")
-    @Generated
-    public Predicate<T> getPredicate() {
-        return predicate;
-    }
-
-    @Generated
-    public void setPredicate(final Predicate<T> predicate) {
-        requireNonNull(predicate);
         this.predicate = predicate;
     }
 
@@ -164,6 +131,24 @@ public class WrappedRule<T> implements Rule<T> {
         return rtn;
     }
 
+
+    @Generated
+    public Rule<T> getRule() {
+        return rule;
+    }
+
+    @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "class")
+    @Generated
+    public UnaryOperator<T> getFunction() {
+        return function;
+    }
+
+    @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "class")
+    @Generated
+    public Predicate<T> getPredicate() {
+        return predicate;
+    }
+
     @Override
     @Generated
     public boolean equals(final Object o) {
@@ -173,10 +158,10 @@ public class WrappedRule<T> implements Rule<T> {
         if (!(o instanceof WrappedRule)) {
             return false;
         }
-        WrappedRule<?> that = (WrappedRule<?>) o;
-        return rule.equals(that.rule) &&
-                function.equals(that.function) &&
-                predicate.equals(that.predicate);
+        final WrappedRule<?> that = (WrappedRule<?>) o;
+        return Objects.equals(rule, that.rule) &&
+                Objects.equals(function, that.function) &&
+                Objects.equals(predicate, that.predicate);
     }
 
     @Override
