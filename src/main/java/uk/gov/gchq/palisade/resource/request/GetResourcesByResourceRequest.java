@@ -41,6 +41,7 @@ public class GetResourcesByResourceRequest extends Request {
      * @param resource the {@link Resource} you want to run an {@code ls} on
      * @return the {@link GetResourcesByResourceRequest}
      */
+    @Generated
     public GetResourcesByResourceRequest resource(final Resource resource) {
         this.setResource(resource);
         return this;

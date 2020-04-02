@@ -52,6 +52,7 @@ public class UserId {
      * @param id a non null String representing the id of the user
      * @return the UserId object
      */
+    @Generated
     public UserId id(final String id) {
         this.setId(id);
         return this;

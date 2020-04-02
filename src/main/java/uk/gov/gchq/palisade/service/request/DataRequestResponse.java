@@ -42,22 +42,26 @@ public class DataRequestResponse extends Request {
         //no-args constructor needed for serialization only
     }
 
+    @Generated
     public DataRequestResponse token(final String token) {
         this.setToken(token);
         return this;
     }
 
+    @Generated
     public DataRequestResponse resource(final LeafResource resource, final ConnectionDetail connectionDetail) {
-        this.setResource(resource, connectionDetail);
+        this.addResource(resource, connectionDetail);
         return this;
     }
 
+    @Generated
     public DataRequestResponse resources(final Map<LeafResource, ConnectionDetail> resources) {
         this.setResources(resources);
         return this;
     }
 
-    public void setResource(final LeafResource resource, final ConnectionDetail connectionDetail) {
+
+    public void addResource(final LeafResource resource, final ConnectionDetail connectionDetail) {
         requireNonNull(resource);
         requireNonNull(connectionDetail);
         if (resources == null) {

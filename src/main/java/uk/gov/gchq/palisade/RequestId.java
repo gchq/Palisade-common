@@ -33,6 +33,7 @@ public class RequestId {
         //no-args constructor needed for serialization only
     }
 
+    @Generated
     public RequestId id(final String id) {
         this.setId(id);
         return this;

@@ -35,6 +35,7 @@ public class GetResourcesByIdRequest extends Request {
      * @param resourceId the unique identifier of the resource that you want to {@code ls}
      * @return the {@link GetResourcesByIdRequest}
      */
+    @Generated
     public GetResourcesByIdRequest resourceId(final String resourceId) {
         this.setResourceId(resourceId);
         return this;

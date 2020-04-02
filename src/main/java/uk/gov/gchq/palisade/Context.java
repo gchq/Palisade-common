@@ -57,6 +57,7 @@ public class Context {
         this.setContents(contents);
     }
 
+    @Generated
     public Context contents(final Map<String, Object> contents) {
         this.setContents(contents);
         return this;
@@ -75,11 +76,13 @@ public class Context {
     }
 
     @JsonIgnore
+    @Generated
     public Map<String, Object> getContentsCopy() {
         return Collections.unmodifiableMap(contents);
     }
 
     @JsonIgnore
+    @Generated
     public Context purpose(final String purpose) {
         contents.put(PURPOSE, purpose);
         return this;
@@ -94,11 +97,12 @@ public class Context {
         }
     }
 
-
+    @Generated
     public Object get(final String key) {
         return contents.get(key);
     }
 
+    @Generated
     public Context put(final String key, final Object value) {
         requireNonNull(key, "The key cannot be null.");
         requireNonNull(value, "The value cannot be null.");
@@ -106,6 +110,7 @@ public class Context {
         return this;
     }
 
+    @Generated
     public Context putIfAbsent(final String key, final Object value) {
         requireNonNull(key, "The key cannot be null.");
         requireNonNull(value, "The value cannot be null.");
@@ -114,6 +119,7 @@ public class Context {
     }
 
     @JsonGetter("class")
+    @Generated
     public String _getClass() {
         return getClass().getName();
     }

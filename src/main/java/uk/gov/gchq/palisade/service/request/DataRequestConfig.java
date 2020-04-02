@@ -43,16 +43,19 @@ public class DataRequestConfig extends Request {
         //no-args constructor needed for serialization only
     }
 
+    @Generated
     public DataRequestConfig user(final User user) {
         this.setUser(user);
         return this;
     }
 
+    @Generated
     public DataRequestConfig context(final Context context) {
         this.setContext(context);
         return this;
     }
 
+    @Generated
     public DataRequestConfig rules(final Map<LeafResource, Rules> rules) {
         this.setRules(rules);
         return this;

@@ -45,6 +45,7 @@ public class AddResourceRequest extends Request {
      * @param resource The {@link LeafResource} to be added.
      * @return the {@link AddResourceRequest}
      */
+    @Generated
     public AddResourceRequest resource(final LeafResource resource) {
         this.setResource(resource);
         return this;
@@ -54,6 +55,7 @@ public class AddResourceRequest extends Request {
      * @param connectionDetail Details of how to get to the data from the {@code DataService}.
      * @return the {@link AddResourceRequest}
      */
+    @Generated
     public AddResourceRequest connectionDetail(final ConnectionDetail connectionDetail) {
         this.setConnectionDetail(connectionDetail);
         return this;

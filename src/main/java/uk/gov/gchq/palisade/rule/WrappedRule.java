@@ -107,10 +107,22 @@ public class WrappedRule<T> implements Rule<T> {
         this.rule = rule;
     }
 
+    @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "class")
+    @Generated
+    public UnaryOperator<T> getFunction() {
+        return function;
+    }
+
     @Generated
     public void setFunction(final UnaryOperator<T> function) {
         requireNonNull(function);
         this.function = function;
+    }
+
+    @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "class")
+    @Generated
+    public Predicate<T> getPredicate() {
+        return predicate;
     }
 
     @Generated
@@ -150,16 +162,6 @@ public class WrappedRule<T> implements Rule<T> {
             rtn = obj;
         }
         return rtn;
-    }
-
-    @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "class")
-    public UnaryOperator<T> getFunction() {
-        return function;
-    }
-
-    @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "class")
-    public Predicate<T> getPredicate() {
-        return predicate;
     }
 
     @Override

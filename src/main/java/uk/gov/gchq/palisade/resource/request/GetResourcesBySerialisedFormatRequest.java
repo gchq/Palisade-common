@@ -39,6 +39,7 @@ public class GetResourcesBySerialisedFormatRequest extends Request {
      * @param serialisedFormat the serialisedFormat of the {@link uk.gov.gchq.palisade.resource.Resource}'s that you want to know about
      * @return the {@link GetResourcesBySerialisedFormatRequest}
      */
+    @Generated
     public GetResourcesBySerialisedFormatRequest serialisedFormat(final String serialisedFormat) {
         this.setSerialisedFormat(serialisedFormat);
         return this;

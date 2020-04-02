@@ -35,9 +35,9 @@ public class SimpleConnectionDetail implements ConnectionDetail {
         //no-args constructor needed for serialization only
     }
 
+    @Generated
     public SimpleConnectionDetail uri(final String uri) {
-        requireNonNull(uri, "The uri value can not be set to null");
-        this.uri = uri;
+        this.setUri(uri);
         return this;
     }
 
@@ -53,6 +53,7 @@ public class SimpleConnectionDetail implements ConnectionDetail {
     }
 
     @Override
+    @Generated
     public String createConnection() {
         return getUri();
     }
@@ -63,7 +64,7 @@ public class SimpleConnectionDetail implements ConnectionDetail {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof SimpleConnectionDetail)) {
             return false;
         }
         SimpleConnectionDetail that = (SimpleConnectionDetail) o;
@@ -81,6 +82,7 @@ public class SimpleConnectionDetail implements ConnectionDetail {
     public String toString() {
         return new StringJoiner(", ", SimpleConnectionDetail.class.getSimpleName() + "[", "]")
                 .add("uri='" + uri + "'")
+                .add(super.toString())
                 .toString();
     }
 }

@@ -47,8 +47,8 @@ import static java.util.Objects.requireNonNull;
         property = "class"
 )
 public class User {
-    private UserId userId;
 
+    private UserId userId;
     private Set<String> roles = new HashSet<>();
     private Set<String> auths = new HashSet<>();
 
@@ -77,6 +77,7 @@ public class User {
      * @param userId the userId
      * @return this User instance.
      */
+    @Generated
     public User userId(final UserId userId) {
         this.setUserId(userId);
         return this;
@@ -89,6 +90,7 @@ public class User {
      * @param userId the unique user ID string.
      * @return this User instance.
      */
+    @Generated
     public User userId(final String userId) {
         this.setUserId((new UserId()).id(userId));
         return this;
@@ -100,6 +102,7 @@ public class User {
      * @param auths the user auths to add
      * @return this User instance.
      */
+    @Generated
     public User auths(final String... auths) {
         this.setAuths(new HashSet<>(Arrays.asList(auths)));
         return this;
@@ -111,11 +114,13 @@ public class User {
      * @param auths the user auths to add
      * @return this User instance.
      */
+    @Generated
     public User auths(final Set<String> auths) {
         this.setAuths(auths);
         return this;
     }
 
+    @Generated
     public User addAuths(final Set<String> auths) {
         requireNonNull(auths, "Cannot add null auths.");
         this.auths.addAll(auths);
@@ -128,12 +133,13 @@ public class User {
      * @param roles the user roles to add
      * @return this User instance.
      */
+    @Generated
     public User roles(final String... roles) {
         this.setRoles(new HashSet<>(Arrays.asList(roles)));
         return this;
     }
 
-
+    @Generated
     public User addRoles(final Set<String> roles) {
         this.setRoles(roles);
         return this;
@@ -145,6 +151,7 @@ public class User {
      * @param roles the user roles to add
      * @return this User instance.
      */
+    @Generated
     public User roles(final Set<String> roles) {
         this.setRoles(roles);
         return this;
@@ -184,6 +191,7 @@ public class User {
     }
 
     @JsonGetter("class")
+    @Generated
     public String _getClass() {
         return getClass().getName();
     }

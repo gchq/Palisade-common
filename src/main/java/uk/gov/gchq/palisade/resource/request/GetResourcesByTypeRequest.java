@@ -39,6 +39,7 @@ public class GetResourcesByTypeRequest extends Request {
      * @param type the type of the {@link uk.gov.gchq.palisade.resource.Resource}'s that you want to know about
      * @return the {@link GetResourcesByTypeRequest}
      */
+    @Generated
     public GetResourcesByTypeRequest type(final String type) {
         this.setType(type);
         return this;
