@@ -17,7 +17,6 @@
 package uk.gov.gchq.palisade.resource;
 
 import uk.gov.gchq.palisade.Generated;
-import uk.gov.gchq.palisade.ToStringBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
