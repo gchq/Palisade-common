@@ -45,7 +45,7 @@ import java.util.Map.Entry;
 public interface PolicyCacheWarmerFactory {
 
     /**
-     * Creates a {@link Policy} using the data within an implementation of the {@link PolicyCacheWarmerFactory}.
+     * Creates a {@link Policy} that is associated to a {@link Resource} using the data within an implementation of the {@link PolicyCacheWarmerFactory}.
      *
      * @param users     a {@link List} of {@link UserCacheWarmerFactory} implementations
      * @return          an {@link Entry} value that consists of a {@link Resource} and the created {@link Policy}.
