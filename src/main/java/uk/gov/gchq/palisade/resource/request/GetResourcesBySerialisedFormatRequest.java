@@ -15,6 +15,7 @@
  */
 package uk.gov.gchq.palisade.resource.request;
 
+import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.service.request.Request;
 
 import java.util.Objects;
@@ -38,22 +39,25 @@ public class GetResourcesBySerialisedFormatRequest extends Request {
      * @param serialisedFormat the serialisedFormat of the {@link uk.gov.gchq.palisade.resource.Resource}'s that you want to know about
      * @return the {@link GetResourcesBySerialisedFormatRequest}
      */
+    @Generated
     public GetResourcesBySerialisedFormatRequest serialisedFormat(final String serialisedFormat) {
-        requireNonNull(serialisedFormat, "The serialised format cannot be set to null.");
-        this.serialisedFormat = serialisedFormat;
+        this.setSerialisedFormat(serialisedFormat);
         return this;
     }
 
+    @Generated
     public String getSerialisedFormat() {
-        requireNonNull(serialisedFormat, "The serialised format has not been set.");
         return serialisedFormat;
     }
 
+    @Generated
     public void setSerialisedFormat(final String serialisedFormat) {
-        serialisedFormat(serialisedFormat);
+        requireNonNull(serialisedFormat);
+        this.serialisedFormat = serialisedFormat;
     }
 
     @Override
+    @Generated
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
@@ -65,18 +69,21 @@ public class GetResourcesBySerialisedFormatRequest extends Request {
             return false;
         }
         GetResourcesBySerialisedFormatRequest that = (GetResourcesBySerialisedFormatRequest) o;
-        return getSerialisedFormat().equals(that.getSerialisedFormat());
+        return serialisedFormat.equals(that.serialisedFormat);
     }
 
     @Override
+    @Generated
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getSerialisedFormat());
+        return Objects.hash(super.hashCode(), serialisedFormat);
     }
 
     @Override
+    @Generated
     public String toString() {
         return new StringJoiner(", ", GetResourcesBySerialisedFormatRequest.class.getSimpleName() + "[", "]")
                 .add("serialisedFormat='" + serialisedFormat + "'")
+                .add(super.toString())
                 .toString();
     }
 }

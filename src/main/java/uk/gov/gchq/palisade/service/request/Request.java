@@ -16,12 +16,12 @@
 
 package uk.gov.gchq.palisade.service.request;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.RequestId;
-import uk.gov.gchq.palisade.ToStringBuilder;
 
+import java.util.Objects;
+import java.util.StringJoiner;
 import java.util.UUID;
 
 import static java.util.Objects.requireNonNull;
@@ -38,57 +38,55 @@ public abstract class Request {
         this.id = new RequestId().id(UUID.randomUUID().toString());
     }
 
+    @Generated
     public Request originalRequestId(final RequestId originalRequestId) {
-        requireNonNull(originalRequestId, "The originalRequestId cannot be set to null.");
-        this.originalRequestId = originalRequestId;
+        this.setOriginalRequestId(originalRequestId);
         return this;
     }
 
+    @Generated
     public RequestId getId() {
-        //id will never be null - set on construction
         return id;
     }
 
-    public void setOriginalRequestId(final RequestId originalRequestId) {
-        originalRequestId(originalRequestId);
-    }
 
+    @Generated
     public RequestId getOriginalRequestId() {
-        requireNonNull(originalRequestId, "The originalRequestId type cannot be null");
         return originalRequestId;
     }
 
+    @Generated
+    public void setOriginalRequestId(final RequestId originalRequestId) {
+        requireNonNull(originalRequestId);
+        this.originalRequestId = originalRequestId;
+    }
+
     @Override
+    @Generated
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
-
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Request)) {
             return false;
         }
-
-        final Request request = (Request) o;
-
-        return new EqualsBuilder()
-                .append(id, request.id)
-                .append(originalRequestId, request.originalRequestId)
-                .isEquals();
+        Request request = (Request) o;
+        return id.equals(request.id) &&
+                originalRequestId.equals(request.originalRequestId);
     }
 
     @Override
+    @Generated
     public int hashCode() {
-        return new HashCodeBuilder(5, 37)
-                .append(id)
-                .append(originalRequestId)
-                .toHashCode();
+        return Objects.hash(id, originalRequestId);
     }
 
     @Override
+    @Generated
     public String toString() {
-        return new ToStringBuilder(this)
-                .append("id", id)
-                .append("originalRequestId", originalRequestId)
+        return new StringJoiner(", ", Request.class.getSimpleName() + "[", "]")
+                .add("id=" + id)
+                .add("originalRequestId=" + originalRequestId)
                 .toString();
     }
 }

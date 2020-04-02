@@ -16,16 +16,16 @@
 
 package uk.gov.gchq.palisade.service.request;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import uk.gov.gchq.palisade.Context;
-import uk.gov.gchq.palisade.ToStringBuilder;
+import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.User;
 import uk.gov.gchq.palisade.resource.LeafResource;
 import uk.gov.gchq.palisade.rule.Rules;
 
 import java.util.Map;
+import java.util.Objects;
+import java.util.StringJoiner;
 
 import static java.util.Objects.requireNonNull;
 
@@ -43,88 +43,90 @@ public class DataRequestConfig extends Request {
         //no-args constructor needed for serialization only
     }
 
+    @Generated
     public DataRequestConfig user(final User user) {
-        requireNonNull(user, "User cannot be set to null.");
-        this.user = user;
+        this.setUser(user);
         return this;
     }
 
-    public void setUser(final User user) {
-        user(user);
+    @Generated
+    public DataRequestConfig context(final Context context) {
+        this.setContext(context);
+        return this;
     }
 
+    @Generated
+    public DataRequestConfig rules(final Map<LeafResource, Rules> rules) {
+        this.setRules(rules);
+        return this;
+    }
+
+
+    @Generated
     public User getUser() {
-        requireNonNull(user, "The user has not been set.");
         return user;
     }
 
-    public DataRequestConfig context(final Context context) {
-        requireNonNull(context, "Context cannot be set to null.");
-        this.context = context;
-        return this;
+    @Generated
+    public void setUser(final User user) {
+        requireNonNull(user);
+        this.user = user;
     }
 
-    public void setContext(final Context context) {
-        context(context);
-    }
-
+    @Generated
     public Context getContext() {
-        requireNonNull(context, "The context has not been set.");
         return context;
     }
 
-    public DataRequestConfig rules(final Map<LeafResource, Rules> rules) {
-        requireNonNull(rules, "The rules are required.");
-        this.rules = rules;
-        return this;
+    @Generated
+    public void setContext(final Context context) {
+        requireNonNull(context);
+        this.context = context;
     }
 
-    public void setRules(final Map<LeafResource, Rules> rules) {
-        rules(rules);
-    }
-
+    @Generated
     public Map<LeafResource, Rules> getRules() {
-        requireNonNull(rules, "The Rules have not been set.");
         return rules;
     }
 
+    @Generated
+    public void setRules(final Map<LeafResource, Rules> rules) {
+        requireNonNull(rules);
+        this.rules = rules;
+    }
+
     @Override
+    @Generated
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
-
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof DataRequestConfig)) {
             return false;
         }
-
-        final DataRequestConfig that = (DataRequestConfig) o;
-
-        return new EqualsBuilder()
-                .appendSuper(super.equals(o))
-                .append(user, that.user)
-                .append(context, that.context)
-                .append(rules, that.rules)
-                .isEquals();
+        if (!super.equals(o)) {
+            return false;
+        }
+        DataRequestConfig that = (DataRequestConfig) o;
+        return user.equals(that.user) &&
+                context.equals(that.context) &&
+                rules.equals(that.rules);
     }
 
     @Override
+    @Generated
     public int hashCode() {
-        return new HashCodeBuilder(53, 37)
-                .appendSuper(super.hashCode())
-                .append(user)
-                .append(context)
-                .append(rules)
-                .toHashCode();
+        return Objects.hash(super.hashCode(), user, context, rules);
     }
 
     @Override
+    @Generated
     public String toString() {
-        return new ToStringBuilder(this)
-                .appendSuper(super.toString())
-                .append("user", user)
-                .append("context", context)
-                .append("rules", rules)
+        return new StringJoiner(", ", DataRequestConfig.class.getSimpleName() + "[", "]")
+                .add("user=" + user)
+                .add("context=" + context)
+                .add("rules=" + rules)
+                .add(super.toString())
                 .toString();
     }
 }

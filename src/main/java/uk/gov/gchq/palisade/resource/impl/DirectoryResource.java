@@ -16,12 +16,15 @@
 
 package uk.gov.gchq.palisade.resource.impl;
 
-import uk.gov.gchq.palisade.ToStringBuilder;
+import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.resource.AbstractResource;
 import uk.gov.gchq.palisade.resource.ChildResource;
 import uk.gov.gchq.palisade.resource.ParentResource;
 
 import java.util.Objects;
+import java.util.StringJoiner;
+
+import static java.util.Objects.requireNonNull;
 
 public class DirectoryResource extends AbstractResource implements ChildResource, ParentResource {
 
@@ -41,23 +44,25 @@ public class DirectoryResource extends AbstractResource implements ChildResource
     }
 
     public DirectoryResource parent(final ParentResource parent) {
-        Objects.requireNonNull(parent, "The parent cannot be set to null");
-        this.parent = parent;
+        this.setParent(parent);
         return this;
     }
 
     @Override
+    @Generated
     public ParentResource getParent() {
-        Objects.requireNonNull(parent, "The parent resource has not been set for this resource.");
         return parent;
     }
 
     @Override
+    @Generated
     public void setParent(final ParentResource parent) {
-        parent(parent);
+        requireNonNull(parent);
+        this.parent = parent;
     }
 
     @Override
+    @Generated
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
@@ -68,20 +73,22 @@ public class DirectoryResource extends AbstractResource implements ChildResource
         if (!super.equals(o)) {
             return false;
         }
-        final DirectoryResource that = (DirectoryResource) o;
-        return Objects.equals(parent, that.parent);
+        DirectoryResource that = (DirectoryResource) o;
+        return parent.equals(that.parent);
     }
 
     @Override
+    @Generated
     public int hashCode() {
         return Objects.hash(super.hashCode(), parent);
     }
 
     @Override
+    @Generated
     public String toString() {
-        return new ToStringBuilder(this)
-                .appendSuper(super.toString())
-                .append("parent", parent)
+        return new StringJoiner(", ", DirectoryResource.class.getSimpleName() + "[", "]")
+                .add("parent=" + parent)
+                .add(super.toString())
                 .toString();
     }
 }

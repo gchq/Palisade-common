@@ -18,17 +18,18 @@ package uk.gov.gchq.palisade.rule;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import uk.gov.gchq.palisade.ToStringBuilder;
+import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.jsonserialisation.JSONSerialiser;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.StringJoiner;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * This class is used to encapsulate the list of {@link Rule}s that apply to a resource and is provided with a user
@@ -59,24 +60,16 @@ public class Rules<T> {
      * @param rules the rules to set
      * @return this Rules instance
      */
+    @Generated
     public Rules<T> rules(final Map<String, Rule<T>> rules) {
-        Objects.requireNonNull(rules, "Rules can not be set to null.");
-        this.rulesHashMap.clear();
-        this.rulesHashMap.putAll(rules);
+        this.setRules(rules);
         return this;
     }
 
-    public void setRules(final Map<String, Rule<T>> rules) {
-        rules(rules);
-    }
 
-    public Map<String, Rule<T>> getRules() {
-        // no need for a null check as it can not be null
-        return rulesHashMap;
-    }
-
+    @Generated
     public Rules<T> addRules(final Map<String, Rule<T>> rules) {
-        Objects.requireNonNull(rules, "Cannot add null to the existing rules.");
+        requireNonNull(rules, "Cannot add null to the existing rules.");
         this.rulesHashMap.putAll(rules);
         return this;
     }
@@ -87,19 +80,10 @@ public class Rules<T> {
      * @param message user friendly message to explain what the set of rules are.
      * @return this Rules instance
      */
+    @Generated
     public Rules<T> message(final String message) {
-        Objects.requireNonNull(message, "The message can not be set to null.");
-        this.message = message;
+        this.setMessage(message);
         return this;
-    }
-
-    public void setMessage(final String message) {
-        message(message);
-    }
-
-    public String getMessage() {
-        // The message will never be null
-        return message;
     }
 
     /**
@@ -109,9 +93,10 @@ public class Rules<T> {
      * @param rule the rule
      * @return this Rules instance
      */
+    @Generated
     public Rules<T> rule(final String id, final Rule<T> rule) {
-        Objects.requireNonNull(id, ID_CANNOT_BE_NULL);
-        Objects.requireNonNull(rule, RULE_CANNOT_BE_NULL);
+        requireNonNull(id, ID_CANNOT_BE_NULL);
+        requireNonNull(rule, RULE_CANNOT_BE_NULL);
         rulesHashMap.put(id, rule);
         return this;
     }
@@ -123,10 +108,9 @@ public class Rules<T> {
      * @param rule the predicate rule
      * @return this Rules instance
      */
+    @Generated
     public Rules<T> predicateRule(final String id, final PredicateRule<T> rule) {
-        Objects.requireNonNull(id, ID_CANNOT_BE_NULL);
-        Objects.requireNonNull(rule, RULE_CANNOT_BE_NULL);
-        rulesHashMap.put(id, rule);
+        this.rule(id, rule);
         return this;
     }
 
@@ -138,10 +122,9 @@ public class Rules<T> {
      * @param rule the simple predicate rule
      * @return this Rules instance
      */
+    @Generated
     public Rules<T> simplePredicateRule(final String id, final Predicate<T> rule) {
-        Objects.requireNonNull(id, ID_CANNOT_BE_NULL);
-        Objects.requireNonNull(rule, RULE_CANNOT_BE_NULL);
-        rulesHashMap.put(id, new WrappedRule<>(rule));
+        this.rule(id, new WrappedRule<>(rule));
         return this;
     }
 
@@ -153,11 +136,32 @@ public class Rules<T> {
      * @param rule the simple function rule
      * @return this Rules instance
      */
+    @Generated
     public Rules<T> simpleFunctionRule(final String id, final UnaryOperator<T> rule) {
-        Objects.requireNonNull(id, ID_CANNOT_BE_NULL);
-        Objects.requireNonNull(rule, RULE_CANNOT_BE_NULL);
-        rulesHashMap.put(id, new WrappedRule<>(rule));
+        this.rule(id, new WrappedRule<>(rule));
         return this;
+    }
+
+    @Generated
+    public String getMessage() {
+        return message;
+    }
+
+    @Generated
+    public void setMessage(final String message) {
+        requireNonNull(message);
+        this.message = message;
+    }
+
+    @Generated
+    public Map<String, Rule<T>> getRules() {
+        return rulesHashMap;
+    }
+
+    @Generated
+    public void setRules(final Map<String, Rule<T>> rulesHashMap) {
+        requireNonNull(rulesHashMap);
+        this.rulesHashMap = rulesHashMap;
     }
 
     /**
@@ -181,7 +185,7 @@ public class Rules<T> {
                     .append(this.rulesHashMap.keySet(), that.getRules().keySet());
 
             if (builder.isEquals()) {
-                for (final Entry<String, Rule<T>> entry : this.rulesHashMap.entrySet()) {
+                for (final Map.Entry<String, Rule<T>> entry : this.rulesHashMap.entrySet()) {
                     final String ruleName = entry.getKey();
                     final Rule thisRule = entry.getValue();
                     final Rule thatRule = that.getRules().get(ruleName);
@@ -193,7 +197,7 @@ public class Rules<T> {
                     }
 
                     if (!builder.isEquals()) {
-                       return false;
+                        return false;
                     }
                 }
             }
@@ -203,18 +207,18 @@ public class Rules<T> {
     }
 
     @Override
+    @Generated
     public int hashCode() {
-        final HashCodeBuilder builder = new HashCodeBuilder(17, 37)
-                .append(message);
-        rulesHashMap.forEach((s, tRule) -> builder.append(s).append(JSONSerialiser.serialise(tRule)));
-        return builder.toHashCode();
+        return Objects.hash(message, rulesHashMap);
     }
 
     @Override
+    @Generated
     public String toString() {
-        return new ToStringBuilder(this)
-                .append("message", message)
-                .append("rules", rulesHashMap)
-                .build();
+        return new StringJoiner(", ", Rules.class.getSimpleName() + "[", "]")
+                .add("message='" + message + "'")
+                .add("rulesHashMap=" + rulesHashMap)
+                .add(super.toString())
+                .toString();
     }
 }

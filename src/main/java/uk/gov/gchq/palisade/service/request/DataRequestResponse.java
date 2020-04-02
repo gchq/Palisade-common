@@ -16,14 +16,13 @@
 
 package uk.gov.gchq.palisade.service.request;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-
-import uk.gov.gchq.palisade.ToStringBuilder;
+import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.resource.LeafResource;
 import uk.gov.gchq.palisade.service.ConnectionDetail;
 
 import java.util.Map;
+import java.util.Objects;
+import java.util.StringJoiner;
 import java.util.TreeMap;
 
 import static java.util.Objects.requireNonNull;
@@ -43,80 +42,86 @@ public class DataRequestResponse extends Request {
         //no-args constructor needed for serialization only
     }
 
+    @Generated
     public DataRequestResponse token(final String token) {
-        requireNonNull(token, "The token cannot be null.");
-        this.token = token;
+        this.setToken(token);
         return this;
     }
 
-    public void setToken(final String token) {
-        token(token);
-    }
-
-    public String getToken() {
-        requireNonNull(token, "The token has not been set.");
-        return token;
-    }
-
+    @Generated
     public DataRequestResponse resource(final LeafResource resource, final ConnectionDetail connectionDetail) {
-        requireNonNull(resource, "The resource cannot be null.");
-        requireNonNull(connectionDetail, "The connection details cannot be null.");
-        if (null == resources) {
+        this.addResource(resource, connectionDetail);
+        return this;
+    }
+
+    @Generated
+    public DataRequestResponse resources(final Map<LeafResource, ConnectionDetail> resources) {
+        this.setResources(resources);
+        return this;
+    }
+
+
+    public void addResource(final LeafResource resource, final ConnectionDetail connectionDetail) {
+        requireNonNull(resource);
+        requireNonNull(connectionDetail);
+        if (resources == null) {
             resources = new TreeMap<>();
         }
         resources.put(resource, connectionDetail);
-        return this;
     }
 
-    public DataRequestResponse resources(final Map<LeafResource, ConnectionDetail> resources) {
-        requireNonNull(resources, "The resources cannot be null.");
-        this.resources = resources;
-        return this;
+    @Generated
+    public String getToken() {
+        return token;
     }
 
-    public void setResources(final Map<LeafResource, ConnectionDetail> resources) {
-        resources(resources);
+    @Generated
+    public void setToken(final String token) {
+        requireNonNull(token);
+        this.token = token;
     }
 
+    @Generated
     public Map<LeafResource, ConnectionDetail> getResources() {
-        requireNonNull(resources, "The Resources have not been set.");
         return resources;
     }
 
+    @Generated
+    public void setResources(final Map<LeafResource, ConnectionDetail> resources) {
+        requireNonNull(resources);
+        this.resources = resources;
+    }
+
     @Override
+    @Generated
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
-
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof DataRequestResponse)) {
             return false;
         }
-
-        final DataRequestResponse that = (DataRequestResponse) o;
-
-        return new EqualsBuilder()
-                .appendSuper(super.equals(o))
-                .append(token, that.token)
-                .append(resources, that.resources)
-                .isEquals();
+        if (!super.equals(o)) {
+            return false;
+        }
+        DataRequestResponse that = (DataRequestResponse) o;
+        return token.equals(that.token) &&
+                resources.equals(that.resources);
     }
 
     @Override
+    @Generated
     public int hashCode() {
-        return new HashCodeBuilder(17, 67)
-                .appendSuper(super.hashCode())
-                .append(token)
-                .append(resources)
-                .toHashCode();
+        return Objects.hash(super.hashCode(), token, resources);
     }
 
     @Override
+    @Generated
     public String toString() {
-        return new ToStringBuilder(this)
-                .appendSuper(super.toString())
-                .append("token", token)
-                .append("resources", resources)
+        return new StringJoiner(", ", DataRequestResponse.class.getSimpleName() + "[", "]")
+                .add("token='" + token + "'")
+                .add("resources=" + resources)
+                .add(super.toString())
                 .toString();
     }
 }

@@ -18,12 +18,14 @@ package uk.gov.gchq.palisade;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import java.util.Collections;
+
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
+import java.util.StringJoiner;
+
 
 import static java.util.Objects.requireNonNull;
 
@@ -45,8 +47,8 @@ import static java.util.Objects.requireNonNull;
         property = "class"
 )
 public class User {
-    private UserId userId;
 
+    private UserId userId;
     private Set<String> roles = new HashSet<>();
     private Set<String> auths = new HashSet<>();
 
@@ -59,24 +61,14 @@ public class User {
 
     /**
      * Copy constructor for a {@link User}.
+     *
      * @param user the {@link User} that will be copied.
      */
     User(final User user) {
         requireNonNull(user, "User to be cloned cannot be null");
-        userId = user.getUserId();
-        roles = user.getRoles();
-        auths = user.getAuths();
-    }
-
-    /**
-     * Sets the userId to a {@link UserId} with the given userId string.
-     *
-     * @param userId the unique user ID string.
-     * @return this User instance.
-     */
-    public User userId(final String userId) {
-        requireNonNull(userId, "The user id cannot be set to null.");
-        return userId(new UserId().id(userId));
+        this.setUserId(user.getUserId());
+        this.setRoles(user.getRoles());
+        this.setAuths(user.getAuths());
     }
 
     /**
@@ -85,19 +77,23 @@ public class User {
      * @param userId the userId
      * @return this User instance.
      */
+    @Generated
     public User userId(final UserId userId) {
-        requireNonNull(userId, "The user id cannot be set to null.");
-        this.userId = userId;
+        this.setUserId(userId);
         return this;
     }
 
-    public UserId getUserId() {
-        requireNonNull(userId, "The user id has not been set.");
-        return userId;
-    }
 
-    public void setUserId(final UserId userId) {
-        userId(userId);
+    /**
+     * Sets the userId to a {@link UserId} with the given userId string.
+     *
+     * @param userId the unique user ID string.
+     * @return this User instance.
+     */
+    @Generated
+    public User userId(final String userId) {
+        this.setUserId((new UserId()).id(userId));
+        return this;
     }
 
     /**
@@ -106,10 +102,9 @@ public class User {
      * @param auths the user auths to add
      * @return this User instance.
      */
+    @Generated
     public User auths(final String... auths) {
-        requireNonNull(auths, "Cannot add null auths.");
-        this.auths.clear();
-        Collections.addAll(this.auths, auths);
+        this.setAuths(new HashSet<>(Arrays.asList(auths)));
         return this;
     }
 
@@ -119,26 +114,13 @@ public class User {
      * @param auths the user auths to add
      * @return this User instance.
      */
+    @Generated
     public User auths(final Set<String> auths) {
-        requireNonNull(auths, "Cannot add null auths.");
-        this.auths.clear();
-        this.auths.addAll(auths);
+        this.setAuths(auths);
         return this;
     }
 
-    public void setAuths(final Set<String> auths) {
-        auths(auths);
-    }
-
-    /**
-     * Return the user auths.
-     *
-     * @return the authorisations
-     */
-    public Set<String> getAuths() {
-        return auths;
-    }
-
+    @Generated
     public User addAuths(final Set<String> auths) {
         requireNonNull(auths, "Cannot add null auths.");
         this.auths.addAll(auths);
@@ -151,20 +133,17 @@ public class User {
      * @param roles the user roles to add
      * @return this User instance.
      */
+    @Generated
     public User roles(final String... roles) {
-        requireNonNull(roles, "Cannot add null roles.");
-        this.roles.clear();
-        Collections.addAll(this.roles, roles);
+        this.setRoles(new HashSet<>(Arrays.asList(roles)));
         return this;
     }
 
-    /**
-     * Adds the user roles.
-     *
-     * @param roles the user roles to add
-     */
-    public void setRoles(final Set<String> roles) {
-        roles(roles);
+    @Generated
+    public User addRoles(final Set<String> roles) {
+        requireNonNull(auths, "Cannot add null roles.");
+        this.roles.addAll(roles);
+        return this;
     }
 
     /**
@@ -173,68 +152,80 @@ public class User {
      * @param roles the user roles to add
      * @return this User instance.
      */
+    @Generated
     public User roles(final Set<String> roles) {
-        requireNonNull(roles, "Cannot add null roles.");
-        this.roles.clear();
-        this.roles.addAll(roles);
+        this.setRoles(roles);
         return this;
     }
 
-    /**
-     * Return the user roles.
-     *
-     * @return the roles
-     */
+    @Generated
+    public UserId getUserId() {
+        return userId;
+    }
+
+    @Generated
+    public void setUserId(final UserId userId) {
+        requireNonNull(userId);
+        this.userId = userId;
+    }
+
+    @Generated
     public Set<String> getRoles() {
-        // roles cannot be null
         return roles;
     }
 
-    public User addRoles(final Set<String> roles) {
-        requireNonNull(roles, "Cannot add null roles.");
-        this.roles.addAll(roles);
-        return this;
+    @Generated
+    public void setRoles(final Set<String> roles) {
+        requireNonNull(roles);
+        this.roles = roles;
+    }
+
+    @Generated
+    public Set<String> getAuths() {
+        return auths;
+    }
+
+    @Generated
+    public void setAuths(final Set<String> auths) {
+        requireNonNull(auths);
+        this.auths = auths;
+    }
+
+    @JsonGetter("class")
+    @Generated
+    public String _getClass() {
+        return getClass().getName();
     }
 
     @Override
+    @Generated
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
-
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof User)) {
             return false;
         }
-
-        final User user = (User) o;
-
-        return new EqualsBuilder()
-                .append(userId, user.userId)
-                .append(roles, user.roles)
-                .append(auths, user.auths)
-                .isEquals();
+        User user = (User) o;
+        return userId.equals(user.userId) &&
+                roles.equals(user.roles) &&
+                auths.equals(user.auths);
     }
 
     @Override
+    @Generated
     public int hashCode() {
-        return new HashCodeBuilder(11, 19)
-                .append(userId)
-                .append(roles)
-                .append(auths)
-                .toHashCode();
+        return Objects.hash(userId, roles, auths);
     }
 
     @Override
+    @Generated
     public String toString() {
-        return new ToStringBuilder(this)
-                .append("userId", userId)
-                .append("roles", roles)
-                .append("auths", auths)
+        return new StringJoiner(", ", User.class.getSimpleName() + "[", "]")
+                .add("userId=" + userId)
+                .add("roles=" + roles)
+                .add("auths=" + auths)
+                .add(super.toString())
                 .toString();
-    }
-
-    @JsonGetter("class")
-    public String _getClass() {
-        return getClass().getName();
     }
 }

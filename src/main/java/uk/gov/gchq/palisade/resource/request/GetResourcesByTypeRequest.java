@@ -15,6 +15,7 @@
  */
 package uk.gov.gchq.palisade.resource.request;
 
+import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.service.request.Request;
 
 import java.util.Objects;
@@ -38,22 +39,25 @@ public class GetResourcesByTypeRequest extends Request {
      * @param type the type of the {@link uk.gov.gchq.palisade.resource.Resource}'s that you want to know about
      * @return the {@link GetResourcesByTypeRequest}
      */
+    @Generated
     public GetResourcesByTypeRequest type(final String type) {
-        requireNonNull(type, "The resource type cannot be set to null.");
-        this.type = type;
+        this.setType(type);
         return this;
     }
 
+    @Generated
     public String getType() {
-        requireNonNull(type, "The resource type has not been set.");
         return type;
     }
 
+    @Generated
     public void setType(final String type) {
-        type(type);
+        requireNonNull(type);
+        this.type = type;
     }
 
     @Override
+    @Generated
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
@@ -65,18 +69,21 @@ public class GetResourcesByTypeRequest extends Request {
             return false;
         }
         GetResourcesByTypeRequest that = (GetResourcesByTypeRequest) o;
-        return getType().equals(that.getType());
+        return type.equals(that.type);
     }
 
     @Override
+    @Generated
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getType());
+        return Objects.hash(super.hashCode(), type);
     }
 
     @Override
+    @Generated
     public String toString() {
         return new StringJoiner(", ", GetResourcesByTypeRequest.class.getSimpleName() + "[", "]")
                 .add("type='" + type + "'")
+                .add(super.toString())
                 .toString();
     }
 }

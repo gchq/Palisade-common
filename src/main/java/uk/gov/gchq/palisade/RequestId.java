@@ -16,8 +16,9 @@
 
 package uk.gov.gchq.palisade;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+
+import java.util.Objects;
+import java.util.StringJoiner;
 
 import static java.util.Objects.requireNonNull;
 
@@ -32,45 +33,47 @@ public class RequestId {
         //no-args constructor needed for serialization only
     }
 
+    @Generated
     public RequestId id(final String id) {
-        requireNonNull(id, "The id cannot be set to null.");
-        this.id = id;
+        this.setId(id);
         return this;
     }
 
+    @Generated
     public String getId() {
-        requireNonNull(id, "The id has not been set.");
         return id;
     }
 
+    @Generated
+    public void setId(final String id) {
+        requireNonNull(id);
+        this.id = id;
+    }
+
     @Override
+    @Generated
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
-
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof RequestId)) {
             return false;
         }
-
-        final RequestId requestId = (RequestId) o;
-
-        return new EqualsBuilder()
-                .append(id, requestId.id)
-                .isEquals();
+        RequestId requestId = (RequestId) o;
+        return id.equals(requestId.id);
     }
 
     @Override
+    @Generated
     public int hashCode() {
-        return new HashCodeBuilder(13, 37)
-                .append(id)
-                .toHashCode();
+        return Objects.hash(id);
     }
 
     @Override
+    @Generated
     public String toString() {
-        return new ToStringBuilder(this)
-                .append("id", id)
+        return new StringJoiner(", ", RequestId.class.getSimpleName() + "[", "]")
+                .add("id='" + id + "'")
                 .toString();
     }
 }

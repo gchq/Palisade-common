@@ -15,7 +15,10 @@
  */
 package uk.gov.gchq.palisade.exception;
 
+import uk.gov.gchq.palisade.Generated;
+
 import java.util.Arrays;
+import java.util.StringJoiner;
 
 /**
  * Enumerated types for HTTP status codes, loosely based on the JAX-RS 2.0
@@ -101,11 +104,23 @@ public enum Status {
                 .orElseThrow(RuntimeException::new);
     }
 
+    @Generated
     public int getStatusCode() {
         return statusCode;
     }
 
+    @Generated
     public String getReason() {
         return reason;
+    }
+
+    @Override
+    @Generated
+    public String toString() {
+        return new StringJoiner(", ", Status.class.getSimpleName() + "[", "]")
+                .add("statusCode=" + statusCode)
+                .add("reason='" + reason + "'")
+                .add(super.toString())
+                .toString();
     }
 }

@@ -60,6 +60,7 @@ public class Policy<T> {
      *
      * @return UUID.randomUUID
      */
+    @Generated
     private static String generateUUID() {
         return UUID.randomUUID().toString();
     }
@@ -89,6 +90,127 @@ public class Policy<T> {
     }
 
     /**
+     * Record level rule policy.
+     *
+     * @param message the message
+     * @param rule    the rule
+     * @return the policy
+     */
+    @Generated
+    public Policy<T> recordLevelRule(final String message, final Rule<T> rule) {
+        Rules<T> recordLevelRules = getRecordRules();
+        recordLevelRules.rule(generateUUID(), rule);
+        addMessage(message, recordLevelRules);
+        return this;
+    }
+
+    /**
+     * Record level predicate rule policy.
+     *
+     * @param message the message
+     * @param rule    the rule
+     * @return the policy
+     */
+    @Generated
+    public Policy<T> recordLevelPredicateRule(final String message, final PredicateRule<T> rule) {
+        Rules<T> recordLevelRules = getRecordRules();
+        recordLevelRules.predicateRule(generateUUID(), rule);
+        addMessage(message, recordLevelRules);
+        return this;
+    }
+
+    /**
+     * Record level simple predicate rule policy.
+     *
+     * @param message the message
+     * @param rule    the rule
+     * @return the policy
+     */
+    @Generated
+    public Policy<T> recordLevelSimplePredicateRule(final String message, final Predicate<T> rule) {
+        Rules<T> recordLevelRules = getRecordRules();
+        recordLevelRules.simplePredicateRule(generateUUID(), rule);
+        addMessage(message, recordLevelRules);
+        return this;
+    }
+
+    /**
+     * Record level simple function rule policy.
+     *
+     * @param message the message
+     * @param rule    the rule
+     * @return the policy
+     */
+    @Generated
+    public Policy<T> recordLevelSimpleFunctionRule(final String message, final UnaryOperator<T> rule) {
+        Rules<T> recordLevelRules = getRecordRules();
+        recordLevelRules.simpleFunctionRule(generateUUID(), rule);
+        addMessage(message, recordLevelRules);
+        return this;
+    }
+
+    /**
+     * Resource level rule policy.
+     *
+     * @param message the message
+     * @param rule    the rule
+     * @return the policy
+     */
+    @Generated
+    public Policy<T> resourceLevelRule(final String message, final Rule<Resource> rule) {
+        Rules<Resource> resourceLevelRules = getResourceRules();
+        resourceLevelRules.rule(generateUUID(), rule);
+        addMessage(message, resourceLevelRules);
+        return this;
+    }
+
+    /**
+     * Resource level predicate rule policy.
+     *
+     * @param message the message
+     * @param rule    the rule
+     * @return the policy
+     */
+    @Generated
+    public Policy<T> resourceLevelPredicateRule(final String message, final PredicateRule<Resource> rule) {
+        Rules<Resource> resourceLevelRules = getResourceRules();
+        resourceLevelRules.rule(generateUUID(), rule);
+        addMessage(message, resourceLevelRules);
+        return this;
+    }
+
+    /**
+     * Resource level simple predicate rule policy.
+     *
+     * @param message the message
+     * @param rule    the rule
+     * @return the policy
+     */
+    @Generated
+    public Policy<T> resourceLevelSimplePredicateRule(final String message, final Predicate<Resource> rule) {
+        Rules<Resource> resourceLevelRules = getResourceRules();
+        resourceLevelRules.simplePredicateRule(generateUUID(), rule);
+        addMessage(message, resourceLevelRules);
+        return this;
+    }
+
+    /**
+     * Resource level simple function rule policy.
+     *
+     * @param message the message
+     * @param rule    the rule
+     * @return the policy
+     */
+    @Generated
+    public Policy<T> resourceLevelSimpleFunctionRule(final String message, final UnaryOperator<Resource> rule) {
+        Rules<Resource> resourceLevelRules = getResourceRules();
+        resourceLevelRules.simpleFunctionRule(generateUUID(), rule);
+        addMessage(message, resourceLevelRules);
+        return this;
+    }
+
+
+    /**
      * Gets message.
      *
      * @return the message
@@ -99,10 +221,27 @@ public class Policy<T> {
     }
 
     /**
-     * Gets record rules.
+     * Gets owner.
      *
-     * @return the record rules
+     * @return the owner
      */
+    @Generated
+    public User getOwner() {
+        return owner;
+    }
+
+    /**
+     * Sets owner.
+     *
+     * @param owner the owner
+     */
+    @Generated
+    public void setOwner(final User owner) {
+        requireNonNull(owner);
+        this.owner = owner;
+    }
+
+
     @Generated
     public Rules<T> getRecordRules() {
         return recordRules;
@@ -151,166 +290,7 @@ public class Policy<T> {
         }
     }
 
-    /**
-     * Record level rule policy.
-     *
-     * @param message the message
-     * @param rule    the rule
-     * @return the policy
-     */
-    public Policy<T> recordLevelRule(final String message, final Rule<T> rule) {
-        requireNonNull(message, "The message cannot be null and should indicate what the rule is doing.");
-        requireNonNull(rule, "Cannot set a null rule.");
-        Rules<T> recordLevelRules = getRecordRules();
-        recordLevelRules.rule(generateUUID(), rule);
-        addMessage(message, recordLevelRules);
-        return this;
-    }
 
-    /**
-     * Record level predicate rule policy.
-     *
-     * @param message the message
-     * @param rule    the rule
-     * @return the policy
-     */
-    public Policy<T> recordLevelPredicateRule(final String message, final PredicateRule<T> rule) {
-        requireNonNull(message, "The message cannot be null and should indicate what the rule is doing.");
-        requireNonNull(rule, "Cannot set a null rule.");
-        Rules<T> recordLevelRules = getRecordRules();
-        recordLevelRules.rule(generateUUID(), rule);
-        addMessage(message, recordLevelRules);
-        return this;
-    }
-
-    /**
-     * Record level simple predicate rule policy.
-     *
-     * @param message the message
-     * @param rule    the rule
-     * @return the policy
-     */
-    public Policy<T> recordLevelSimplePredicateRule(final String message, final Predicate<T> rule) {
-        requireNonNull(message, "The message cannot be null and should indicate what the rule is doing.");
-        requireNonNull(rule, "Cannot set a null rule.");
-        Rules<T> recordLevelRules = getRecordRules();
-        recordLevelRules.simplePredicateRule(generateUUID(), rule);
-        addMessage(message, recordLevelRules);
-        return this;
-    }
-
-    /**
-     * Record level simple function rule policy.
-     *
-     * @param message the message
-     * @param rule    the rule
-     * @return the policy
-     */
-    public Policy<T> recordLevelSimpleFunctionRule(final String message, final UnaryOperator<T> rule) {
-        requireNonNull(message, "The message cannot be null and should indicate what the rule is doing.");
-        requireNonNull(rule, "Cannot set a null rule.");
-        Rules<T> recordLevelRules = getRecordRules();
-        recordLevelRules.simpleFunctionRule(generateUUID(), rule);
-        addMessage(message, recordLevelRules);
-        return this;
-    }
-
-    /**
-     * Resource level rule policy.
-     *
-     * @param message the message
-     * @param rule    the rule
-     * @return the policy
-     */
-    public Policy<T> resourceLevelRule(final String message, final Rule<Resource> rule) {
-        requireNonNull(message, "The message cannot be null and should indicate what the rule is doing.");
-        requireNonNull(rule, "Cannot set a null rule.");
-        Rules<Resource> resourceLevelRules = getResourceRules();
-        resourceLevelRules.rule(generateUUID(), rule);
-        addMessage(message, resourceLevelRules);
-        return this;
-    }
-
-    /**
-     * Resource level predicate rule policy.
-     *
-     * @param message the message
-     * @param rule    the rule
-     * @return the policy
-     */
-    public Policy<T> resourceLevelPredicateRule(final String message, final PredicateRule<Resource> rule) {
-        requireNonNull(message, "The message cannot be null and should indicate what the rule is doing.");
-        requireNonNull(rule, "Cannot set a null rule.");
-        Rules<Resource> resourceLevelRules = getResourceRules();
-        resourceLevelRules.rule(generateUUID(), rule);
-        addMessage(message, resourceLevelRules);
-        return this;
-    }
-
-    /**
-     * Resource level simple predicate rule policy.
-     *
-     * @param message the message
-     * @param rule    the rule
-     * @return the policy
-     */
-    public Policy<T> resourceLevelSimplePredicateRule(final String message, final Predicate<Resource> rule) {
-        requireNonNull(message, "The message cannot be null and should indicate what the rule is doing.");
-        requireNonNull(rule, "Cannot set a null rule.");
-        Rules<Resource> resourceLevelRules = getResourceRules();
-        resourceLevelRules.simplePredicateRule(generateUUID(), rule);
-        addMessage(message, resourceLevelRules);
-        return this;
-    }
-
-    /**
-     * Resource level simple function rule policy.
-     *
-     * @param message the message
-     * @param rule    the rule
-     * @return the policy
-     */
-    public Policy<T> resourceLevelSimpleFunctionRule(final String message, final UnaryOperator<Resource> rule) {
-        requireNonNull(message, "The message cannot be null and should indicate what the rule is doing.");
-        requireNonNull(rule, "Cannot set a null rule.");
-        Rules<Resource> resourceLevelRules = getResourceRules();
-        resourceLevelRules.simpleFunctionRule(generateUUID(), rule);
-        addMessage(message, resourceLevelRules);
-        return this;
-    }
-
-
-    /**
-     * Gets owner.
-     *
-     * @return the owner
-     */
-    @Generated
-    public User getOwner() {
-        return owner;
-    }
-
-    /**
-     * Sets owner.
-     *
-     * @param owner the owner
-     */
-    @Generated
-    public void setOwner(final User owner) {
-        requireNonNull(owner);
-        this.owner = owner;
-    }
-
-    /**
-     * Owner policy.
-     *
-     * @param owner the owner
-     * @return the policy
-     */
-    public Policy<T> owner(final User owner) {
-        this.setOwner(owner);
-        return this;
-    }
 
     /**
      * Gets nullable owner.
@@ -331,10 +311,10 @@ public class Policy<T> {
         if (!(o instanceof Policy)) {
             return false;
         }
-        final Policy<?> policy = (Policy<?>) o;
-        return Objects.equals(recordRules, policy.recordRules) &&
-                Objects.equals(resourceRules, policy.resourceRules) &&
-                Objects.equals(owner, policy.owner);
+        Policy<?> policy = (Policy<?>) o;
+        return recordRules.equals(policy.recordRules) &&
+                resourceRules.equals(policy.resourceRules) &&
+                owner.equals(policy.owner);
     }
 
     @Override

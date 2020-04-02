@@ -17,14 +17,15 @@ package uk.gov.gchq.palisade.resource.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.RequestId;
-import uk.gov.gchq.palisade.ToStringBuilder;
 import uk.gov.gchq.palisade.exception.ForbiddenException;
 import uk.gov.gchq.palisade.resource.LeafResource;
 import uk.gov.gchq.palisade.service.ConnectionDetail;
 import uk.gov.gchq.palisade.service.request.Request;
 
 import java.util.Objects;
+import java.util.StringJoiner;
 
 import static java.util.Objects.requireNonNull;
 
@@ -44,9 +45,9 @@ public class AddResourceRequest extends Request {
      * @param resource The {@link LeafResource} to be added.
      * @return the {@link AddResourceRequest}
      */
+    @Generated
     public AddResourceRequest resource(final LeafResource resource) {
-        requireNonNull(resource, "The resource cannot be set to null.");
-        this.resource = resource;
+        this.setResource(resource);
         return this;
     }
 
@@ -54,20 +55,12 @@ public class AddResourceRequest extends Request {
      * @param connectionDetail Details of how to get to the data from the {@code DataService}.
      * @return the {@link AddResourceRequest}
      */
+    @Generated
     public AddResourceRequest connectionDetail(final ConnectionDetail connectionDetail) {
-        requireNonNull(connectionDetail, "The connection details cannot be set to null.");
-        this.connectionDetail = connectionDetail;
+        this.setConnectionDetail(connectionDetail);
         return this;
     }
 
-    public LeafResource getResource() {
-        requireNonNull(resource, "The resource has not been set.");
-        return resource;
-    }
-
-    public void setResource(final LeafResource resource) {
-        resource(resource);
-    }
 
     @Override
     public RequestId getOriginalRequestId() {
@@ -79,42 +72,58 @@ public class AddResourceRequest extends Request {
         throw new ForbiddenException("Should not call AddResourceRequest.setOriginalRequestId()");
     }
 
+    @Generated
+    public LeafResource getResource() {
+        return resource;
+    }
+
+    @Generated
+    public void setResource(final LeafResource resource) {
+        requireNonNull(resource);
+        this.resource = resource;
+    }
+
+    @Generated
     public ConnectionDetail getConnectionDetail() {
-        requireNonNull(connectionDetail, "The connection details have not been set.");
         return connectionDetail;
     }
 
+    @Generated
     public void setConnectionDetail(final ConnectionDetail connectionDetail) {
-        connectionDetail(connectionDetail);
+        requireNonNull(connectionDetail);
+        this.connectionDetail = connectionDetail;
     }
 
     @Override
+    @Generated
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof AddResourceRequest)) {
             return false;
         }
         if (!super.equals(o)) {
             return false;
         }
-        final AddResourceRequest that = (AddResourceRequest) o;
+        AddResourceRequest that = (AddResourceRequest) o;
         return resource.equals(that.resource) &&
-                Objects.equals(connectionDetail, that.connectionDetail);
+                connectionDetail.equals(that.connectionDetail);
     }
 
     @Override
+    @Generated
     public int hashCode() {
         return Objects.hash(super.hashCode(), resource, connectionDetail);
     }
 
     @Override
+    @Generated
     public String toString() {
-        return new ToStringBuilder(this)
-                .appendSuper(super.toString())
-                .append("resource", resource)
-                .append("connectionDetail", connectionDetail)
+        return new StringJoiner(", ", AddResourceRequest.class.getSimpleName() + "[", "]")
+                .add("resource=" + resource)
+                .add("connectionDetail=" + connectionDetail)
+                .add(super.toString())
                 .toString();
     }
 }

@@ -16,9 +16,10 @@
 
 package uk.gov.gchq.palisade.service.request;
 
-import uk.gov.gchq.palisade.ToStringBuilder;
+import uk.gov.gchq.palisade.Generated;
 
 import java.util.Objects;
+import java.util.StringJoiner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,9 +34,6 @@ public class ResourceDetails {
     private String format;
 
     public ResourceDetails(final String fileName, final String type, final String format) {
-        requireNonNull(fileName, "fileName");
-        requireNonNull(type, "type");
-        requireNonNull(format, "format");
         this.fileName = fileName;
         this.type = type;
         this.format = format;
@@ -63,44 +61,68 @@ public class ResourceDetails {
         return FILENAME_PATTERN.matcher(fileName);
     }
 
+    @Generated
     public String getFileName() {
         return fileName;
     }
 
+    @Generated
+    public void setFileName(final String fileName) {
+        requireNonNull(fileName);
+        this.fileName = fileName;
+    }
+
+    @Generated
     public String getType() {
         return type;
     }
 
+    @Generated
+    public void setType(final String type) {
+        requireNonNull(type);
+        this.type = type;
+    }
+
+    @Generated
     public String getFormat() {
         return format;
     }
 
+    @Generated
+    public void setFormat(final String format) {
+        requireNonNull(format);
+        this.format = format;
+    }
+
+
     @Override
+    @Generated
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof ResourceDetails)) {
             return false;
         }
-        final ResourceDetails that = (ResourceDetails) o;
+        ResourceDetails that = (ResourceDetails) o;
         return fileName.equals(that.fileName) &&
                 type.equals(that.type) &&
                 format.equals(that.format);
     }
 
     @Override
+    @Generated
     public int hashCode() {
         return Objects.hash(fileName, type, format);
     }
 
     @Override
+    @Generated
     public String toString() {
-        return new ToStringBuilder(this)
-                .appendSuper(super.toString())
-                .append("fileName", fileName)
-                .append("type", type)
-                .append("format", format)
+        return new StringJoiner(", ", ResourceDetails.class.getSimpleName() + "[", "]")
+                .add("fileName='" + fileName + "'")
+                .add("type='" + type + "'")
+                .add("format='" + format + "'")
                 .toString();
     }
 }

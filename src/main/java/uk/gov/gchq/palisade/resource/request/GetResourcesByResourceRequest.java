@@ -15,11 +15,12 @@
  */
 package uk.gov.gchq.palisade.resource.request;
 
-import uk.gov.gchq.palisade.ToStringBuilder;
+import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.resource.Resource;
 import uk.gov.gchq.palisade.service.request.Request;
 
 import java.util.Objects;
+import java.util.StringJoiner;
 
 import static java.util.Objects.requireNonNull;
 
@@ -40,46 +41,51 @@ public class GetResourcesByResourceRequest extends Request {
      * @param resource the {@link Resource} you want to run an {@code ls} on
      * @return the {@link GetResourcesByResourceRequest}
      */
+    @Generated
     public GetResourcesByResourceRequest resource(final Resource resource) {
-        requireNonNull(resource, "The resource cannot be set to null.");
-        this.resource = resource;
+        this.setResource(resource);
         return this;
     }
 
+    @Generated
     public Resource getResource() {
-        requireNonNull(resource, "The resource has not been set.");
         return resource;
     }
 
+    @Generated
     public void setResource(final Resource resource) {
-        resource(resource);
+        requireNonNull(resource);
+        this.resource = resource;
     }
 
     @Override
+    @Generated
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof GetResourcesByResourceRequest)) {
             return false;
         }
         if (!super.equals(o)) {
             return false;
         }
-        final GetResourcesByResourceRequest that = (GetResourcesByResourceRequest) o;
-        return Objects.equals(resource, that.resource);
+        GetResourcesByResourceRequest that = (GetResourcesByResourceRequest) o;
+        return resource.equals(that.resource);
     }
 
     @Override
+    @Generated
     public int hashCode() {
         return Objects.hash(super.hashCode(), resource);
     }
 
     @Override
+    @Generated
     public String toString() {
-        return new ToStringBuilder(this)
-                .appendSuper(super.toString())
-                .append("resource", resource)
+        return new StringJoiner(", ", GetResourcesByResourceRequest.class.getSimpleName() + "[", "]")
+                .add("resource=" + resource)
+                .add(super.toString())
                 .toString();
     }
 }
