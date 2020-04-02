@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Crown Copyright
+ * Copyright 2020 Crown Copyright
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,21 +35,25 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
     public AbstractLeafResource() {
     }
 
+    @Generated
     public AbstractLeafResource type(final String type) {
         this.setType(type);
         return this;
     }
 
+    @Generated
     public AbstractLeafResource serialisedFormat(final String serialisedFormat) {
         this.setSerialisedFormat(serialisedFormat);
         return this;
     }
 
+    @Generated
     public AbstractLeafResource attributes(final Map<String, Object> attributes) {
         this.setAttributes(attributes);
         return this;
     }
 
+    @Generated
     public AbstractLeafResource attribute(final String attributeKey, final Object attributeValue) {
         this.setAttribute(attributeKey, attributeValue);
         return this;
@@ -115,6 +119,7 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
     }
 
 
+    @Generated
     public void setAttribute(final String attributeKey, final Object attributeValue) {
         requireNonNull(attributeKey, "The attributeKey cannot be set to null.");
         requireNonNull(attributeKey, "The attributeValue cannot be set to null.");
@@ -122,9 +127,9 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
 
     }
 
+    @Generated
     public AbstractLeafResource parent(final ParentResource parent) {
-        requireNonNull(parent, "The parent cannot be set to null.");
-        this.parent = parent;
+        this.setParent(parent);
         return this;
     }
 
