@@ -22,6 +22,7 @@ import uk.gov.gchq.palisade.ToStringBuilder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 import static java.util.Objects.requireNonNull;
 
@@ -163,13 +164,14 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
     }
 
     @Override
+    @Generated
     public String toString() {
-        return new ToStringBuilder(this)
-                .appendSuper(super.toString())
-                .append("type", type)
-                .append("serialisedFormat", serialisedFormat)
-                .append("parent", parent)
-                .append("attributes", attributes)
+        return new StringJoiner(", ", AbstractLeafResource.class.getSimpleName() + "[", "]")
+                .add("type='" + type + "'")
+                .add("serialisedFormat='" + serialisedFormat + "'")
+                .add("parent=" + parent)
+                .add("attributes=" + attributes)
+                .add(super.toString())
                 .toString();
     }
 }

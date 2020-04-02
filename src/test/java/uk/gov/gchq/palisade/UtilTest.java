@@ -45,7 +45,7 @@ public class UtilTest {
     @Test
     public void shouldUpdateRecord() throws Exception {
         //given
-        final Rules<String> rules = new Rules<String>().addRule("r1", (record, user, context) -> "fromRule");
+        final Rules<String> rules = new Rules<String>().rule("r1", (record, user, context) -> "fromRule");
         //when
         final String actual1 = applyRulesToItem("String", null, null, rules);
         assertEquals("fromRule", actual1);
@@ -55,8 +55,8 @@ public class UtilTest {
     public void shouldUpdateRecordFromAllRules() throws Exception {
         //given
         final Rules<String> rules = new Rules<String>()
-                .addRule("r1", (record, user, context) -> "fromRule")
-                .addRule("r2", (record, user, context) -> record.concat("2ndRule"));
+                .rule("r1", (record, user, context) -> "fromRule")
+                .rule("r2", (record, user, context) -> record.concat("2ndRule"));
         //when
         final String actual1 = applyRulesToItem("String", null, null, rules);
         //then
@@ -70,8 +70,8 @@ public class UtilTest {
         final AtomicLong recordsReturned = new AtomicLong(0);
         final Stream<String> stream = Arrays.asList("one", "two").stream();
         final Rules<String> rules = new Rules<String>()
-                .addRule("r2", (record, user, context) -> record.concat("2ndRule"))
-                .addRule("r3", (record, user, context) -> record.concat("3rdRule"));
+                .rule("r2", (record, user, context) -> record.concat("2ndRule"))
+                .rule("r3", (record, user, context) -> record.concat("3rdRule"));
         //when
         final List<String> result = Util.applyRulesToStream(stream, null, null, rules, recordsProcessed, recordsReturned).collect(Collectors.toList());
         //then

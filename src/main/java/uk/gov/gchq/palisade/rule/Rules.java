@@ -94,7 +94,7 @@ public class Rules<T> {
      * @return this Rules instance
      */
     @Generated
-    public Rules<T> addRule(final String id, final Rule<T> rule) {
+    public Rules<T> rule(final String id, final Rule<T> rule) {
         requireNonNull(id, ID_CANNOT_BE_NULL);
         requireNonNull(rule, RULE_CANNOT_BE_NULL);
         rulesHashMap.put(id, rule);
@@ -109,8 +109,8 @@ public class Rules<T> {
      * @return this Rules instance
      */
     @Generated
-    public Rules<T> addPredicateRule(final String id, final PredicateRule<T> rule) {
-        this.addRule(id, rule);
+    public Rules<T> predicateRule(final String id, final PredicateRule<T> rule) {
+        this.rule(id, rule);
         return this;
     }
 
@@ -123,8 +123,8 @@ public class Rules<T> {
      * @return this Rules instance
      */
     @Generated
-    public Rules<T> addSimplePredicateRule(final String id, final Predicate<T> rule) {
-        this.addRule(id, new WrappedRule<>(rule));
+    public Rules<T> simplePredicateRule(final String id, final Predicate<T> rule) {
+        this.rule(id, new WrappedRule<>(rule));
         return this;
     }
 
@@ -137,8 +137,8 @@ public class Rules<T> {
      * @return this Rules instance
      */
     @Generated
-    public Rules<T> addSimpleFunctionRule(final String id, final UnaryOperator<T> rule) {
-        this.addRule(id, new WrappedRule<>(rule));
+    public Rules<T> simpleFunctionRule(final String id, final UnaryOperator<T> rule) {
+        this.rule(id, new WrappedRule<>(rule));
         return this;
     }
 
