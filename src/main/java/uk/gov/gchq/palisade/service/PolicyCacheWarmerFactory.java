@@ -48,12 +48,12 @@ public interface PolicyCacheWarmerFactory {
      * Creates a {@link Policy} using the data within an implementation of the {@link PolicyCacheWarmerFactory}.
      *
      * @param users     a {@link List} of {@link UserCacheWarmerFactory} implementations
-     * @return          the {@link Policy} that has been created.
+     * @return          an {@link Entry} value that consists of a {@link Resource} and the created {@link Policy}.
      */
     Entry<Resource, Policy> policyWarm(List<? extends UserCacheWarmerFactory> users);
 
     /**
-     * Creates a {@link Resource} that will be passed to the Policy-Service
+     * Creates a {@link Resource} that will have a policy applied to it.
      *
      * @return the {@link Resource} that has been created.
      */
