@@ -83,4 +83,5 @@ public abstract class AbstractResource implements Resource {
     public int compareTo(final Resource o) {
         return comp.compare(this, o);
     }
+
 }

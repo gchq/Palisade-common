@@ -35,7 +35,6 @@ import java.util.stream.Stream;
 import static java.util.Objects.isNull;
 import static java.util.Objects.requireNonNull;
 
-
 /**
  * Common utility methods.
  */

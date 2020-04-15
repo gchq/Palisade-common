@@ -52,4 +52,5 @@ public interface Resource extends Comparable<Resource> {
     default void _setClass(final String className) {
         // do nothing.
     }
+
 }
