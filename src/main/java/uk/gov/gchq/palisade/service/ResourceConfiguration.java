@@ -18,14 +18,14 @@ package uk.gov.gchq.palisade.service;
 
 import java.util.List;
 
-public interface UserConfiguration {
+public interface ResourceConfiguration {
 
     /**
-     * Gets a {@link List} of the {@link UserPrepopulationFactory} implemented
+     * Gets a {@link List} of the {@link ResourcePrepopulationFactory} implemented
      * objects that have been created from a yaml file.
      *
-     * @return a {@link List} of the objects that have implemented {@link UserPrepopulationFactory}.
+     * @return a {@link List} of the objects that have implemented {@link ResourcePrepopulationFactory}.
      */
-    List<? extends UserPrepopulationFactory> getResources();
+    List<? extends ResourcePrepopulationFactory> getResources();
 
 }

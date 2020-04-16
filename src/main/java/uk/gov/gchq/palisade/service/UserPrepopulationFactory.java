@@ -27,9 +27,9 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import uk.gov.gchq.palisade.User;
 
 /**
- * This class defines the top level of the cache warming.
+ * This class defines the top level of the cache prepopulation.
  * <p>
- * The only requirement is that there is a warm method, used to add data into the relevant cache
+ * The only requirement is that there is a warm method, used to create the object
  */
 @JsonPropertyOrder(value = {"class"}, alphabetic = true)
 @JsonTypeInfo(
@@ -38,14 +38,14 @@ import uk.gov.gchq.palisade.User;
         property = "class"
 )
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
-public interface UserCacheWarmerFactory {
+public interface UserPrepopulationFactory {
 
     /**
-     * Creates a {@link User} using the data within an implementation of the {@link UserCacheWarmerFactory}.
+     * Creates a {@link User} using the data within an implementation of the {@link UserPrepopulationFactory}.
      *
      * @return the {@link User} that has been created.
      */
-    User userWarm();
+    User build();
 
     @JsonGetter("class")
     default String _getClass() {

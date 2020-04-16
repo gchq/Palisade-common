@@ -24,16 +24,12 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import uk.gov.gchq.palisade.resource.Resource;
-import uk.gov.gchq.palisade.service.request.Policy;
-
-import java.util.List;
-import java.util.Map.Entry;
+import uk.gov.gchq.palisade.resource.LeafResource;
 
 /**
- * This class defines the top level of the cache warming.
+ * This class defines the top level of persistence prepopulation.
  * <p>
- * The only requirement is that there is a warm method, used to add data into the relevant cache
+ * The only requirement is that there is a build method to construct a LeafResource
  */
 @JsonPropertyOrder(value = {"class"}, alphabetic = true)
 @JsonTypeInfo(
@@ -42,22 +38,14 @@ import java.util.Map.Entry;
         property = "class"
 )
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
-public interface PolicyCacheWarmerFactory {
+public interface ResourcePrepopulationFactory {
 
     /**
-     * Creates a {@link Policy} that is associated to a {@link Resource} using the data within an implementation of the {@link PolicyCacheWarmerFactory}.
+     * Creates a {@link LeafResource} using the data within an implementation of the {@link ResourcePrepopulationFactory}.
      *
-     * @param users     a {@link List} of {@link UserCacheWarmerFactory} implementations
-     * @return          an {@link Entry} value that consists of a {@link Resource} and the created {@link Policy}.
+     * @return the {@link LeafResource} that has been created.
      */
-    Entry<Resource, Policy> policyWarm(List<? extends UserCacheWarmerFactory> users);
-
-    /**
-     * Creates a {@link Resource} that will have a policy applied to it.
-     *
-     * @return the {@link Resource} that has been created.
-     */
-    Resource createResource();
+    LeafResource build();
 
     @JsonGetter("class")
     default String _getClass() {

@@ -21,18 +21,18 @@ import java.util.List;
 public interface PolicyConfiguration {
 
     /**
-     * Gets a {@link List} of the {@link PolicyCacheWarmerFactory} implemented
+     * Gets a {@link List} of the {@link PolicyPrepopulationFactory} implemented
      * objects that have been created from a yaml file.
      *
-     * @return a {@link List} of the objects that have implemented {@link PolicyCacheWarmerFactory}.
+     * @return a {@link List} of the objects that have implemented {@link PolicyPrepopulationFactory}.
      */
-    List<? extends PolicyCacheWarmerFactory> getPolicies();
+    List<? extends PolicyPrepopulationFactory> getPolicies();
 
     /**
-     * Gets a {@link List} of the {@link UserCacheWarmerFactory} implemented
+     * Gets a {@link List} of the {@link UserPrepopulationFactory} implemented
      * objects that have been created from a yaml file.
      *
-     * @return a {@link List} of the objects that have implemented {@link UserCacheWarmerFactory}.
+     * @return a {@link List} of the objects that have implemented {@link UserPrepopulationFactory}.
      */
-    List<? extends UserCacheWarmerFactory> getUsers();
+    List<? extends UserPrepopulationFactory> getUsers();
 }
