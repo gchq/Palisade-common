@@ -49,8 +49,9 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
         return this;
     }
 
+    @Generated
     public AbstractLeafResource connectionDetail(final ConnectionDetail connectionDetail) {
-        this.connectionDetail = connectionDetail;
+        this.setConnectionDetail(connectionDetail);
         return this;
     }
 

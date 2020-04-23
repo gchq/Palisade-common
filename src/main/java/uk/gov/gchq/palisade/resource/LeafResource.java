@@ -31,6 +31,8 @@ public interface LeafResource extends ChildResource {
 
     LeafResource serialisedFormat(final String serialisedFormat);
 
+    LeafResource connectionDetail(final ConnectionDetail connectionDetail);
+
     String getType();
 
     String getSerialisedFormat();
