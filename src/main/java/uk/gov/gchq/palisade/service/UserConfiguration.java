@@ -26,6 +26,6 @@ public interface UserConfiguration {
      *
      * @return a {@link List} of the objects that have implemented {@link UserPrepopulationFactory}.
      */
-    List<? extends UserPrepopulationFactory> getResources();
+    List<? extends UserPrepopulationFactory> getUsers();
 
 }
