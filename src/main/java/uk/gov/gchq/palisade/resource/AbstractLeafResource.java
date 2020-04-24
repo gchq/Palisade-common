@@ -17,6 +17,7 @@
 package uk.gov.gchq.palisade.resource;
 
 import uk.gov.gchq.palisade.Generated;
+import uk.gov.gchq.palisade.resource.impl.FileResource;
 import uk.gov.gchq.palisade.service.ConnectionDetail;
 
 import java.util.HashMap;
@@ -26,6 +27,12 @@ import java.util.StringJoiner;
 
 import static java.util.Objects.requireNonNull;
 
+/**
+ * This is a partial implementation of a LeafResource which provides basic member-variable storage to implement
+ * methods required of a LeafResource. The only missing detail here is how resourceIds are managed.
+ * See {@link FileResource} for a concrete implementation with an id.
+ * This class is mostly used when deserialisation to a LeafResource is required, but the interface can't be used.
+ */
 public abstract class AbstractLeafResource extends AbstractResource implements LeafResource, ChildResource {
 
     private String type;
