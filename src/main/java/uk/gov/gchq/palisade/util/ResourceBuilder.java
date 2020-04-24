@@ -19,15 +19,21 @@ package uk.gov.gchq.palisade.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import uk.gov.gchq.palisade.resource.LeafResource;
 import uk.gov.gchq.palisade.resource.ParentResource;
 import uk.gov.gchq.palisade.resource.Resource;
 import uk.gov.gchq.palisade.resource.impl.DirectoryResource;
 import uk.gov.gchq.palisade.resource.impl.FileResource;
 import uk.gov.gchq.palisade.resource.impl.SystemResource;
+import uk.gov.gchq.palisade.service.ConnectionDetail;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
+import java.util.Collections;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -48,6 +54,18 @@ import java.util.Objects;
  */
 public class ResourceBuilder {
     private static final Logger LOGGER = LoggerFactory.getLogger(ResourceBuilder.class);
+    private static final URI ROOT;
+
+    static {
+        File userDir = new File(System.getProperty("user.dir"));
+        URI root;
+        try {
+            root = userDir.getCanonicalFile().toURI();
+        } catch (IOException ex) {
+            root = userDir.getAbsoluteFile().toURI();
+        }
+        ROOT = root;
+    }
 
     private ResourceBuilder() {
         // empty private constructor
@@ -67,33 +85,63 @@ public class ResourceBuilder {
         }
     }
 
-    public static Resource create(final URI uri) {
-        // The hostname is all in the connectionDetail still, so we never have file://hostname/some/uri
+    // Create a leafResource from a uri, connectionDetail, type, serialisedFormat and attribute map
+    // Throw IllegalArgumentException if unsupported scheme
+    // Throw ClassCastException if uri did not point to a leaf resource
+    public static LeafResource create(final URI uri, final ConnectionDetail connectionDetail, final String type, final String serialisedFormat, final Map<String, String> attributes) {
+        return ((LeafResource) create(uri, attributes))
+                .connectionDetail(connectionDetail)
+                .type(type)
+                .serialisedFormat(serialisedFormat);
+    }
+
+    // Create a resource from a uri and attribute map
+    // Throw IllegalArgumentException if unsupported scheme
+    public static Resource create(final URI uri, final Map<String, String> attributes) {
+        // If passed relative paths, we can resolve them against the user.dir system property
+        URI absolute = uri.isAbsolute() ? uri : ROOT.resolve(uri);
+        // The hostname is all in the connectionDetail, so we never have a case of file://hostname/some/uri
         // A lot of this is trying to normalize file:///some/uri (file://<no-hostname>/some/uri) to file:/some/uri
-        URI normalize = UriBuilder.create(uri)
-                .withoutScheme()
-                .withoutAuthority()
-                .withoutPath()
-                .withoutQuery()
-                .withoutFragment();
-        if (!normalize.isAbsolute()) {
-            throw new IllegalArgumentException("No support for non-absolute uri " + uri);
-        }
-        switch (Scheme.valueOf(normalize.getScheme())) {
+        URI normal = UriBuilder.create(absolute)
+                    .withoutScheme()
+                    .withoutAuthority()
+                    .withoutPath()
+                    .withoutQuery()
+                    .withoutFragment();
+
+        // This should be assigning the attributes map to the returned object, once resources support attribute maps
+
+        switch (Scheme.valueOf(normal.getScheme())) {
             case file:
             case hdfs:
-                return filesystemSchema(normalize);
+                return filesystemSchema(normal);
             default:
-                throw new IllegalArgumentException("No such implementation for uri scheme " + normalize.getScheme());
+                throw new IllegalArgumentException("No such implementation for uri scheme " + normal.getScheme());
         }
     }
 
-    public static Resource create(final String uriString) {
+    // Create a resource from a uri
+    // Default to an empty attribute map
+    // Throw IllegalArgumentException if unsupported scheme
+    public static Resource create(final URI uri) {
+        return create(uri, Collections.emptyMap());
+    }
+
+    // Create a resource from a uri string and attribute map
+    // Throw IllegalArgumentException if invalid uri string or unsupported scheme
+    public static Resource create(final String uriString, final Map<String, String> attributes) {
         try {
-            return create(new URI(uriString));
+            return create(new URI(uriString), attributes);
         } catch (URISyntaxException ex) {
             throw new IllegalArgumentException("URISyntaxException converting string '" + uriString + "' to uri");
         }
+    }
+
+    // Create a resource from a uri string
+    // Default to an empty attribute map
+    // Throw IllegalArgumentException if invalid uri string or unsupported scheme
+    public static Resource create(final String uriString) {
+        return create(uriString, Collections.emptyMap());
     }
 
     private static FileResource fileResource(final URI uri) {
