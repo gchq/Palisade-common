@@ -54,7 +54,7 @@ spec:
                 git branch: "${env.BRANCH_NAME}", url: 'https://github.com/gchq/Palisade-common.git'
             }
             container('maven') {
-                configFileProvider([job: configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
+                configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
                     sh 'mvn -s $MAVEN_SETTINGS install'
                 }
             }
