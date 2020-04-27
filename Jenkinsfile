@@ -37,6 +37,7 @@ spec:
         }
         stage('Install a Maven project') {
             x = env.BRANCH_NAME
+            configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')])
 
             if (x.substring(0, 2) == "PR") {
                 y = x.substring(3)
@@ -47,7 +48,6 @@ spec:
                 git branch: "${env.BRANCH_NAME}", url: 'https://github.com/gchq/Palisade-common.git'
             }
             container('docker-cmds') {
-                configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
                     sh 'mvn -s $MAVEN_SETTINGS install'
                 }
             }
