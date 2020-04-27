@@ -13,9 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-podTemplate(containers: [
-        containerTemplate(name: 'maven', image: 'maven:3.6.1-jdk-11', ttyEnabled: true, command: 'cat')
-]) {
+
+podTemplate(yaml: '''
+apiVersion: v1
+kind: Pod
+spec:
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 1
+        preference:
+          matchExpressions:
+          - key: palisade-node-name
+            operator: In
+            values: 
+            - node1
+            - node2
+            - node3
+  containers:
+  - name: maven
+    image: maven:3.6.1-jdk-11
+    imagePullPolicy: IfNotPresent
+    command: ['cat']
+    tty: true
+''') {
 
     node(POD_LABEL) {
         stage('Bootstrap') {
