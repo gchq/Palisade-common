@@ -36,22 +36,21 @@ spec:
             sh "echo ${env.BRANCH_NAME}"
         }
         stage('Install a Maven project') {
-            configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
-                    echo " =========== ^^^^^^^^^^^^ Reading config from pipeline script "
-                    sh "cat ${env.$MAVEN_SETTINGS}"
-                    echo " =========== ~~~~~~~~~~~~ ============ "
-                    x = env.BRANCH_NAME
-                    if (x.substring(0, 2) == "PR") {
-                        y = x.substring(3)
-                        git url: 'https://github.com/gchq/Palisade-common.git'
-                        sh "git fetch origin pull/${y}/head:${x}"
-                        sh "git checkout ${x}"
-                    } else { //just a normal branch
-                        git branch: "${env.BRANCH_NAME}", url: 'https://github.com/gchq/Palisade-common.git'
-                    }
-                    container('docker-cmds') {
-                        sh "mvn -s ${env.$MAVEN_SETTINGS} install"
-                    }
+        configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
+                echo " =========== ^^^^^^^^^^^^ Reading config from pipeline script "
+                sh "cat ${env.$MAVEN_SETTINGS}"
+                echo " =========== ~~~~~~~~~~~~ ============ "
+                x = env.BRANCH_NAME
+                if (x.substring(0, 2) == "PR") {
+                    y = x.substring(3)
+                    git url: 'https://github.com/gchq/Palisade-common.git'
+                    sh "git fetch origin pull/${y}/head:${x}"
+                    sh "git checkout ${x}"
+                } else { //just a normal branch
+                    git branch: "${env.BRANCH_NAME}", url: 'https://github.com/gchq/Palisade-common.git'
+                }
+                container('docker-cmds') {
+                    sh "mvn -s ${env.$MAVEN_SETTINGS} install"
                 }
             }
         }
