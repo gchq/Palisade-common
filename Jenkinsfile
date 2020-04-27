@@ -32,10 +32,24 @@ spec:
             - node3
   containers:
   - name: maven
-    image: maven:3.6.1-jdk-11
+    image: 779921734503.dkr.ecr.eu-west-1.amazonaws.com/docker-jnlp-slave-image:INFRA
     imagePullPolicy: IfNotPresent
     command: ['cat']
     tty: true
+    env:
+    - name: TILLER_NAMESPACE
+      value: tiller
+    - name: HELM_HOST
+      value: :44134
+    volumeMounts:
+      - mountPath: /var/run
+        name: docker-sock
+  volumes:
+    - name: docker-graph-storage
+      emptyDir: {}
+    - name: docker-sock
+      hostPath:
+         path: /var/run
 ''') {
 
     node(POD_LABEL) {
