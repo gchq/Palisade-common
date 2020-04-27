@@ -31,7 +31,7 @@ spec:
             - node2
             - node3
   containers:
-  - name: maven
+  - name: docker-cmds
     image: 779921734503.dkr.ecr.eu-west-1.amazonaws.com/jnlp-did:INFRA
     imagePullPolicy: IfNotPresent
     command:
