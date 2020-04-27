@@ -31,25 +31,16 @@ spec:
             - node2
             - node3
   containers:
-  - name: maven
-    image: 779921734503.dkr.ecr.eu-west-1.amazonaws.com/docker-jnlp-slave-image:INFRA
+  - name: docker-cmds
+    image: 779921734503.dkr.ecr.eu-west-1.amazonaws.com/jnlp-did:INFRA
     imagePullPolicy: IfNotPresent
-    command: ['cat']
-    tty: true
+    command:
+    - sleep
+    args:
+    - 99d
     env:
-    - name: TILLER_NAMESPACE
-      value: tiller
-    - name: HELM_HOST
-      value: :44134
-    volumeMounts:
-      - mountPath: /var/run
-        name: docker-sock
-  volumes:
-    - name: docker-graph-storage
-      emptyDir: {}
-    - name: docker-sock
-      hostPath:
-         path: /var/run
+      - name: DOCKER_HOST
+        value: tcp://localhost:2375
 ''') {
 
     node(POD_LABEL) {
@@ -67,7 +58,7 @@ spec:
             } else { //just a normal branch
                 git branch: "${env.BRANCH_NAME}", url: 'https://github.com/gchq/Palisade-common.git'
             }
-            container('maven') {
+            container('docker-cmds') {
                 configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
                     sh 'mvn -s $MAVEN_SETTINGS install'
                 }
