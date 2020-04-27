@@ -31,16 +31,11 @@ spec:
             - node2
             - node3
   containers:
-  - name: docker-cmds
-    image: 779921734503.dkr.ecr.eu-west-1.amazonaws.com/jnlp-did:INFRA
+  - name: maven
+    image: maven:3.6.1-jdk-11
     imagePullPolicy: IfNotPresent
     command:
-    - sleep
-    args:
-    - 99d
-    env:
-      - name: DOCKER_HOST
-        value: tcp://localhost:2375
+    - cat
 ''') {
 
     node(POD_LABEL) {
@@ -57,14 +52,14 @@ spec:
                 } else { //just a normal branch
                     git branch: "${env.BRANCH_NAME}", url: 'https://github.com/gchq/Palisade-common.git'
                 }
-                container('docker-cmds') {
+                container('maven') {
                     configFileProvider([configFile(fileId: '450d38e2-db65-4601-8be0-8621455e93b5', variable: 'MAVEN_SETTINGS')]) {
                     sh 'mvn -s $MAVEN_SETTINGS install'
                 }
             }
         }
         stage('SonarQube analysis') {
-            container('docker-cmds') {
+            container('maven') {
                 withCredentials([string(credentialsId: '3dc8e0fb-23de-471d-8009-ed1d5890333a', variable: 'SONARQUBE_WEBHOOK'),
                                 string(credentialsId: 'b01b7c11-ccdf-4ac5-b022-28c9b861379a', variable: 'KEYSTORE_PASS'),
                                 file(credentialsId: '91d1a511-491e-4fac-9da5-a61b7933f4f6', variable: 'KEYSTORE')]) {
