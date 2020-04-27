@@ -18,18 +18,6 @@ podTemplate(yaml: '''
 apiVersion: v1
 kind: Pod
 spec:
-  affinity:
-    nodeAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-      - weight: 1
-        preference:
-          matchExpressions:
-          - key: palisade-node-name
-            operator: In
-            values: 
-            - node1
-            - node2
-            - node3
   containers:
   - name: docker-cmds
     image: 779921734503.dkr.ecr.eu-west-1.amazonaws.com/jnlp-did:INFRA
