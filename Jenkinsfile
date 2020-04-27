@@ -36,7 +36,7 @@ spec:
             sh "echo ${env.BRANCH_NAME}"
         }
         stage('Install a Maven project') {
-        configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
+        configFileProvider([configFile(fileId: '450d38e2-db65-4601-8be0-8621455e93b5', variable: 'MAVEN_SETTINGS')]) {
                 echo " =========== ^^^^^^^^^^^^ Reading config from pipeline script "
                 sh "cat ${env.$MAVEN_SETTINGS}"
                 echo " =========== ~~~~~~~~~~~~ ============ "
