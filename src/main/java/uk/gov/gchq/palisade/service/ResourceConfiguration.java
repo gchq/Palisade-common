@@ -18,7 +18,6 @@ package uk.gov.gchq.palisade.service;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Map;
 
 public interface ResourceConfiguration {
 
@@ -27,9 +26,8 @@ public interface ResourceConfiguration {
      * objects that have been created from a yaml file, paired with the {@link URI} of the topmost parent
      * that resource should be prepopulated up-to.
      *
-     * @param <T> the implementation of ResourcePrepopulationFactory
      * @return a {@link List} of the objects that have implemented {@link ResourcePrepopulationFactory}.
      */
-    <T extends ResourcePrepopulationFactory> Map<URI, List<T>> getResources();
+    List<? extends ResourcePrepopulationFactory> getResources();
 
 }
