@@ -164,8 +164,15 @@
 
     </dependencies>
 
-
     <profiles>
+        <profile>
+            <id>quick</id>
+            <properties>
+                <maven.test.skip>true</maven.test.skip>
+                <checkstyle.skip>true</checkstyle.skip>
+                <dockerfile.skip>true</dockerfile.skip>
+            </properties>
+        </profile>
         <profile>
             <id>default</id>
             <activation>
