@@ -75,6 +75,17 @@
         <sonar.language>java</sonar.language>
     </properties>
 
+    <profiles>
+        <profile>
+            <id>quick</id>
+            <properties>
+                <maven.test.skip>true</maven.test.skip>
+                <checkstyle.skip>true</checkstyle.skip>
+                <dockerfile.skip>true</dockerfile.skip>
+            </properties>
+        </profile>
+    </profiles>
+
     <scm>
         <developerConnection>scm:git:ssh://git@github.com:gchq/Palisade-services.git</developerConnection>
         <url>https://github.com/gchq/Palisade-services</url>

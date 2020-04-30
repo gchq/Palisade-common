@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 podTemplate(containers: [
         containerTemplate(name: 'maven', image: 'maven:3.6.1-jdk-11', ttyEnabled: true, command: 'cat')
 ]) {
@@ -29,7 +30,7 @@ podTemplate(containers: [
         }
 
         stage('Install, Unit Tests, Checkstyle') {
-            dir ('Palisade-common') {
+            dir('Palisade-common') {
                 git url: 'https://github.com/gchq/Palisade-common.git'
                 sh "git fetch origin develop"
                 sh "git checkout ${GIT_BRANCH_NAME} || git checkout develop"
@@ -42,7 +43,7 @@ podTemplate(containers: [
         }
 
         stage('SonarQube analysis') {
-            dir ('Palisade-common') {
+            dir('Palisade-common') {
                 container('maven') {
                     withCredentials([string(credentialsId: '3dc8e0fb-23de-471d-8009-ed1d5890333a', variable: 'SONARQUBE_WEBHOOK'),
                                      string(credentialsId: 'b01b7c11-ccdf-4ac5-b022-28c9b861379a', variable: 'KEYSTORE_PASS'),
@@ -58,7 +59,7 @@ podTemplate(containers: [
         }
 
         stage('Maven deploy') {
-            dir ('Palisade-common') {
+            dir('Palisade-common') {
                 container('maven') {
                     configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
                         if (("${env.BRANCH_NAME}" == "develop") ||
@@ -78,7 +79,7 @@ podTemplate(containers: [
     }
     // No need to occupy a node
     stage("SonarQube Quality Gate") {
-        timeout(time: 1, unit: 'HOURS') {
+        timeout(time: 1, unit: 'MINUTES') {
             // Just in case something goes wrong, pipeline will be killed after a timeout
             def qg = waitForQualityGate()
             // Reuse taskId previously collected by withSonarQubeEnv
