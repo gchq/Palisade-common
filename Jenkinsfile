@@ -32,8 +32,7 @@ podTemplate(containers: [
         stage('Install, Unit Tests, Checkstyle') {
             dir('Palisade-common') {
                 git url: 'https://github.com/gchq/Palisade-common.git'
-                sh "git fetch origin develop"
-                sh "git checkout ${GIT_BRANCH_NAME} || git checkout develop"
+                sh "git checkout ${GIT_BRANCH_NAME}"
                 container('maven') {
                     configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
                         sh 'mvn -s $MAVEN_SETTINGS install'
