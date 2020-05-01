@@ -168,7 +168,7 @@
         <profile>
             <id>quick</id>
             <properties>
-                <maven.test.skip>true</maven.test.skip>
+                <skipTests>true</skipTests>
                 <checkstyle.skip>true</checkstyle.skip>
                 <dockerfile.skip>true</dockerfile.skip>
             </properties>
