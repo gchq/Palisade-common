@@ -73,7 +73,6 @@ public class ResourceBuilder {
 
     private enum Scheme {
         file,
-        hdfs
     }
 
     public static boolean canCreate(final URI uri) {
@@ -113,7 +112,6 @@ public class ResourceBuilder {
 
         switch (Scheme.valueOf(normal.getScheme())) {
             case file:
-            case hdfs:
                 return filesystemSchema(normal);
             default:
                 throw new IllegalArgumentException("No such implementation for uri scheme " + normal.getScheme());
