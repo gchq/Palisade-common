@@ -67,6 +67,7 @@ spec:
         }
 
         stage('SonarQube analysis') {
+            dir('Palisade-common') {
             container('docker-cmds') {
                 withCredentials([string(credentialsId: "${env.SQ_WEB_HOOK}", variable: 'SONARQUBE_WEBHOOK'),
                                 string(credentialsId: "${env.SQ_KEY_STORE_PASS}", variable: 'KEYSTORE_PASS'),
