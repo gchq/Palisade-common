@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Crown Copyright
+ * Copyright 2020 Crown Copyright
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,25 +44,28 @@ spec:
 ''') {
 
     node(POD_LABEL) {
+        def GIT_BRANCH_NAME
+
         stage('Bootstrap') {
-            sh "echo ${env.BRANCH_NAME}"
+            if (env.CHANGE_BRANCH) {
+                GIT_BRANCH_NAME=env.CHANGE_BRANCH
+            } else {
+                GIT_BRANCH_NAME=env.BRANCH_NAME
+            }
+            echo sh(script: 'env | sort', returnStdout: true)
         }
-        stage('Install a Maven project') {
-                x = env.BRANCH_NAME
-                if (x.substring(0, 2) == "PR") {
-                    y = x.substring(3)
-                    git url: 'https://github.com/gchq/Palisade-common.git'
-                    sh "git fetch origin pull/${y}/head:${x}"
-                    sh "git checkout ${x}"
-                } else { //just a normal branch
-                    git branch: "${env.BRANCH_NAME}", url: 'https://github.com/gchq/Palisade-common.git'
-                }
+        stage('Install, Unit Tests, Checkstyle') {
+            dir('Palisade-common') {
+                git url: 'https://github.com/gchq/Palisade-common.git'
+                sh "git checkout ${GIT_BRANCH_NAME}"
                 container('docker-cmds') {
                     configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
-                    sh 'mvn -s $MAVEN_SETTINGS install'
+                        sh 'mvn -s $MAVEN_SETTINGS install'
+                    }
                 }
             }
         }
+
         stage('SonarQube analysis') {
             container('docker-cmds') {
                 withCredentials([string(credentialsId: "${env.SQ_WEB_HOOK}", variable: 'SONARQUBE_WEBHOOK'),
@@ -76,37 +79,33 @@ spec:
                 }
             }
         }
-        stage('Build a Maven project') {
-            x = env.BRANCH_NAME
 
-            if (x.substring(0, 2) == "PR") {
-                y = x.substring(3)
-                git url: 'https://github.com/gchq/Palisade-common.git'
-                sh "git fetch origin pull/${y}/head:${x}"
-                sh "git checkout ${x}"
-            } else { //just a normal branch
-                git branch: "${env.BRANCH_NAME}", url: 'https://github.com/gchq/Palisade-common.git'
+        stage("SonarQube Quality Gate") {
+            // Wait for SonarQube to prepare the report
+            sleep(time: 10, unit: 'SECONDS')
+            // Just in case something goes wrong, pipeline will be killed after a timeout
+            timeout(time: 5, unit: 'MINUTES') {
+                // Reuse taskId previously collected by withSonarQubeEnv
+                def qg = waitForQualityGate()
+                if (qg.status != 'OK') {
+                    error "Pipeline aborted due to SonarQube quality gate failure: ${qg.status}"
+                }
             }
-            container('docker-cmds') {
-                configFileProvider(
-                        [configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
-                    if (("${env.BRANCH_NAME}" == "develop") ||
-                            ("${env.BRANCH_NAME}" == "master")) {
-                        sh 'mvn -s $MAVEN_SETTINGS deploy -Pdefault -Pavro'
-                    } else {
-                        sh "echo - no deploy"
+        }
+        stage('Maven deploy') {
+            dir('Palisade-common') {
+                container('maven') {
+                    configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
+                        if (("${env.BRANCH_NAME}" == "develop") ||
+                                ("${env.BRANCH_NAME}" == "master") ||
+                                ("${env.BRANCH_NAME}" == "PAL-324-new-infrastructure-changes")) {
+                            sh 'mvn -s $MAVEN_SETTINGS deploy -P default,quick,avro'
+                        } else {
+                            sh "echo - no deploy"
+                        }
                     }
                 }
             }
         }
     }
-    // No need to occupy a node
-        stage("SonarQube Quality Gate"){
-          timeout(time: 1, unit: 'HOURS') { // Just in case something goes wrong, pipeline will be killed after a timeout
-            def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
-            if (qg.status != 'OK') {
-              error "Pipeline aborted due to SonarQube quality gate failure: ${qg.status}"
-            }
-          }
-        }
 }
