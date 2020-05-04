@@ -48,9 +48,9 @@ spec:
 
         stage('Bootstrap') {
             if (env.CHANGE_BRANCH) {
-                GIT_BRANCH_NAME=env.CHANGE_BRANCH
+                GIT_BRANCH_NAME = env.CHANGE_BRANCH
             } else {
-                GIT_BRANCH_NAME=env.BRANCH_NAME
+                GIT_BRANCH_NAME = env.BRANCH_NAME
             }
             echo sh(script: 'env | sort', returnStdout: true)
         }
@@ -68,41 +68,42 @@ spec:
 
         stage('SonarQube analysis') {
             dir('Palisade-common') {
-            container('docker-cmds') {
-                withCredentials([string(credentialsId: "${env.SQ_WEB_HOOK}", variable: 'SONARQUBE_WEBHOOK'),
-                                string(credentialsId: "${env.SQ_KEY_STORE_PASS}", variable: 'KEYSTORE_PASS'),
-                                file(credentialsId: "${env.SQ_KEY_STORE}", variable: 'KEYSTORE')]) {
-                    configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
-                        withSonarQubeEnv(installationName: 'sonar') {
-                            sh 'mvn -s $MAVEN_SETTINGS org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar -Dsonar.projectKey="Palisade-Common-${BRANCH_NAME}" -Dsonar.projectName="Palisade-Common-${BRANCH_NAME}" -Dsonar.webhooks.project=$SONARQUBE_WEBHOOK -Djavax.net.ssl.trustStore=$KEYSTORE -Djavax.net.ssl.trustStorePassword=$KEYSTORE_PASS'
+                container('docker-cmds') {
+                    withCredentials([string(credentialsId: "${env.SQ_WEB_HOOK}", variable: 'SONARQUBE_WEBHOOK'),
+                                     string(credentialsId: "${env.SQ_KEY_STORE_PASS}", variable: 'KEYSTORE_PASS'),
+                                     file(credentialsId: "${env.SQ_KEY_STORE}", variable: 'KEYSTORE')]) {
+                        configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
+                            withSonarQubeEnv(installationName: 'sonar') {
+                                sh 'mvn -s $MAVEN_SETTINGS org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar -Dsonar.projectKey="Palisade-Common-${BRANCH_NAME}" -Dsonar.projectName="Palisade-Common-${BRANCH_NAME}" -Dsonar.webhooks.project=$SONARQUBE_WEBHOOK -Djavax.net.ssl.trustStore=$KEYSTORE -Djavax.net.ssl.trustStorePassword=$KEYSTORE_PASS'
+                            }
                         }
                     }
                 }
             }
-        }
 
-        stage("SonarQube Quality Gate") {
-            // Wait for SonarQube to prepare the report
-            sleep(time: 10, unit: 'SECONDS')
-            // Just in case something goes wrong, pipeline will be killed after a timeout
-            timeout(time: 5, unit: 'MINUTES') {
-                // Reuse taskId previously collected by withSonarQubeEnv
-                def qg = waitForQualityGate()
-                if (qg.status != 'OK') {
-                    error "Pipeline aborted due to SonarQube quality gate failure: ${qg.status}"
+            stage("SonarQube Quality Gate") {
+                // Wait for SonarQube to prepare the report
+                sleep(time: 10, unit: 'SECONDS')
+                // Just in case something goes wrong, pipeline will be killed after a timeout
+                timeout(time: 5, unit: 'MINUTES') {
+                    // Reuse taskId previously collected by withSonarQubeEnv
+                    def qg = waitForQualityGate()
+                    if (qg.status != 'OK') {
+                        error "Pipeline aborted due to SonarQube quality gate failure: ${qg.status}"
+                    }
                 }
             }
-        }
-        stage('Maven deploy') {
-            dir('Palisade-common') {
-                container('maven') {
-                    configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
-                        if (("${env.BRANCH_NAME}" == "develop") ||
-                                ("${env.BRANCH_NAME}" == "master") ||
-                                ("${env.BRANCH_NAME}" == "PAL-324-new-infrastructure-changes")) {
-                            sh 'mvn -s $MAVEN_SETTINGS deploy -P default,quick,avro'
-                        } else {
-                            sh "echo - no deploy"
+            stage('Maven deploy') {
+                dir('Palisade-common') {
+                    container('maven') {
+                        configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
+                            if (("${env.BRANCH_NAME}" == "develop") ||
+                                    ("${env.BRANCH_NAME}" == "master") ||
+                                    ("${env.BRANCH_NAME}" == "PAL-324-new-infrastructure-changes")) {
+                                sh 'mvn -s $MAVEN_SETTINGS deploy -P default,quick,avro'
+                            } else {
+                                sh "echo - no deploy"
+                            }
                         }
                     }
                 }
