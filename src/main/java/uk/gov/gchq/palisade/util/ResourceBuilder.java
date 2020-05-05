@@ -73,7 +73,7 @@ public class ResourceBuilder {
 
     private enum Scheme {
         file,
-        hdfs,
+        hdfs
     }
 
     public static boolean canCreate(final URI uri) {
