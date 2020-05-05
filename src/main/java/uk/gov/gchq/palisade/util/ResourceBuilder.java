@@ -73,6 +73,7 @@ public class ResourceBuilder {
 
     private enum Scheme {
         file,
+        hdfs,
     }
 
     public static boolean canCreate(final URI uri) {
@@ -111,7 +112,9 @@ public class ResourceBuilder {
         // This should be assigning the attributes map to the returned object, once resources support attribute maps
 
         switch (Scheme.valueOf(normal.getScheme())) {
+            // Both file:/ and hdfs:/ schema produce filesystem-like structures
             case file:
+            case hdfs:
                 return filesystemSchema(normal);
             default:
                 throw new IllegalArgumentException("No such implementation for uri scheme " + normal.getScheme());
