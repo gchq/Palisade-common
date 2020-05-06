@@ -15,8 +15,10 @@
  */
 package uk.gov.gchq.palisade.exception;
 
+import uk.gov.gchq.palisade.service.request.Request;
+
 /**
- * An abstract exception thrown by Palisade components when unable to satisfy a particular {@link uk.gov.gchq.palisade.service.request.Request}.
+ * An abstract exception thrown by Palisade components when unable to satisfy a particular {@link Request}.
  * Exception sub-classes should specify more detailed reasons.
  */
 public abstract class RequestFailedException extends PalisadeRuntimeException {

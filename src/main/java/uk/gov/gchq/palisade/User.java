@@ -19,13 +19,11 @@ package uk.gov.gchq.palisade;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.StringJoiner;
-
 
 import static java.util.Objects.requireNonNull;
 

@@ -24,6 +24,11 @@ import java.util.StringJoiner;
 
 import static java.util.Objects.requireNonNull;
 
+/**
+ * This is a partial implementation of a Resource which provides basic member-variable storage to implement
+ * methods required of a Resource.
+ * This class is mostly used when deserialisation to a Resource is required, but the interface can't be used.
+ */
 public abstract class AbstractResource implements Resource {
 
     private static Comparator<Resource> comp = Comparator.comparing(Resource::getId);
@@ -83,4 +88,5 @@ public abstract class AbstractResource implements Resource {
     public int compareTo(final Resource o) {
         return comp.compare(this, o);
     }
+
 }

@@ -16,6 +16,8 @@
 
 package uk.gov.gchq.palisade.resource;
 
+import uk.gov.gchq.palisade.service.ConnectionDetail;
+
 /**
  * A leaf resource is the interface for any resource that can be read for data
  * and is not just part of the hierarchical resource structure.
@@ -29,6 +31,8 @@ public interface LeafResource extends ChildResource {
 
     LeafResource serialisedFormat(final String serialisedFormat);
 
+    LeafResource connectionDetail(final ConnectionDetail connectionDetail);
+
     String getType();
 
     String getSerialisedFormat();
@@ -36,4 +40,9 @@ public interface LeafResource extends ChildResource {
     void setType(final String type);
 
     void setSerialisedFormat(final String serialisedFormat);
+
+    ConnectionDetail getConnectionDetail();
+
+    void setConnectionDetail(final ConnectionDetail connectionDetail);
+
 }

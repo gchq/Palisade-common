@@ -16,23 +16,20 @@
 
 package uk.gov.gchq.palisade.service;
 
+import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
-public interface PolicyConfiguration {
-
-    /**
-     * Gets a {@link List} of the {@link PolicyPrepopulationFactory} implemented
-     * objects that have been created from a yaml file.
-     *
-     * @return a {@link List} of the objects that have implemented {@link PolicyPrepopulationFactory}.
-     */
-    List<? extends PolicyPrepopulationFactory> getPolicies();
+public interface ResourceConfiguration {
 
     /**
-     * Gets a {@link List} of the {@link UserPrepopulationFactory} implemented
-     * objects that have been created from a yaml file.
+     * Gets a {@link List} of the {@link ResourcePrepopulationFactory} implemented
+     * objects that have been created from a yaml file, paired with the {@link URI} of the topmost parent
+     * that resource should be prepopulated up-to.
      *
-     * @return a {@link List} of the objects that have implemented {@link UserPrepopulationFactory}.
+     * @param <T> the implementation of ResourcePrepopulationFactory
+     * @return a {@link List} of the objects that have implemented {@link ResourcePrepopulationFactory}.
      */
-    List<? extends UserPrepopulationFactory> getUsers();
+    <T extends ResourcePrepopulationFactory> Map<URI, List<T>> getResources();
+
 }

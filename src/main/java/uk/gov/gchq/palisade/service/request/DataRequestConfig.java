@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.palisade.service.request;
 
-
 import uk.gov.gchq.palisade.Context;
 import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.User;

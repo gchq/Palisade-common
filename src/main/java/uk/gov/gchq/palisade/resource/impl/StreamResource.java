@@ -19,6 +19,7 @@ package uk.gov.gchq.palisade.resource.impl;
 import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.resource.AbstractLeafResource;
 import uk.gov.gchq.palisade.resource.ParentResource;
+import uk.gov.gchq.palisade.service.ConnectionDetail;
 
 import java.util.Map;
 import java.util.Objects;
@@ -45,6 +46,11 @@ public class StreamResource extends AbstractLeafResource {
     @Override
     public StreamResource serialisedFormat(final String serialisedFormat) {
         return (StreamResource) super.serialisedFormat(serialisedFormat);
+    }
+
+    @Override
+    public StreamResource connectionDetail(final ConnectionDetail connectionDetail) {
+        return (StreamResource) super.connectionDetail(connectionDetail);
     }
 
     @Override

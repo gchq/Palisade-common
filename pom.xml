@@ -161,7 +161,6 @@
             <version>${common-maths}</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <profiles>
