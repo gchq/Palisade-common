@@ -25,6 +25,10 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import uk.gov.gchq.palisade.resource.LeafResource;
+import uk.gov.gchq.palisade.resource.Resource;
+
+import java.util.Map.Entry;
+import java.util.function.Function;
 
 /**
  * This class defines the top level of persistence prepopulation.
@@ -43,9 +47,10 @@ public interface ResourcePrepopulationFactory {
     /**
      * Creates a {@link LeafResource} using the data within an implementation of the {@link ResourcePrepopulationFactory}.
      *
+     * @param connectionDetailMapper a function mapping the connection detail {@link String}s to proper {@link ConnectionDetail}s
      * @return the {@link LeafResource} that has been created.
      */
-    LeafResource build();
+    Entry<Resource, LeafResource> build(Function<String, ConnectionDetail> connectionDetailMapper);
 
     @JsonGetter("class")
     default String _getClass() {
