@@ -21,6 +21,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Optional;
 
+/**
+ * Convenience wrapper around the {@link URI} constructors.
+ * Allows constructing new URIs from an immutable baseUri, with appropriate optionals for each part.
+ */
 public class UriBuilder {
 
     private Optional<URI> baseUri = Optional.empty();
