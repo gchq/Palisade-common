@@ -48,16 +48,10 @@ public interface PolicyPrepopulationFactory {
      * Creates a {@link Policy} that is associated to a {@link Resource} using the data within an implementation of the {@link PolicyPrepopulationFactory}.
      *
      * @param users     a {@link List} of {@link UserPrepopulationFactory} implementations
+     * @param resources a {@link List} of {@link ResourcePrepopulationFactory} implementations
      * @return          an {@link Entry} value that consists of a {@link Resource} and the created {@link Policy}.
      */
-    Entry<Resource, Policy> build(List<? extends UserPrepopulationFactory> users);
-
-    /**
-     * Creates a {@link Resource} that will have a policy applied to it.
-     *
-     * @return the {@link Resource} that has been created.
-     */
-    Resource createResource();
+    Entry<Resource, Policy> build(List<? extends UserPrepopulationFactory> users, List<? extends ResourcePrepopulationFactory> resources);
 
     @JsonGetter("class")
     default String _getClass() {
