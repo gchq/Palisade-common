@@ -28,11 +28,4 @@ public interface PolicyConfiguration {
      */
     List<? extends PolicyPrepopulationFactory> getPolicies();
 
-    /**
-     * Gets a {@link List} of the {@link UserPrepopulationFactory} implemented
-     * objects that have been created from a yaml file.
-     *
-     * @return a {@link List} of the objects that have implemented {@link UserPrepopulationFactory}.
-     */
-    List<? extends UserPrepopulationFactory> getUsers();
 }
