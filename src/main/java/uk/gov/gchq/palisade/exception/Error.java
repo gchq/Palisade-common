@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
 import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.util.DebugUtil;
 
-import java.lang.reflect.Constructor;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -145,29 +144,7 @@ public final class Error {
                 .toString();
     }
 
-    public RuntimeException createException() {
-        if (null == exceptionClass) {
-            return new PalisadeWrappedErrorRuntimeException(this);
-        }
 
-        if (null != simpleMessage) {
-            try {
-                final Constructor<? extends RuntimeException> constructor = exceptionClass.getConstructor(String.class);
-                return constructor.newInstance(simpleMessage);
-            } catch (final Exception e) {
-                LOGGER.error("Unable to recreate exception with message for error {}", this, e);
-            }
-        }
-
-        try {
-            return exceptionClass.getDeclaredConstructor().newInstance();
-        } catch (final Exception e) {
-            // ignore
-        }
-
-        return new PalisadeWrappedErrorRuntimeException(this);
-
-    }
 
 
     public static final class ErrorBuilder {
