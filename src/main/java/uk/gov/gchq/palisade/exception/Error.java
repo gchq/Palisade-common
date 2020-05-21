@@ -17,9 +17,6 @@
 package uk.gov.gchq.palisade.exception;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.util.DebugUtil;
 
@@ -35,7 +32,6 @@ import static java.util.Objects.requireNonNull;
  * manually.
  */
 public final class Error {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Error.class);
 
     private int statusCode;
     private Status status;
@@ -143,8 +139,6 @@ public final class Error {
                 .add("exceptionClass=" + exceptionClass)
                 .toString();
     }
-
-
 
 
     public static final class ErrorBuilder {
