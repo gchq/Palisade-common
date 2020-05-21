@@ -92,10 +92,10 @@ public class AvroSerialiser<O> implements Serialiser<O> {
             } finally {
                 try {
                     dataFileWriter.flush();
-                    dataFileWriter.close();
                 } catch (IOException e) {
                     LOGGER.warn("Unable to flush Avro DataFileWriter", e);
                 }
+                dataFileWriter.close();
             }
         }
     }
