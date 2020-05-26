@@ -39,18 +39,27 @@
     <properties>
         <!-- Versions -->
         <java.version>11</java.version>
+        <revision>SNAPSHOT</revision>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
+        <encoding>UTF-8</encoding>
+        <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
+
+        <!-- Plugins -->
         <jar.plugin.version>3.1.1</jar.plugin.version>
+        <javadoc.plugin.version>3.2.0</javadoc.plugin.version>
         <compiler.plugin.version>3.8.0</compiler.plugin.version>
-        <javadoc.plugin.version>3.0.1</javadoc.plugin.version>
+        <depends.phase>validate</depends.phase>
+        <depends.maven.version>3.1.1</depends.maven.version>
+
+        <!-- Dependencies -->
         <slf4j.api.version>1.7.25</slf4j.api.version>
         <slf4j.simple.version>1.7.25</slf4j.simple.version>
         <jackson.version>2.10.0</jackson.version>
         <commons-io.version>2.6</commons-io.version>
         <commons-lang3.version>3.8.1</commons-lang3.version>
         <avro.version>1.8.2</avro.version>
-        <maven-jar-plugin.version>2.2</maven-jar-plugin.version>
 
         <!-- Testing properties -->
         <junit.version>4.12</junit.version>
@@ -60,13 +69,6 @@
         <checkstyle.phase>verify</checkstyle.phase>
         <mockito.core>3.1.0</mockito.core>
         <common-maths>3.1.1</common-maths>
-        <revision>SNAPSHOT</revision>
-
-        <!-- Other -->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <depends.phase>validate</depends.phase>
-        <depends.maven.version>3.1.1</depends.maven.version>
 
         <!-- Sonar -->
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
@@ -161,14 +163,15 @@
             <version>${common-maths}</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <profiles>
         <profile>
             <id>quick</id>
             <properties>
+                <!-- Allow for test-compile stage to build common-tests jar -->
                 <skipTests>true</skipTests>
+                <maven.javadoc.skip>true</maven.javadoc.skip>
                 <checkstyle.skip>true</checkstyle.skip>
                 <dockerfile.skip>true</dockerfile.skip>
             </properties>
@@ -228,8 +231,29 @@
             </build>
         </profile>
     </profiles>
+
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${javadoc.plugin.version}</version>
+                <configuration>
+                    <show>private</show>
+                    <nohelp>true</nohelp>
+                    <quiet>true</quiet>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>javadoc</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>javadoc-no-fork</goal>
+                            <goal>aggregate-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

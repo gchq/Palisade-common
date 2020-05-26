@@ -17,6 +17,7 @@
 package uk.gov.gchq.palisade.resource;
 
 import uk.gov.gchq.palisade.resource.impl.SystemResource;
+import uk.gov.gchq.palisade.service.ConnectionDetail;
 
 import java.util.Comparator;
 
@@ -28,10 +29,11 @@ public class StubResource extends AbstractLeafResource {
 
     }
 
-    public StubResource(final String type, final String id, final String format) {
+    public StubResource(final String type, final String id, final String format, final ConnectionDetail connectionDetail) {
         id(id);
         type(type);
         serialisedFormat(format);
+        connectionDetail(connectionDetail);
         parent(PARENT);
     }
 

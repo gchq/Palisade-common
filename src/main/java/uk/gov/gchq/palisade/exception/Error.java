@@ -17,13 +17,9 @@
 package uk.gov.gchq.palisade.exception;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.util.DebugUtil;
 
-import java.lang.reflect.Constructor;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -36,7 +32,6 @@ import static java.util.Objects.requireNonNull;
  * manually.
  */
 public final class Error {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Error.class);
 
     private int statusCode;
     private Status status;
@@ -143,30 +138,6 @@ public final class Error {
                 .add("detailMessage='" + detailMessage + "'")
                 .add("exceptionClass=" + exceptionClass)
                 .toString();
-    }
-
-    public RuntimeException createException() {
-        if (null == exceptionClass) {
-            return new PalisadeWrappedErrorRuntimeException(this);
-        }
-
-        if (null != simpleMessage) {
-            try {
-                final Constructor<? extends RuntimeException> constructor = exceptionClass.getConstructor(String.class);
-                return constructor.newInstance(simpleMessage);
-            } catch (final Exception e) {
-                LOGGER.error("Unable to recreate exception with message for error {}", this, e);
-            }
-        }
-
-        try {
-            return exceptionClass.getDeclaredConstructor().newInstance();
-        } catch (final Exception e) {
-            // ignore
-        }
-
-        return new PalisadeWrappedErrorRuntimeException(this);
-
     }
 
 

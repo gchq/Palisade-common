@@ -39,22 +39,7 @@ public final class ErrorFactory {
         // Empty
     }
 
-    /**
-     * Create an {@link uk.gov.gchq.palisade.exception.Error} object from a
-     * {@link uk.gov.gchq.palisade.exception.PalisadeCheckedException}.
-     *
-     * @param gex the exception object
-     * @return a newly constructed {@link uk.gov.gchq.palisade.exception.Error}
-     */
-    public static Error from(final PalisadeCheckedException gex) {
-        LOGGER.error("Error: {}", gex.getMessage(), gex);
-        return new ErrorBuilder()
-                .status(gex.getStatus())
-                .simpleMessage(gex.getMessage())
-                .detailMessage(Arrays.asList(gex.getStackTrace()).stream().map(StackTraceElement::toString).collect(Collectors.joining("\n")))
-                .exceptionClass(gex)
-                .build();
-    }
+
 
     /**
      * Create an {@link uk.gov.gchq.palisade.exception.Error} object from a
@@ -73,17 +58,7 @@ public final class ErrorFactory {
                 .build();
     }
 
-    /**
-     * Create an {@link uk.gov.gchq.palisade.exception.Error} object from a
-     * {@link uk.gov.gchq.palisade.exception.PalisadeWrappedErrorRuntimeException}.
-     *
-     * @param gex the exception object
-     * @return the error from within the exception
-     */
-    public static Error from(final PalisadeWrappedErrorRuntimeException gex) {
-        LOGGER.error("Error: {}", gex.getError().getSimpleMessage(), gex);
-        return gex.getError();
-    }
+
 
     /**
      * Create an {@link uk.gov.gchq.palisade.exception.Error} object from an

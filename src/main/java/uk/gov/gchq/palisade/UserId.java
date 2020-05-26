@@ -16,14 +16,13 @@
 
 package uk.gov.gchq.palisade;
 
-
 import java.util.Objects;
 import java.util.StringJoiner;
 
 import static java.util.Objects.requireNonNull;
 
 /**
- * A {@link UserId} uniquely identifies a {@link uk.gov.gchq.palisade.User}.
+ * A {@link UserId} uniquely identifies a {@link User}.
  */
 public class UserId {
 

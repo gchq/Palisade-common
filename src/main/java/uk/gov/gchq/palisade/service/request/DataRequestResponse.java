@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Crown Copyright
+ * Copyright 2020 Crown Copyright
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +18,11 @@ package uk.gov.gchq.palisade.service.request;
 
 import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.resource.LeafResource;
-import uk.gov.gchq.palisade.service.ConnectionDetail;
 
-import java.util.Map;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import java.util.StringJoiner;
-import java.util.TreeMap;
 
 import static java.util.Objects.requireNonNull;
 
@@ -36,7 +35,7 @@ import static java.util.Objects.requireNonNull;
  */
 public class DataRequestResponse extends Request {
     private String token;
-    private Map<LeafResource, ConnectionDetail> resources;
+    private Set<LeafResource> resources;
 
     public DataRequestResponse() {
         //no-args constructor needed for serialization only
@@ -49,25 +48,24 @@ public class DataRequestResponse extends Request {
     }
 
     @Generated
-    public DataRequestResponse resource(final LeafResource resource, final ConnectionDetail connectionDetail) {
-        this.addResource(resource, connectionDetail);
+    public DataRequestResponse resource(final LeafResource resource) {
+        this.addResource(resource);
         return this;
     }
 
     @Generated
-    public DataRequestResponse resources(final Map<LeafResource, ConnectionDetail> resources) {
+    public DataRequestResponse resources(final Set<LeafResource> resources) {
         this.setResources(resources);
         return this;
     }
 
 
-    public void addResource(final LeafResource resource, final ConnectionDetail connectionDetail) {
+    public void addResource(final LeafResource resource) {
         requireNonNull(resource);
-        requireNonNull(connectionDetail);
         if (resources == null) {
-            resources = new TreeMap<>();
+            resources = new HashSet<>();
         }
-        resources.put(resource, connectionDetail);
+        resources.add(resource);
     }
 
     @Generated
@@ -82,12 +80,12 @@ public class DataRequestResponse extends Request {
     }
 
     @Generated
-    public Map<LeafResource, ConnectionDetail> getResources() {
+    public Set<LeafResource> getResources() {
         return resources;
     }
 
     @Generated
-    public void setResources(final Map<LeafResource, ConnectionDetail> resources) {
+    public void setResources(final Set<LeafResource> resources) {
         requireNonNull(resources);
         this.resources = resources;
     }

@@ -17,6 +17,8 @@
 package uk.gov.gchq.palisade.resource;
 
 import uk.gov.gchq.palisade.Generated;
+import uk.gov.gchq.palisade.resource.impl.FileResource;
+import uk.gov.gchq.palisade.service.ConnectionDetail;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,10 +27,17 @@ import java.util.StringJoiner;
 
 import static java.util.Objects.requireNonNull;
 
+/**
+ * This is a partial implementation of a LeafResource which provides basic member-variable storage to implement
+ * methods required of a LeafResource. The only missing detail here is how resourceIds are managed.
+ * See {@link FileResource} for a concrete implementation with an id.
+ * This class is mostly used when deserialisation to a LeafResource is required, but the interface can't be used.
+ */
 public abstract class AbstractLeafResource extends AbstractResource implements LeafResource, ChildResource {
 
     private String type;
     private String serialisedFormat;
+    private ConnectionDetail connectionDetail;
     private ParentResource parent;
     private Map<String, Object> attributes = new HashMap<>();
 
@@ -44,6 +53,12 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
     @Generated
     public AbstractLeafResource serialisedFormat(final String serialisedFormat) {
         this.setSerialisedFormat(serialisedFormat);
+        return this;
+    }
+
+    @Generated
+    public AbstractLeafResource connectionDetail(final ConnectionDetail connectionDetail) {
+        this.setConnectionDetail(connectionDetail);
         return this;
     }
 
@@ -93,6 +108,19 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
 
     @Override
     @Generated
+    public ConnectionDetail getConnectionDetail() {
+        return connectionDetail;
+    }
+
+    @Override
+    @Generated
+    public void setConnectionDetail(final ConnectionDetail connectionDetail) {
+        requireNonNull(connectionDetail);
+        this.connectionDetail = connectionDetail;
+    }
+
+    @Override
+    @Generated
     public ParentResource getParent() {
         return parent;
     }
@@ -134,9 +162,6 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
 
     }
 
-
-
-
     @Override
     @Generated
     public boolean equals(final Object o) {
@@ -149,17 +174,18 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
         if (!super.equals(o)) {
             return false;
         }
-        AbstractLeafResource that = (AbstractLeafResource) o;
-        return type.equals(that.type) &&
-                serialisedFormat.equals(that.serialisedFormat) &&
-                parent.equals(that.parent) &&
-                attributes.equals(that.attributes);
+        final AbstractLeafResource that = (AbstractLeafResource) o;
+        return Objects.equals(type, that.type) &&
+                Objects.equals(serialisedFormat, that.serialisedFormat) &&
+                Objects.equals(connectionDetail, that.connectionDetail) &&
+                Objects.equals(parent, that.parent) &&
+                Objects.equals(attributes, that.attributes);
     }
 
     @Override
     @Generated
     public int hashCode() {
-        return Objects.hash(super.hashCode(), type, serialisedFormat, parent, attributes);
+        return Objects.hash(super.hashCode(), type, serialisedFormat, connectionDetail, parent, attributes);
     }
 
     @Override
@@ -168,6 +194,7 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
         return new StringJoiner(", ", AbstractLeafResource.class.getSimpleName() + "[", "]")
                 .add("type='" + type + "'")
                 .add("serialisedFormat='" + serialisedFormat + "'")
+                .add("connectionDetail=" + connectionDetail)
                 .add("parent=" + parent)
                 .add("attributes=" + attributes)
                 .add(super.toString())
