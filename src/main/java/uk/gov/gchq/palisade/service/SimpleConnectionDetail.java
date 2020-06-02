@@ -29,33 +29,33 @@ import static java.util.Objects.requireNonNull;
  */
 public class SimpleConnectionDetail implements ConnectionDetail {
 
-    private String uri;
+    private String serviceName;
 
     public SimpleConnectionDetail() {
         //no-args constructor needed for serialization only
     }
 
     @Generated
-    public SimpleConnectionDetail uri(final String uri) {
-        this.setUri(uri);
+    public SimpleConnectionDetail serviceName(final String serviceName) {
+        this.setServiceName(serviceName);
         return this;
     }
 
     @Generated
-    public String getUri() {
-        return uri;
+    public String getServiceName() {
+        return serviceName;
     }
 
     @Generated
-    public void setUri(final String uri) {
-        requireNonNull(uri);
-        this.uri = uri;
+    public void setServiceName(final String serviceName) {
+        requireNonNull(serviceName);
+        this.serviceName = serviceName;
     }
 
     @Override
     @Generated
     public String createConnection() {
-        return getUri();
+        return getServiceName();
     }
 
     @Override
@@ -68,20 +68,20 @@ public class SimpleConnectionDetail implements ConnectionDetail {
             return false;
         }
         SimpleConnectionDetail that = (SimpleConnectionDetail) o;
-        return uri.equals(that.uri);
+        return serviceName.equals(that.serviceName);
     }
 
     @Override
     @Generated
     public int hashCode() {
-        return Objects.hash(uri);
+        return Objects.hash(serviceName);
     }
 
     @Override
     @Generated
     public String toString() {
         return new StringJoiner(", ", SimpleConnectionDetail.class.getSimpleName() + "[", "]")
-                .add("uri='" + uri + "'")
+                .add("serviceName='" + serviceName + "'")
                 .add(super.toString())
                 .toString();
     }
