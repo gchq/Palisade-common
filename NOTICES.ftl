@@ -33,7 +33,7 @@
     <#if p.name?index_of('Unnamed') &gt; -1>
         <#return p.artifactId + " (" + p.groupId + ":" + p.artifactId + ":" + p.version + " - " + (p.url!"no url defined") + ")">
     <#else>
-        <#return p.name + " [" + p.groupId + ":" + p.artifactId + ":" + p.version + "](" + (p.url!"no url defined") + ")">
+        <#return p.name + " ([" + p.groupId + ":" + p.artifactId + ":" + p.version + "](" + (p.url!"no url defined") + "))">
     </#if>
 </#function>
 <#if licenseMap?size == 0>
@@ -41,11 +41,11 @@ The project has no dependencies.
 <#else>
 List of third-party dependencies grouped by their license type
 <#list licenseMap as e>
-<#assign license = e.getKey()/>
+<#assign license = e.getKey()?split(" :: ")/>
 <#assign projects = e.getValue()/>
 <#if projects?size &gt; 0>
 
-### [${license}](./licenses/${license}):
+### [${license[0]}](./licenses/${license[1]}):
 <#list projects as project>
 * ${artifactFormat(project)}
 </#list>
