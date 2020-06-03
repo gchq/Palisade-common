@@ -26,19 +26,14 @@ if [ -f $FILE ]; then
       else
         val+="$val2""_"
       fi
-
       val3=$(xmllint --xpath '//licenseSummary/dependencies/dependency['$a']/licenses/license/url' $FILE | awk -F">" '{print $2}' | awk -F"<" '{print $1}')
       if [[ "$val3" == http* ]]; then
         val+=$(echo "$val3" | awk -F"//" '{print $2}')"_"
       fi
-
       val+=$(xmllint --xpath '//licenseSummary/dependencies/dependency['$a']/groupId' $FILE | awk -F">" '{print $2}' | awk -F"<" '{print $1}')":"
       val+=$(xmllint --xpath '//licenseSummary/dependencies/dependency['$a']/artifactId' $FILE | awk -F">" '{print $2}' | awk -F"<" '{print $1}')":"
       val+=$(xmllint --xpath '//licenseSummary/dependencies/dependency['$a']/version' $FILE | awk -F">" '{print $2}' | awk -F"<" '{print $1}')
-
-      if [[ $(echo "$val" | awk -F"_" '{print $2}') == *:* ]]; then
-        val=""
-      else
+      if [[ $(echo "$val" | awk -F"_" '{print $2}') == */* ]]; then
         dependency_array[$int]=$(echo "$val" | tr ' ' '-')
         int=$((int+1))
       fi
@@ -56,13 +51,15 @@ if [ -f $FILE ]; then
         else
           val+="$val2"
         fi
-
-        val+=$(xmllint --xpath '//licenseSummary/dependencies/dependency['$a']/licenses/license['$b']/url' $FILE | awk -F">" '{print $2}' | awk -F"<" '{print $1}')"_"
+        val3=$(xmllint --xpath '//licenseSummary/dependencies/dependency['$a']/licenses/license['$b']/url' $FILE | awk -F">" '{print $2}' | awk -F"<" '{print $1}')
+        if [[ "$val3" == http* ]]; then
+          val+=$(echo "$val3" | awk -F"//" '{print $2}')"_"
+        fi
         val+=$(xmllint --xpath '//licenseSummary/dependencies/dependency['$a']/groupId' $FILE | awk -F">" '{print $2}' | awk -F"<" '{print $1}')":"
         val+=$(xmllint --xpath '//licenseSummary/dependencies/dependency['$a']/artifactId' $FILE | awk -F">" '{print $2}' | awk -F"<" '{print $1}')":"
         val+=$(xmllint --xpath '//licenseSummary/dependencies/dependency['$a']/version' $FILE | awk -F">" '{print $2}' | awk -F"<" '{print $1}')
-        if [[ $(echo "${val}" | awk -F"_" '{print $2}') == http* ]]; then
-          dependency_array[$int]=$(echo "$val" | awk -F"//" '{print $2}')
+        if [[ $(echo "$val" | awk -F"_" '{print $2}') == */* ]]; then
+          dependency_array[$int]=$(echo "$val" | tr ' ' '-')
           int=$((int+1))
         fi
       done
@@ -76,9 +73,6 @@ if [ -f $FILE ]; then
       var1=$(echo "${sorted_array[$i]}" | cut -f1 -d_ | tr '-' ' ')
       var2=$(echo "${sorted_array[$i]}" | cut -f2 -d_)
       var3=$(echo "${sorted_array[$i]}" | cut -f3 -d_)
-      if [[ "${var2}" == *Apache* ]]; then
-          var2="Apache 2 Licence"
-      fi
       if [ $i == 0 ]; then
         curLicense="$var1"
         printf '%s (%s)\n\n' "$var1" "$var2" > NOTICES.txt
