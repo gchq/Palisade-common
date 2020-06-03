@@ -75,15 +75,15 @@ if [ -f $FILE ]; then
       var3=$(echo "${sorted_array[$i]}" | cut -f3 -d_)
       if [ $i == 0 ]; then
         curLicense="$var1"
-        printf '%s (%s)\n\n' "$var1" "$var2" > NOTICES.txt
-        printf ' - %s\n' "$var3" >> NOTICES.txt
+        printf '%s (%s)\n\n' "$var1" "$var2" > NOTICES
+        printf ' - %s\n' "$var3" >> NOTICES
       else
         if [ "$var1" == "$curLicense" ]; then
-          printf ' - %s\n' "$var3" >> NOTICES.txt
+          printf ' - %s\n' "$var3" >> NOTICES
         else
           curLicense="$var1"
-          printf '\n\n%s (%s)\n\n' "$var1" "$var2" >> NOTICES.txt
-          printf ' - %s\n' "$var3" >> NOTICES.txt
+          printf '\n\n%s (%s)\n\n' "$var1" "$var2" >> NOTICES
+          printf ' - %s\n' "$var3" >> NOTICES
         fi
       fi
   done
