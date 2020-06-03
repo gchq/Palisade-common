@@ -377,16 +377,41 @@
                 <version>2.0.0</version>
                 <executions>
                     <execution>
-                        <id>download-licenses</id>
+                        <id>licenses-report</id>
+                        <phase>generate-resources</phase>
                         <goals>
-                            <goal>download-licenses</goal>
+                            <goal>aggregate-download-licenses</goal>
+                            <goal>add-third-party</goal>
+                            <goal>aggregate-add-third-party</goal>
                         </goals>
                     </execution>
                 </executions>
                 <configuration>
-                    <licensesOutputDirectory>${project.basedir}/target/licenses</licensesOutputDirectory>
+                    <fileTemplate>${project.basedir}/NOTICES.ftl</fileTemplate>
+                    <outputDirectory>${project.basedir}</outputDirectory>
+                    <thirdPartyFilename>NOTICES.md</thirdPartyFilename>
+                    <licensesOutputDirectory>${project.basedir}/licenses</licensesOutputDirectory>
+                    <includeTransitiveDependencies>false</includeTransitiveDependencies>
                     <cleanLicensesOutputDirectory>true</cleanLicensesOutputDirectory>
-                    <sortArtifactByName>true</sortArtifactByName>
+                    <licenseMerges>
+                        <licenseMerge>apache_software_license_2.0.txt|Apache Software License, Version 2.0|The Apache Software License, Version 2.0|Apache License, Version 2.0|Apache 2</licenseMerge>
+                        <licenseMerge>mit_license.html|MIT License|The MIT License</licenseMerge>
+                        <licenseMerge>eclipse_license_1.0.html|Eclipse Public License 1.0|The Eclipse Public License 1.0</licenseMerge>
+                    </licenseMerges>
+                    <licenseUrlFileNameSanitizers>
+                        <licenseUrlFileNameSanitizer>
+                            <regexp>(the )?apache (software )?license, (version )?2(.0)?.*</regexp>
+                            <replacement>apache_software_license_2.0.txt</replacement>
+                        </licenseUrlFileNameSanitizer>
+                        <licenseUrlFileNameSanitizer>
+                            <regexp>(the )?eclipse (public )?license 1.0.*</regexp>
+                            <replacement>mit_license.html</replacement>
+                        </licenseUrlFileNameSanitizer>
+                        <licenseUrlFileNameSanitizer>
+                            <regexp>(the )?mit license.*</regexp>
+                            <replacement>eclipse_license_1.0.html</replacement>
+                        </licenseUrlFileNameSanitizer>
+                    </licenseUrlFileNameSanitizers>
                 </configuration>
             </plugin>
         </plugins>
