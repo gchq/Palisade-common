@@ -66,7 +66,7 @@
         <surefire.plugin.version>2.22.1</surefire.plugin.version>
         <failsafe.version>2.22.1</failsafe.version>
         <checkstyle.plugin.version>3.1.0</checkstyle.plugin.version>
-        <checkstyle.phase>verify</checkstyle.phase>
+        <checkstyle.phase>prepare-package</checkstyle.phase>
         <mockito.core>3.1.0</mockito.core>
         <common-maths>3.1.1</common-maths>
 
@@ -377,16 +377,43 @@
                 <version>2.0.0</version>
                 <executions>
                     <execution>
-                        <id>download-licenses</id>
+                        <id>licenses-report</id>
+                        <phase>prepare-package</phase>
                         <goals>
-                            <goal>download-licenses</goal>
+                            <goal>aggregate-download-licenses</goal>
+                            <goal>add-third-party</goal>
+                            <goal>aggregate-add-third-party</goal>
                         </goals>
                     </execution>
                 </executions>
                 <configuration>
-                    <licensesOutputDirectory>${project.basedir}/target/licenses</licensesOutputDirectory>
+                    <fileTemplate>${project.basedir}/code-style/NOTICES.ftl</fileTemplate>
+                    <outputDirectory>${project.basedir}</outputDirectory>
+                    <thirdPartyFilename>NOTICES.md</thirdPartyFilename>
+                    <licensesOutputDirectory>${project.basedir}/licenses</licensesOutputDirectory>
+                    <includeTransitiveDependencies>false</includeTransitiveDependencies>
                     <cleanLicensesOutputDirectory>true</cleanLicensesOutputDirectory>
-                    <sortArtifactByName>true</sortArtifactByName>
+                    <licenseMerges>
+                        <!-- Normalise equivalent license names, append filename after :: (split in NOTICES.ftl) -->
+                        <licenseMerge>Apache Software License 2.0 :: apache_software_license_2.0.txt|Apache Software License, Version 2.0|The Apache Software License, Version 2.0|Apache License, Version 2.0|Apache 2</licenseMerge>
+                        <licenseMerge>MIT License :: mit_license.html|MIT License|The MIT License</licenseMerge>
+                        <licenseMerge>Eclipse Public License 1.0 :: eclipse_public_license_1.0.html|Eclipse Public License 1.0|The Eclipse Public License 1.0</licenseMerge>
+                    </licenseMerges>
+                    <licenseUrlFileNameSanitizers>
+                        <!-- Normalise equivalent license filenames, cannot change filetype, but stated here for clarity -->
+                        <licenseUrlFileNameSanitizer>
+                            <regexp>(the )?apache (software )?license, (version )?2(.0)?.*</regexp>
+                            <replacement>apache_software_license_2.0.txt</replacement>
+                        </licenseUrlFileNameSanitizer>
+                        <licenseUrlFileNameSanitizer>
+                            <regexp>(the )?mit license.*</regexp>
+                            <replacement>mit_license.html</replacement>
+                        </licenseUrlFileNameSanitizer>
+                        <licenseUrlFileNameSanitizer>
+                            <regexp>(the )?eclipse (public )?license 1.0.*</regexp>
+                            <replacement>eclipse_public_license_1.0.html</replacement>
+                        </licenseUrlFileNameSanitizer>
+                    </licenseUrlFileNameSanitizers>
                 </configuration>
             </plugin>
         </plugins>
