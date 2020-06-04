@@ -24,8 +24,7 @@ import java.util.StringJoiner;
 import static java.util.Objects.requireNonNull;
 
 /**
- * A simple implementation of the {@link ConnectionDetail} that holds an instance
- * of {@link Service}
+ * A simple implementation of the {@link ConnectionDetail} that holds a reference to the {@link Service}
  */
 public class SimpleConnectionDetail implements ConnectionDetail {
 
