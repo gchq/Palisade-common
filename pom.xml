@@ -52,7 +52,6 @@
         <compiler.plugin.version>3.8.0</compiler.plugin.version>
         <depends.phase>validate</depends.phase>
         <depends.maven.version>3.1.1</depends.maven.version>
-        <freemarker.plugin.version>2.3.23</freemarker.plugin.version>
 
         <!-- Dependencies -->
         <slf4j.api.version>1.7.25</slf4j.api.version>
@@ -67,7 +66,7 @@
         <surefire.plugin.version>2.22.1</surefire.plugin.version>
         <failsafe.version>2.22.1</failsafe.version>
         <checkstyle.plugin.version>3.1.0</checkstyle.plugin.version>
-        <checkstyle.phase>verify</checkstyle.phase>
+        <checkstyle.phase>prepare-package</checkstyle.phase>
         <mockito.core>3.1.0</mockito.core>
         <common-maths>3.1.1</common-maths>
 
@@ -379,7 +378,7 @@
                 <executions>
                     <execution>
                         <id>licenses-report</id>
-                        <phase>generate-resources</phase>
+                        <phase>prepare-package</phase>
                         <goals>
                             <goal>aggregate-download-licenses</goal>
                             <goal>add-third-party</goal>
@@ -388,7 +387,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <fileTemplate>${project.basedir}/NOTICES.ftl</fileTemplate>
+                    <fileTemplate>${project.basedir}/code-style/NOTICES.ftl</fileTemplate>
                     <outputDirectory>${project.basedir}</outputDirectory>
                     <thirdPartyFilename>NOTICES.md</thirdPartyFilename>
                     <licensesOutputDirectory>${project.basedir}/licenses</licensesOutputDirectory>
