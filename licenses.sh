@@ -13,77 +13,59 @@ if [ -f $FILE ]; then
 
   for (( a = 1; a <= dependencyCount; a++ )); do
     licenseCount=$(xmllint --xpath 'count(//licenseSummary/dependencies/dependency['$a']/licenses/license)' "$FILE")
-    if [ "$licenseCount" == 1 ]; then
-      val=""
-      val2=$(xmllint --xpath '//licenseSummary/dependencies/dependency['$a']/licenses/license/name' $FILE | awk -F">" '{print $2}' | awk -F"<" '{print $1}')
+    for (( b = 0; b < licenseCount; b++ )); do
+      licensePath="/"
+      if [ "$licenseCount" == 1 ]; then
+        licensePath+="/licenseSummary/dependencies/dependency['$a']/licenses/license/"
+      else
+        licensePath+="/licenseSummary/dependencies/dependency['$a']/licenses/license['$b']/"
+      fi
+      printf "License Path: %s\n" "$licensePath"
+      entry=""
+      newName=$(xmllint --xpath "$licensePath""name" $FILE | awk -F">" '{print $2}' | awk -F"<" '{print $1}')
       for (( i = 0; i < "${#start[@]}"; i++ )); do
-        if [[ "${start[$i]}" == $(echo "$val2" | awk -F" " '{print $1}') ]]; then
-          val2=$(echo "$val2" | cut -f2- -d" ")
+        if [[ "${start[$i]}" == $(echo "$newName" | awk -F" " '{print $1}') ]]; then
+          newName=$(echo "$newName" | cut -f2- -d" ")
         fi
       done
-      if [[ "$val2" == *Apache* ]]; then
-        val+="$apache""_"
+      if [[ "$licenseName" == *Apache* ]]; then
+        entry+="$apache""_"
       else
-        val+="$val2""_"
+        entry+="$licenseName""_"
       fi
-      val3=$(xmllint --xpath '//licenseSummary/dependencies/dependency['$a']/licenses/license/url' $FILE | awk -F">" '{print $2}' | awk -F"<" '{print $1}')
-      if [[ "$val3" == http* ]]; then
-        val+=$(echo "$val3" | awk -F"//" '{print $2}')"_"
+      newUrl=$(xmllint --xpath --xpath "$licensePath""url" $FILE | awk -F">" '{print $2}' | awk -F"<" '{print $1}')
+      if [[ "$newUrl" == http* ]]; then
+        entry+=$(echo "$newUrl" | awk -F"//" '{print $2}')"_"
       fi
-      val+=$(xmllint --xpath '//licenseSummary/dependencies/dependency['$a']/groupId' $FILE | awk -F">" '{print $2}' | awk -F"<" '{print $1}')":"
-      val+=$(xmllint --xpath '//licenseSummary/dependencies/dependency['$a']/artifactId' $FILE | awk -F">" '{print $2}' | awk -F"<" '{print $1}')":"
-      val+=$(xmllint --xpath '//licenseSummary/dependencies/dependency['$a']/version' $FILE | awk -F">" '{print $2}' | awk -F"<" '{print $1}')
-      if [[ $(echo "$val" | awk -F"_" '{print $2}') == */* ]]; then
-        dependency_array[$int]=$(echo "$val" | tr ' ' '-')
+      entry+=$(xmllint --xpath '//licenseSummary/dependencies/dependency['$a']/groupId' $FILE | awk -F">" '{print $2}' | awk -F"<" '{print $1}')":"
+      entry+=$(xmllint --xpath '//licenseSummary/dependencies/dependency['$a']/licenseArtifactId' $FILE | awk -F">" '{print $2}' | awk -F"<" '{print $1}')":"
+      entry+=$(xmllint --xpath '//licenseSummary/dependencies/dependency['$a']/version' $FILE | awk -F">" '{print $2}' | awk -F"<" '{print $1}')
+      if [[ $(echo "$entry" | awk -F"_" '{print $2}') == */* ]]; then
+        dependency_array[$int]=$(echo "$entry" | tr ' ' '-')
         int=$((int+1))
       fi
-    else
-      for (( b = 1; b <= licenseCount; b++ )); do
-        val=""
-        val2=$(xmllint --xpath '//licenseSummary/dependencies/dependency['$a']/licenses/license['$b']/name' $FILE | awk -F">" '{print $2}' | awk -F"<" '{print $1}')
-        for (( i = 0; i < "${#start[@]}"; i++ )); do
-          if [[ "${start[$i]}" == $(echo "$val2" | awk -F" " '{print $1}') ]]; then
-            val2=$(echo "$val2" | cut -f2- -d" ")"_"
-          fi
-        done
-        if [[ "$val2" == *Apache* ]]; then
-          val+="$apache""_"
-        else
-          val+="$val2"
-        fi
-        val3=$(xmllint --xpath '//licenseSummary/dependencies/dependency['$a']/licenses/license['$b']/url' $FILE | awk -F">" '{print $2}' | awk -F"<" '{print $1}')
-        if [[ "$val3" == http* ]]; then
-          val+=$(echo "$val3" | awk -F"//" '{print $2}')"_"
-        fi
-        val+=$(xmllint --xpath '//licenseSummary/dependencies/dependency['$a']/groupId' $FILE | awk -F">" '{print $2}' | awk -F"<" '{print $1}')":"
-        val+=$(xmllint --xpath '//licenseSummary/dependencies/dependency['$a']/artifactId' $FILE | awk -F">" '{print $2}' | awk -F"<" '{print $1}')":"
-        val+=$(xmllint --xpath '//licenseSummary/dependencies/dependency['$a']/version' $FILE | awk -F">" '{print $2}' | awk -F"<" '{print $1}')
-        if [[ $(echo "$val" | awk -F"_" '{print $2}') == */* ]]; then
-          dependency_array[$int]=$(echo "$val" | tr ' ' '-')
-          int=$((int+1))
-        fi
-      done
-    fi
+      printf "Entry: %s\n" "$entry"
+    done
   done
   sorted_array=($(echo "${dependency_array[@]}" | tr ' ' '\n' | sort))
   n="${#sorted_array[@]}"
-  curLicense=""
+  currentLicense=""
 
   for (( i = 0; i < n; i++ )); do
-      var1=$(echo "${sorted_array[$i]}" | cut -f1 -d_ | tr '-' ' ')
-      var2=$(echo "${sorted_array[$i]}" | cut -f2 -d_)
-      var3=$(echo "${sorted_array[$i]}" | cut -f3 -d_)
+      licenseName=$(echo "${sorted_array[$i]}" | cut -f1 -d_ | tr '-' ' ')
+      licenseUrl=$(echo "${sorted_array[$i]}" | cut -f2 -d_)
+      licenseArtifact=$(echo "${sorted_array[$i]}" | cut -f3 -d_)
       if [ $i == 0 ]; then
-        curLicense="$var1"
-        printf '%s (%s)\n\n' "$var1" "$var2" > NOTICES
-        printf ' - %s\n' "$var3" >> NOTICES
+        currentLicense="$licenseName"
+        printf '%s (%s)\n\n' "$licenseName" "$licenseUrl" > NOTICES
+        printf ' - %s\n' "$licenseArtifact" >> NOTICES
       else
-        if [ "$var1" == "$curLicense" ]; then
-          printf ' - %s\n' "$var3" >> NOTICES
+        if [ "$licenseName" == "$currentLicense" ]; then
+          printf ' - %s\n' "$licenseArtifact" >> NOTICES
         else
-          curLicense="$var1"
-          printf '\n\n%s (%s)\n\n' "$var1" "$var2" >> NOTICES
-          printf ' - %s\n' "$var3" >> NOTICES
+          currentLicense="$licenseName"
+          printf '\n\n%s (%s)\n\n' "$licenseName" "$licenseUrl" >> NOTICES
+          printf ' - %s\n' "$licenseArtifact" >> NOTICES
         fi
       fi
   done
