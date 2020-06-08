@@ -56,6 +56,11 @@ spec:
     env:
       - name: DOCKER_HOST
         value: tcp://localhost:2375
+    resources:
+      requests:
+        ephemeral-storage: "4Gi"
+      limits:
+        ephemeral-storage: "8Gi"            
 ''') {
 
     node(POD_LABEL) {
