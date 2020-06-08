@@ -34,6 +34,18 @@ spec:
             - node2
             - node3
   containers:
+  - name: jnlp
+    image: jenkins/jnlp-slave
+    imagePullPolicy: Always
+    args: 
+    - $(JENKINS_SECRET)
+    - $(JENKINS_NAME)
+    resources:
+      requests:
+        ephemeral-storage: "4Gi"
+      limits:
+        ephemeral-storage: "8Gi"
+  
   - name: docker-cmds
     image: 779921734503.dkr.ecr.eu-west-1.amazonaws.com/jnlp-did:200608
     imagePullPolicy: IfNotPresent
