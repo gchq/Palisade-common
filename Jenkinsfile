@@ -35,7 +35,7 @@ spec:
             - node3
   containers:
   - name: docker-cmds
-    image: 779921734503.dkr.ecr.eu-west-1.amazonaws.com/jnlp-did:INFRA
+    image: 779921734503.dkr.ecr.eu-west-1.amazonaws.com/jnlp-did:200608
     imagePullPolicy: IfNotPresent
     command:
     - sleep
