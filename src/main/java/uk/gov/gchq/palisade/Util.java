@@ -214,7 +214,8 @@ public final class Util {
                 LOGGER.info("Can't determine where {} was loaded from", clazz);
             }
             return (codeSource != null) ? codeSource.getLocation().toString() : null;
-        } catch (Exception e) {
+        } catch (ClassNotFoundException e) {
+            LOGGER.error("LocateJarFile threw an exception and the message is {}", e.getMessage());
             return e.getMessage();
         }
     }

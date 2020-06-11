@@ -17,6 +17,9 @@
 package uk.gov.gchq.palisade.util;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Optional;
@@ -28,6 +31,8 @@ import java.util.Optional;
 public class UriBuilder {
 
     private Optional<URI> baseUri = Optional.empty();
+    private static final Logger LOGGER = LoggerFactory.getLogger(UriBuilder.class);
+
 
     public static class AuthorityBuilder {
         private Optional<URI> baseUri = Optional.empty();
@@ -103,6 +108,7 @@ public class UriBuilder {
                         thisFrag
                 );
             } catch (URISyntaxException e) {
+                LOGGER.error("IScheme create threw an error when building a URI and the message is {}", e.getMessage());
                 throw new IllegalArgumentException(String.format("Invalid URI: %s:%s%s%s%s", thisScheme, thisAuth, thisPath, "?" + thisQuery, "#" + thisFrag), e);
             }
         };
