@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Crown Copyright
+ * Copyright 2020 Crown Copyright
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 
 public class SimpleStringSerialiserTest {
     @Test
-    public void shouldDeserialise() throws IOException {
+    public void shouldDeserialise() {
         // Given
         final SimpleStringSerialiser serialiser = new SimpleStringSerialiser();
         final byte[] input = "line1\nline2".getBytes();
@@ -40,7 +40,7 @@ public class SimpleStringSerialiserTest {
         final Stream<String> result = serialiser.deserialise(new ByteArrayInputStream(input));
 
         // Then
-        assertEquals(Arrays.asList("line1", "line2"), result.collect(Collectors.toList()));
+        assertEquals("the deserialised list should be the same as the input byte stream", Arrays.asList("line1", "line2"), result.collect(Collectors.toList()));
     }
 
     @Test
@@ -55,6 +55,6 @@ public class SimpleStringSerialiserTest {
         InputStream inputBytes = new ByteArrayInputStream(bos.toByteArray());
 
         // Then
-        assertEquals(Arrays.asList("line1", "line2"), IOUtils.readLines(inputBytes, StandardCharsets.UTF_8));
+        assertEquals("The serialised list should be the same as the input byte stream", Arrays.asList("line1", "line2"), IOUtils.readLines(inputBytes, StandardCharsets.UTF_8));
     }
 }
