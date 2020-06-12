@@ -54,7 +54,7 @@ public interface PolicyPrepopulationFactory {
     Entry<Resource, Policy> build(List<? extends UserPrepopulationFactory> users, List<? extends ResourcePrepopulationFactory> resources);
 
     @JsonGetter("class")
-    default String defaultGetClass() {
+    default String getClassName() {
         return getClass().getName();
     }
 

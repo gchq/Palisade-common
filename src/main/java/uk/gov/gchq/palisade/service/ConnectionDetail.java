@@ -37,12 +37,12 @@ public interface ConnectionDetail {
     String createConnection();
 
     @JsonGetter("class")
-    default String defaultGetClass() {
+    default String getClassName() {
         return getClass().getName();
     }
 
     @JsonSetter("class")
-    default void defaultSetClass(final String className) {
+    default void setClassName(final String className) {
         // do nothing.
     }
 }

@@ -191,7 +191,7 @@ public class User {
 
     @JsonGetter("class")
     @Generated
-    public String defaultGetClass() {
+    public String getClassName() {
         return getClass().getName();
     }
 
