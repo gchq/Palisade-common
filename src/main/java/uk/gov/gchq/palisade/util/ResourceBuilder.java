@@ -60,7 +60,7 @@ public class ResourceBuilder {
         try {
             root = userDir.getCanonicalFile().toURI();
         } catch (IOException ex) {
-            LOGGER.error("ResourceBuilder threw an error when getting the CanonicalFile {}", ex);
+            LOGGER.error("ResourceBuilder threw an error when getting the CanonicalFile ", ex);
             root = userDir.getAbsoluteFile().toURI();
         }
         ROOT = root;
@@ -133,7 +133,7 @@ public class ResourceBuilder {
         try {
             return create(new URI(uriString), attributes);
         } catch (URISyntaxException ex) {
-            LOGGER.error("Resource create threw an error when creating a URI {}", ex);
+            LOGGER.error("Resource create threw an error when creating a URI ", ex);
             throw new IllegalArgumentException("URISyntaxException converting string '" + uriString + "' to uri");
         }
     }

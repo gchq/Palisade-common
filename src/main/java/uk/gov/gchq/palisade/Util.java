@@ -216,7 +216,7 @@ public final class Util {
             }
             return (codeSource != null) ? codeSource.getLocation().toString() : null;
         } catch (ClassNotFoundException e) {
-            LOGGER.error("LocateJarFile threw an exception {}", e);
+            LOGGER.error("LocateJarFile threw an exception ", e);
             return e.getMessage();
         }
     }

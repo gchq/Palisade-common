@@ -108,7 +108,7 @@ public class UriBuilder {
                         thisFrag
                 );
             } catch (URISyntaxException e) {
-                LOGGER.error("IScheme create threw an error when building a URI {}", e);
+                LOGGER.error("IScheme create threw an error when building a URI ", e);
                 throw new IllegalArgumentException(String.format("Invalid URI: %s:%s%s%s%s", thisScheme, thisAuth, thisPath, "?" + thisQuery, "#" + thisFrag), e);
             }
         };
