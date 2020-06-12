@@ -44,12 +44,12 @@ public interface Resource extends Comparable<Resource> {
     void setId(final String id);
 
     @JsonGetter("class")
-    default String _getClass() {
+    default String defaultGetClass() {
         return getClass().getName();
     }
 
     @JsonSetter("class")
-    default void _setClass(final String className) {
+    default void defaultSetClass(final String className) {
         // do nothing.
     }
 

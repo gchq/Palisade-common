@@ -120,7 +120,7 @@ public class Context {
 
     @JsonGetter("class")
     @Generated
-    public String _getClass() {
+    public String defaultGetClass() {
         return getClass().getName();
     }
 

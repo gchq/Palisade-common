@@ -61,12 +61,12 @@ public interface Rule<T> {
     T apply(final T record, final User user, final Context context);
 
     @JsonGetter("class")
-    default String _getClass() {
+    default String defaultGetClass() {
         return getClass().getName();
     }
 
     @JsonSetter("class")
-    default void _setClass(final String className) {
+    default void defaultSetClass(final String className) {
         // do nothing.
     }
 }

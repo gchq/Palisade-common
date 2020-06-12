@@ -54,12 +54,12 @@ public interface PolicyPrepopulationFactory {
     Entry<Resource, Policy> build(List<? extends UserPrepopulationFactory> users, List<? extends ResourcePrepopulationFactory> resources);
 
     @JsonGetter("class")
-    default String _getClass() {
+    default String defaultGetClass() {
         return getClass().getName();
     }
 
     @JsonSetter("class")
-    default void _setClass(final String className) {
+    default void defualtSetClass(final String className) {
         // do nothing.
     }
 }
