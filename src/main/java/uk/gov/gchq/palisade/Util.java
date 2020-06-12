@@ -204,6 +204,7 @@ public final class Util {
     public static String locateJarFile(final String clazz) {
         requireNonNull(clazz, "clazz");
         try {
+
             Class c = Class.forName(clazz);
             CodeSource codeSource = c.getProtectionDomain().getCodeSource();
 
@@ -215,7 +216,7 @@ public final class Util {
             }
             return (codeSource != null) ? codeSource.getLocation().toString() : null;
         } catch (ClassNotFoundException e) {
-            LOGGER.error("LocateJarFile threw an exception and the message is {}", e.getMessage());
+            LOGGER.error("LocateJarFile threw an exception {}", e);
             return e.getMessage();
         }
     }
