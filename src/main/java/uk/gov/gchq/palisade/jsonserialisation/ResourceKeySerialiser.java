@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Crown Copyright
+ * Copyright 2020 Crown Copyright
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,6 +27,12 @@ import uk.gov.gchq.palisade.resource.Resource;
 import java.io.IOException;
 
 class ResourceKeySerialiser extends StdSerializer<Resource> {
+    private static final long serialVersionUID = 1L;
+
+    ResourceKeySerialiser() {
+        super(Resource.class);
+    }
+
     public static SimpleModule getModule() {
         final SimpleModule module = new SimpleModule();
         module.addKeyDeserializer(LeafResource.class, new ResourceKeyDeserialiser());
@@ -34,9 +40,6 @@ class ResourceKeySerialiser extends StdSerializer<Resource> {
         return module;
     }
 
-    ResourceKeySerialiser() {
-        super(Resource.class);
-    }
 
     @Override
     public void serialize(final Resource value, final JsonGenerator g, final SerializerProvider provider) throws IOException {
