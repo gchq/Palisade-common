@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Crown Copyright
+ * Copyright 2020 Crown Copyright
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ import static org.junit.Assert.assertEquals;
 public class AvroSerialiserTest {
 
     public static final int INPUT_SIZE = 100;
-    public static final Integer[] INPUT = IntStream.range(0, INPUT_SIZE).mapToObj(Integer::valueOf).toArray((a) -> new Integer[INPUT_SIZE]);
+    public static final Integer[] INPUT = IntStream.range(0, INPUT_SIZE).boxed().toArray((a) -> new Integer[INPUT_SIZE]);
 
     @Test
     public void shouldConsistentlyPass() throws IOException {
@@ -68,7 +68,7 @@ public class AvroSerialiserTest {
         final List<Integer> deserialised = new ArrayList<>();
         in.forEachRemaining(deserialised::add);
         in.close();
-        assertEquals(Arrays.asList(INPUT), deserialised);
+        assertEquals(INPUT_SIZE + " records should be serialised", Arrays.asList(INPUT), deserialised);
     }
 
     @Test
@@ -97,7 +97,7 @@ public class AvroSerialiserTest {
         final Stream<Integer> deserialised = serialiser.deserialise(inputStream);
 
         // Then
-        assertEquals(Arrays.asList(INPUT), deserialised.collect(Collectors.toList()));
+        assertEquals(INPUT_SIZE + " records should be serialised", Arrays.asList(INPUT), deserialised.collect(Collectors.toList()));
     }
 
     @Test
@@ -112,7 +112,7 @@ public class AvroSerialiserTest {
         final Stream<Integer> deserialised = serialiser.deserialise(new ByteArrayInputStream(outputStream.toByteArray()));
 
         // Then
-        assertEquals(Arrays.asList(INPUT), deserialised.collect(Collectors.toList()));
+        assertEquals(INPUT_SIZE + " records should be serialised and deserialised", Arrays.asList(INPUT), deserialised.collect(Collectors.toList()));
     }
 
     @Test
@@ -136,11 +136,11 @@ public class AvroSerialiserTest {
         final Stream<TestObj> deserialised = serialiser.deserialise(new ByteArrayInputStream(outputStream.toByteArray()));
 
         // Then
-        assertEquals(input, deserialised.collect(Collectors.toList()));
+        assertEquals("The serialised and deserialised TestObj list should match the input list", input, deserialised.collect(Collectors.toList()));
     }
 
     @Test
-    public void shouldJsonSerialiseAndDeserialise() throws IOException {
+    public void shouldJsonSerialiseAndDeserialise() {
         // Given
         final AvroSerialiser<Integer> serialiser = new AvroSerialiser<>(Integer.class);
 
@@ -153,7 +153,8 @@ public class AvroSerialiserTest {
                 "  \"domainClass\" : \"java.lang.Integer\",%n" +
                 "  \"class\" : \"uk.gov.gchq.palisade.data.serialise.AvroSerialiser\"%n" +
                 "}").getBytes(), json);
-        assertEquals(AvroSerialiser.class, deserialised.getClass());
-        assertEquals(serialiser.getDomainClass(), ((AvroSerialiser) deserialised).getDomainClass());
+
+        assertEquals("The deserialised class should be AvroSerialiser", AvroSerialiser.class, deserialised.getClass());
+        assertEquals("The serialiser domain class should equal the deserialised domain class", serialiser.getDomainClass(), ((AvroSerialiser) deserialised).getDomainClass());
     }
 }

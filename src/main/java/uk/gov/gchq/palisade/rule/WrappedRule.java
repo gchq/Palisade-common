@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Crown Copyright
+ * Copyright 2020 Crown Copyright
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -124,7 +124,11 @@ public class WrappedRule<T> implements Rule<T> {
             rtn = function.apply(obj);
         } else if (nonNull(predicate)) {
             final boolean test = predicate.test(obj);
-            rtn = test ? obj : null;
+            if (test) {
+                rtn = obj;
+            } else {
+                rtn = null;
+            }
         } else {
             rtn = obj;
         }

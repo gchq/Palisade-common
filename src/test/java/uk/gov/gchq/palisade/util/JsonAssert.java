@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Crown Copyright
+ * Copyright 2020 Crown Copyright
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
+import static org.junit.Assert.assertNotEquals;
 
 public class JsonAssert {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
@@ -54,16 +56,16 @@ public class JsonAssert {
         try {
             final Map expectedSchemaMap = null != expectedJson ? OBJECT_MAPPER.readValue(expectedJson, Map.class) : Collections.emptyMap();
             final Map actualSchemaMap = null != actualJson ? OBJECT_MAPPER.readValue(actualJson, Map.class) : Collections.emptyMap();
-            Assert.assertEquals(expectedSchemaMap, actualSchemaMap);
+            Assert.assertEquals("The actualSchemaMap should equal the expectedSchemaMap", expectedSchemaMap, actualSchemaMap);
             return;
         } catch (final IOException e) {
             // ignore the error and try using lists instead
         }
 
         try {
-            final List expectedSchemaMap = null != expectedJson ? OBJECT_MAPPER.readValue(expectedJson, List.class) : Collections.emptyList();
-            final List actualSchemaMap = null != actualJson ? OBJECT_MAPPER.readValue(actualJson, List.class) : Collections.emptyList();
-            Assert.assertEquals(expectedSchemaMap, actualSchemaMap);
+            final List expectedSchemaList = null != expectedJson ? OBJECT_MAPPER.readValue(expectedJson, List.class) : Collections.emptyList();
+            final List actualSchemaList = null != actualJson ? OBJECT_MAPPER.readValue(actualJson, List.class) : Collections.emptyList();
+            Assert.assertEquals("The actualSchemaList should equal the expectedSchemaList", expectedSchemaList, actualSchemaList);
         } catch (final IOException e) {
             throw new AssertionError(expectedJson + " is not equal to " + actualJson, e);
         }
@@ -77,7 +79,7 @@ public class JsonAssert {
         try {
             final Map firstSchemaMap = null != firstJson ? OBJECT_MAPPER.readValue(firstJson, Map.class) : Collections.emptyMap();
             final Map secondSchemaMap = null != secondJson ? OBJECT_MAPPER.readValue(secondJson, Map.class) : Collections.emptyMap();
-            Assert.assertNotEquals(firstSchemaMap, secondSchemaMap);
+            assertNotEquals("The firstSchemaMap should not equal the secondSchemaMap", firstSchemaMap, secondSchemaMap);
         } catch (final IOException e) {
             // ignore
         }

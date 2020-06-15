@@ -98,7 +98,12 @@ public class ResourceBuilder {
     // Throw IllegalArgumentException if unsupported scheme
     public static Resource create(final URI uri, final Map<String, String> attributes) {
         // If passed relative paths, we can resolve them against the user.dir system property
-        URI absolute = uri.isAbsolute() ? uri : ROOT.resolve(uri);
+        URI absolute;
+        if (uri.isAbsolute()) {
+            absolute = uri;
+        } else {
+            absolute = ROOT.resolve(uri);
+        }
         // The hostname is all in the connectionDetail, so we never have a case of file://hostname/some/uri
         // A lot of this is trying to normalize file:///some/uri (file://<no-hostname>/some/uri) to file:/some/uri
         URI normal = UriBuilder.create(absolute)
@@ -133,8 +138,7 @@ public class ResourceBuilder {
         try {
             return create(new URI(uriString), attributes);
         } catch (URISyntaxException ex) {
-            LOGGER.error("Resource create threw an error when creating a URI ", ex);
-            throw new IllegalArgumentException("URISyntaxException converting string '" + uriString + "' to uri");
+            throw new IllegalArgumentException("URISyntaxException converting string '" + uriString + "' to uri", ex);
         }
     }
 

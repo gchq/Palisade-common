@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Crown Copyright
+ * Copyright 2020 Crown Copyright
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,73 +20,56 @@ import org.junit.Test;
 
 import uk.gov.gchq.palisade.rule.WrappedRule;
 
-import static org.junit.Assert.assertEquals;
+import java.util.function.UnaryOperator;
 
 public class WrappedRuleTest {
 
     @Test
-    public void shouldConstruct1ArgumentWithNoErrors() throws Exception {
+    public void shouldConstruct1ArgumentWithNoErrors() {
         // Given
-        WrappedRule rule1 = new WrappedRule<>(new TestRule(), null, null);
-        WrappedRule rule2 = new WrappedRule<>(null, o -> o.toString(), null);
-        WrappedRule rule3 = new WrappedRule<>(null, null, o -> true);
+        WrappedRule<String> rule1 = new WrappedRule<>(new TestRule(), null, null);
+        WrappedRule<String> rule2 = new WrappedRule<>(null, o -> o, null);
+        WrappedRule<String> rule3 = new WrappedRule<>(null, null, o -> true);
 
         // Then
-        Assert.assertNotNull(rule1.getRule());
-        Assert.assertNotNull(rule2.getFunction());
-        Assert.assertNotNull(rule3.getPredicate());
+        Assert.assertNotNull("rule1 rule should not be null", rule1.getRule());
+        Assert.assertNotNull("rule2 function should not be null", rule2.getFunction());
+        Assert.assertNotNull("rule3 predicate should not be null", rule3.getPredicate());
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void shouldNotConstruct0Arguments() {
-        try {
-            // When
-            new WrappedRule<>(null, null, null);
-            Assert.fail("exception expected");
-        } catch (IllegalArgumentException e) {
-            // Then
-            assertEquals("Only one constructor parameter can be non-null", e.getMessage());
-        }
+        //When
+        new WrappedRule<>(null, null, null);
+        //Then it should throw an IllegalArgumentException
     }
 
-    @Test
-    public void shouldNotConstruct2Arguments() {
-        try {
-            //when
-            new WrappedRule<>(new TestRule(), o -> o.toString(), null);
-            Assert.fail("exception expected");
-        } catch (IllegalArgumentException e) {
-            //then
-            assertEquals("Only one constructor parameter can be non-null", e.getMessage());
-        }
-        try {
-            //when
-            new WrappedRule<>(new TestRule(), null, o -> true);
-            Assert.fail("exception expected");
-        } catch (IllegalArgumentException e) {
-            //then
-            assertEquals("Only one constructor parameter can be non-null", e.getMessage());
-        }
-        try {
-            //when
-            new WrappedRule<>(null, o -> o.toString(), o -> true);
-            Assert.fail("exception expected");
-        } catch (IllegalArgumentException e) {
-            //then
-            assertEquals("Only one constructor parameter can be non-null", e.getMessage());
-        }
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldNotConstructNullPredicate() {
+        //When
+        new WrappedRule<>(new TestRule(), o -> o, null);
+        // Then it should throw an IllegalArgumentException
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldNotConstructNullFunction() {
+        //When
+        new WrappedRule<>(new TestRule(), null, o -> true);
+        //Then it should throw an IllegalArgumentException
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldNotConstructNullRule() {
+        //When
+        new WrappedRule<>(null, (UnaryOperator<Object>) Object::toString, o -> true);
+        //Then it should throw an IllegalArgumentException
+    }
+
+    @Test(expected = IllegalArgumentException.class)
     public void shouldNotConstruct3Arguments() {
-        try {
-            //when
-            new WrappedRule<>(new TestRule(), o -> o.toString(), o -> true);
-            Assert.fail("exception expected");
-        } catch (IllegalArgumentException e) {
-            //then
-            assertEquals("Only one constructor parameter can be non-null", e.getMessage());
-        }
-
+        //When
+        new WrappedRule<>(new TestRule(), o -> o, o -> true);
+        //Then it should throw an IllegalArgumentException
     }
+
 }

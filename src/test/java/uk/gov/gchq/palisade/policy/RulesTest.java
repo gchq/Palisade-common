@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Crown Copyright
+ * Copyright 2020 Crown Copyright
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,11 +20,9 @@ import org.junit.Test;
 
 import uk.gov.gchq.palisade.jsonserialisation.JSONSerialiser;
 import uk.gov.gchq.palisade.rule.Rules;
-import uk.gov.gchq.palisade.util.JsonAssert;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotEquals;
 
 public class RulesTest {
 
@@ -32,7 +30,7 @@ public class RulesTest {
     private byte[] json;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         rules = new Rules<String>()
                 .message("Age off and visibility filtering")
                 .rule("ageOffRule", new TestRule()
@@ -41,7 +39,7 @@ public class RulesTest {
     }
 
     @Test
-    public void shouldNotEquals() throws Exception {
+    public void shouldNotEquals() {
         //given
         final Rules<String> one = new Rules<>();
         one.rule("one", new TestRule());
@@ -50,33 +48,32 @@ public class RulesTest {
         two.rule("two", new TestRule());
 
         //then
-        assertFalse(one.equals(two));
+        assertNotEquals("The 2 different rules should not match", one, two);
     }
 
     @Test
-    public void shouldEquals() throws Exception {
+    public void shouldEquals() {
         final Rules<String> one1 = new Rules<>();
         one1.rule("one", new TestRule());
 
         final Rules<String> one2 = new Rules<>();
         one2.rule("one", new TestRule());
 
-        assertTrue(one1.equals(one2));
+        assertEquals("The two rules should match", one1, one2);
     }
 
     @Test
-    public void shouldSerialiseToEqualObject() throws Exception {
+    public void shouldSerialiseToEqualObject() {
         Rules deserialise = JSONSerialiser.deserialise(json, Rules.class);
         final String thisSerialise = new String(JSONSerialiser.serialise(this.rules, true));
         final String thatSerialise = new String(JSONSerialiser.serialise(deserialise, true));
 
-        assertEquals(thisSerialise, thatSerialise);
-
-        JsonAssert.assertEquals(rules, deserialise);
+        assertEquals("Using the deserliased object in the JSONSerialiser should mean that the two strings are the same", thisSerialise, thatSerialise);
+        assertEquals("The rules object that has been serialised and deserialised should match the original object", rules, deserialise);
     }
 
     @Test
-    public void shouldSerialiseTo() throws Exception {
+    public void shouldSerialiseTo() {
         final String text = String.format("{%n" +
                 "  \"message\" : \"Age off and visibility filtering\",%n" +
                 "  \"rules\" : {%n" +
@@ -86,11 +83,11 @@ public class RulesTest {
                 "  }%n" +
                 "}");
 
-        assertEquals(text, new String(json));
+        assertEquals("The String json rule object should match the json serialised rule object", text, new String(json));
     }
 
     @Test
-    public void shouldDeserialiseText() throws Exception {
+    public void shouldDeserialiseText() {
         final String text = String.format("{%n" +
                 "  \"message\" : \"Age off and visibility filtering\",%n" +
                 "  \"rules\" : {%n" +
@@ -101,7 +98,7 @@ public class RulesTest {
                 "}");
 
         final Rules deserialise = JSONSerialiser.deserialise(text, Rules.class);
-        JsonAssert.assertEquals(rules, deserialise);
+        assertEquals("When the String json object has been deserialised it should match the original rule object", rules, deserialise);
 
     }
 }
