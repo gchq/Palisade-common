@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Crown Copyright
+ * Copyright 2020 Crown Copyright
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -77,11 +77,11 @@ public final class Util {
     /**
      * Applies a collection of rules to an item (record/resource).
      *
-     * @param item             resource or record to filter
-     * @param user             user the record is being processed for
-     * @param context          the additional context
-     * @param rules            rules collection
-     * @param <T>              record type
+     * @param item    resource or record to filter
+     * @param user    user the record is being processed for
+     * @param context the additional context
+     * @param rules   rules collection
+     * @param <T>     record type
      * @return item with rules applied
      */
     public static <T> T applyRulesToItem(final T item, final User user, final Context context, final Rules<T> rules) {
@@ -189,8 +189,7 @@ public final class Util {
         try {
             return func.call();
         } catch (Exception e) {
-            LOGGER.error("Call to failed to {} due to {}", address.toString(), e.getMessage());
-            throw e;
+            throw new Exception("Call to " + address.toString() + "failed due to ", e);
         }
     }
 
@@ -204,6 +203,7 @@ public final class Util {
     public static String locateJarFile(final String clazz) {
         requireNonNull(clazz, "clazz");
         try {
+
             Class c = Class.forName(clazz);
             CodeSource codeSource = c.getProtectionDomain().getCodeSource();
 
@@ -213,8 +213,13 @@ public final class Util {
             } else {
                 LOGGER.info("Can't determine where {} was loaded from", clazz);
             }
-            return (codeSource != null) ? codeSource.getLocation().toString() : null;
-        } catch (Exception e) {
+            if (codeSource != null) {
+                return codeSource.getLocation().toString();
+            } else {
+                return null;
+            }
+        } catch (ClassNotFoundException e) {
+            LOGGER.error("LocateJarFile threw an exception ", e);
             return e.getMessage();
         }
     }
