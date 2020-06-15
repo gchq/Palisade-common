@@ -41,13 +41,11 @@ import java.util.Objects;
  * automatically constructed recursively. This primarily targets filesystem-like
  * resources (Files, Directories etc.)
  * Internally, the resourceId is converted to a URI.
- *
  * Can produce any of the following output types:
  * - {@link FileResource}
  * - {@link DirectoryResource}
  * - {@link SystemResource}
  * Any parents automatically constructed will also be from this collection.
- *
  * If another method of creating a resource is required (i.e. directly using strings)
  * there is no guarantee that this can correctly resolve parents. Instead use the
  * methods provided by the appropriate resource impl.
@@ -99,15 +97,20 @@ public class ResourceBuilder {
     // Throw IllegalArgumentException if unsupported scheme
     public static Resource create(final URI uri, final Map<String, String> attributes) {
         // If passed relative paths, we can resolve them against the user.dir system property
-        URI absolute = uri.isAbsolute() ? uri : ROOT.resolve(uri);
+        URI absolute;
+        if (uri.isAbsolute()) {
+            absolute = uri;
+        } else {
+            absolute = ROOT.resolve(uri);
+        }
         // The hostname is all in the connectionDetail, so we never have a case of file://hostname/some/uri
         // A lot of this is trying to normalize file:///some/uri (file://<no-hostname>/some/uri) to file:/some/uri
         URI normal = UriBuilder.create(absolute)
-                    .withoutScheme()
-                    .withoutAuthority()
-                    .withoutPath()
-                    .withoutQuery()
-                    .withoutFragment();
+                .withoutScheme()
+                .withoutAuthority()
+                .withoutPath()
+                .withoutQuery()
+                .withoutFragment();
 
         // This should be assigning the attributes map to the returned object, once resources support attribute maps
 
