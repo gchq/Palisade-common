@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Crown Copyright
+ * Copyright 2020 Crown Copyright
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,6 +44,7 @@ import static java.util.Objects.requireNonNull;
  * @param <O> the domain object type
  */
 public class AvroSerialiser<O> implements Serialiser<O> {
+    private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = LoggerFactory.getLogger(AvroSerialiser.class);
     private final ReflectDatumWriter<O> datumWriter;
 

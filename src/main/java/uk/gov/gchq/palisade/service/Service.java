@@ -39,12 +39,12 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 public interface Service {
 
     @JsonGetter("class")
-    default String _getClass() {
+    default String getClassName() {
         return getClass().getName();
     }
 
     @JsonSetter("class")
-    default void _setClass(final String className) {
+    default void setClassName(final String className) {
         // do nothing.
     }
 }

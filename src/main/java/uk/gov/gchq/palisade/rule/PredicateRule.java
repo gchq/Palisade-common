@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Crown Copyright
+ * Copyright 2020 Crown Copyright
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,6 +39,11 @@ public interface PredicateRule<T> extends Rule<T> {
 
     @Override
     default T apply(final T obj, final User user, final Context context) {
-        return test(obj, user, context) ? obj : null;
+        if (test(obj, user, context)) {
+            return obj;
+        } else {
+            return null;
+
+        }
     }
 }
