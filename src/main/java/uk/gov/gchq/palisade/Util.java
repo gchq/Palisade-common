@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Crown Copyright
+ * Copyright 2020 Crown Copyright
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -77,11 +77,11 @@ public final class Util {
     /**
      * Applies a collection of rules to an item (record/resource).
      *
-     * @param item             resource or record to filter
-     * @param user             user the record is being processed for
-     * @param context          the additional context
-     * @param rules            rules collection
-     * @param <T>              record type
+     * @param item    resource or record to filter
+     * @param user    user the record is being processed for
+     * @param context the additional context
+     * @param rules   rules collection
+     * @param <T>     record type
      * @return item with rules applied
      */
     public static <T> T applyRulesToItem(final T item, final User user, final Context context, final Rules<T> rules) {
@@ -213,7 +213,11 @@ public final class Util {
             } else {
                 LOGGER.info("Can't determine where {} was loaded from", clazz);
             }
-            return (codeSource != null) ? codeSource.getLocation().toString() : null;
+            if (codeSource != null) {
+                return codeSource.getLocation().toString();
+            } else {
+                return null;
+            }
         } catch (Exception e) {
             return e.getMessage();
         }
