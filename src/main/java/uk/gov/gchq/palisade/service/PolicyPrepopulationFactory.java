@@ -59,7 +59,7 @@ public interface PolicyPrepopulationFactory {
     }
 
     @JsonSetter("class")
-    default void defualtSetClass(final String className) {
+    default void setClassName(final String className) {
         // do nothing.
     }
 }
