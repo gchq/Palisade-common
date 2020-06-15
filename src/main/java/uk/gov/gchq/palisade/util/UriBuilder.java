@@ -103,7 +103,7 @@ public class UriBuilder {
                         thisFrag
                 );
             } catch (URISyntaxException e) {
-                throw new IllegalArgumentException(String.format("Invalid URI: %s:%s%s%s%s", thisScheme, thisAuth, thisPath, "?" + thisQuery, "#" + thisFrag), e);
+                throw new IllegalArgumentException("Invalid URI: " + thisScheme + ":" + thisAuth + "" + thisPath + "?" + thisQuery + "#" + thisFrag, e);
             }
         };
     }
