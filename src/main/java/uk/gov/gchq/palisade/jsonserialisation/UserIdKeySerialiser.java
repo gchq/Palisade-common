@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Crown Copyright
+ * Copyright 2020 Crown Copyright
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,12 @@ import uk.gov.gchq.palisade.UserId;
 import java.io.IOException;
 
 public class UserIdKeySerialiser extends StdSerializer<UserId> {
+    private static final long serialVersionUID = 1L;
+
+    public UserIdKeySerialiser() {
+        super(UserId.class);
+    }
+
     public static SimpleModule getModule() {
         final SimpleModule module = new SimpleModule();
         module.addKeyDeserializer(UserId.class, new UserIdKeyDeserialiser());
@@ -33,9 +39,6 @@ public class UserIdKeySerialiser extends StdSerializer<UserId> {
         return module;
     }
 
-    public UserIdKeySerialiser() {
-        super(UserId.class);
-    }
 
     @Override
     public void serialize(final UserId value, final JsonGenerator g, final SerializerProvider provider) throws IOException {
