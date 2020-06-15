@@ -189,8 +189,7 @@ public final class Util {
         try {
             return func.call();
         } catch (Exception e) {
-            LOGGER.error("Call to failed to {} due to {}", address.toString(), e.getMessage());
-            throw e;
+            throw new Exception("Call to " + address.toString() + "failed due to ", e);
         }
     }
 
@@ -219,7 +218,7 @@ public final class Util {
             } else {
                 return null;
             }
-        } catch (Exception e) {
+        } catch (ClassNotFoundException e) {
             LOGGER.error("LocateJarFile threw an exception ", e);
             return e.getMessage();
         }
