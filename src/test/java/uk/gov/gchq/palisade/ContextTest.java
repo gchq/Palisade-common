@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Crown Copyright
+ * Copyright 2020 Crown Copyright
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,21 +26,21 @@ public class ContextTest {
     private Context testObject;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         testObject = new Context().purpose("purpose1");
     }
 
     @Test
-    public void shouldJsonSerialise() throws Exception {
+    public void shouldJsonSerialise() {
         //when
         final byte[] serialise = JSONSerialiser.serialise(testObject, true);
         final Context deserialise = JSONSerialiser.deserialise(serialise, Context.class);
         //then
-        Assert.assertEquals(testObject, deserialise);
+        Assert.assertEquals("testObject deserialised unsuccessfully: ", testObject, deserialise);
     }
 
     @Test
-    public void shouldHistoricalJsonSerialise() throws Exception {
+    public void shouldHistoricalJsonSerialise() {
         //when
         final byte[] serialise = JSONSerialiser.serialise(testObject, true);
 

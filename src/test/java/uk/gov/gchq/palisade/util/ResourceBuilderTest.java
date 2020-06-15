@@ -46,7 +46,7 @@ public class ResourceBuilderTest {
         final URI invalidSchema = new URI("badschema:/path/to/resource");
 
         // Then
-        assertFalse(ResourceBuilder.canCreate(invalidSchema));
+        assertFalse("The ResourceBuilder shouldn't be able to create a URI with a bad schema", ResourceBuilder.canCreate(invalidSchema));
 
         // When
         ResourceBuilder.create(invalidSchema);
@@ -70,7 +70,7 @@ public class ResourceBuilderTest {
         assertThat(parents.getFirst(), instanceOf(SystemResource.class));
         parents.removeFirst();
         // Nothing else
-        parents.forEach(resource -> fail());
+        parents.forEach(resource -> fail("parents should be empty so cannot create a system resource"));
     }
 
     @Test
