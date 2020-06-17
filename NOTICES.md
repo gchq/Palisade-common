@@ -1,5 +1,3 @@
-small 
-
 List of third-party dependencies grouped by their license type
 
 ### [Apache Software License 2.0](./licenses/apache_software_license_2.0.txt):
