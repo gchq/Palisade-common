@@ -16,6 +16,7 @@
 
 package uk.gov.gchq.palisade;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -24,7 +25,7 @@ import static java.util.Objects.requireNonNull;
 /**
  * A {@link UserId} uniquely identifies a {@link User}.
  */
-public class UserId {
+public class UserId implements Serializable {
 
     private String id;
 
