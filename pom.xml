@@ -77,8 +77,8 @@
     </properties>
 
     <scm>
-        <developerConnection>scm:git:ssh://git@github.com:gchq/Palisade-services.git</developerConnection>
-        <url>https://github.com/gchq/Palisade-services</url>
+        <developerConnection>scm:git:ssh://git@github.com:gchq/Palisade-common.git</developerConnection>
+        <url>https://github.com/gchq/Palisade-common</url>
     </scm>
 
     <distributionManagement>
