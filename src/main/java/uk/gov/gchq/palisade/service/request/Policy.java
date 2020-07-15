@@ -101,7 +101,7 @@ public class Policy<T> {
     @Generated
     public Policy<T> recordLevelRule(final String message, final Rule<T> rule) {
         Rules<T> recordLevelRules = getRecordRules();
-        recordLevelRules.rule(generateUUID(), rule);
+        recordLevelRules.addRule(generateUUID(), rule);
         addMessage(message, recordLevelRules);
         return this;
     }
@@ -116,7 +116,7 @@ public class Policy<T> {
     @Generated
     public Policy<T> recordLevelPredicateRule(final String message, final PredicateRule<T> rule) {
         Rules<T> recordLevelRules = getRecordRules();
-        recordLevelRules.predicateRule(generateUUID(), rule);
+        recordLevelRules.addPredicateRule(generateUUID(), rule);
         addMessage(message, recordLevelRules);
         return this;
     }
@@ -131,7 +131,7 @@ public class Policy<T> {
     @Generated
     public Policy<T> recordLevelSimplePredicateRule(final String message, final Predicate<T> rule) {
         Rules<T> recordLevelRules = getRecordRules();
-        recordLevelRules.simplePredicateRule(generateUUID(), rule);
+        recordLevelRules.addSimplePredicateRule(generateUUID(), rule);
         addMessage(message, recordLevelRules);
         return this;
     }
@@ -146,7 +146,7 @@ public class Policy<T> {
     @Generated
     public Policy<T> recordLevelSimpleFunctionRule(final String message, final UnaryOperator<T> rule) {
         Rules<T> recordLevelRules = getRecordRules();
-        recordLevelRules.simpleFunctionRule(generateUUID(), rule);
+        recordLevelRules.addSimpleFunctionRule(generateUUID(), rule);
         addMessage(message, recordLevelRules);
         return this;
     }
@@ -161,7 +161,7 @@ public class Policy<T> {
     @Generated
     public Policy<T> resourceLevelRule(final String message, final Rule<Resource> rule) {
         Rules<Resource> resourceLevelRules = getResourceRules();
-        resourceLevelRules.rule(generateUUID(), rule);
+        resourceLevelRules.addRule(generateUUID(), rule);
         addMessage(message, resourceLevelRules);
         return this;
     }
@@ -176,7 +176,7 @@ public class Policy<T> {
     @Generated
     public Policy<T> resourceLevelPredicateRule(final String message, final PredicateRule<Resource> rule) {
         Rules<Resource> resourceLevelRules = getResourceRules();
-        resourceLevelRules.rule(generateUUID(), rule);
+        resourceLevelRules.addRule(generateUUID(), rule);
         addMessage(message, resourceLevelRules);
         return this;
     }
@@ -191,7 +191,7 @@ public class Policy<T> {
     @Generated
     public Policy<T> resourceLevelSimplePredicateRule(final String message, final Predicate<Resource> rule) {
         Rules<Resource> resourceLevelRules = getResourceRules();
-        resourceLevelRules.simplePredicateRule(generateUUID(), rule);
+        resourceLevelRules.addSimplePredicateRule(generateUUID(), rule);
         addMessage(message, resourceLevelRules);
         return this;
     }
@@ -206,7 +206,7 @@ public class Policy<T> {
     @Generated
     public Policy<T> resourceLevelSimpleFunctionRule(final String message, final UnaryOperator<Resource> rule) {
         Rules<Resource> resourceLevelRules = getResourceRules();
-        resourceLevelRules.simpleFunctionRule(generateUUID(), rule);
+        resourceLevelRules.addSimpleFunctionRule(generateUUID(), rule);
         addMessage(message, resourceLevelRules);
         return this;
     }
