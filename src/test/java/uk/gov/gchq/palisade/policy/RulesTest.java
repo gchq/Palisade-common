@@ -33,7 +33,7 @@ public class RulesTest {
     public void setUp() {
         rules = new Rules<String>()
                 .message("Age off and visibility filtering")
-                .rule("ageOffRule", new TestRule()
+                .addRule("ageOffRule", new TestRule()
                 );
         json = JSONSerialiser.serialise(rules, true);
     }
@@ -42,10 +42,10 @@ public class RulesTest {
     public void shouldNotEquals() {
         //given
         final Rules<String> one = new Rules<>();
-        one.rule("one", new TestRule());
+        one.addRule("one", new TestRule());
 
         final Rules<String> two = new Rules<>();
-        two.rule("two", new TestRule());
+        two.addRule("two", new TestRule());
 
         //then
         assertNotEquals("The 2 different rules should not match", one, two);
@@ -54,10 +54,10 @@ public class RulesTest {
     @Test
     public void shouldEquals() {
         final Rules<String> one1 = new Rules<>();
-        one1.rule("one", new TestRule());
+        one1.addRule("one", new TestRule());
 
         final Rules<String> one2 = new Rules<>();
-        one2.rule("one", new TestRule());
+        one2.addRule("one", new TestRule());
 
         assertEquals("The two rules should match", one1, one2);
     }
