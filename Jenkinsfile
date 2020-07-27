@@ -17,6 +17,8 @@
 //nodes 1..3 are reserved for Jenkins slave pods.
 //node 0 is used for the Jenkins master
 
+timestamps {
+
 podTemplate(yaml: '''
 apiVersion: v1
 kind: Pod
@@ -74,13 +76,36 @@ spec:
             }
             echo sh(script: 'env | sort', returnStdout: true)
         }
-        stage('Install, Unit Tests, Checkstyle') {
+        
+        stage('Build : Uncached') {
             dir('Palisade-common') {
                 git url: 'https://github.com/gchq/Palisade-common.git'
                 sh "git checkout ${GIT_BRANCH_NAME}"
                 container('docker-cmds') {
                     configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
                         sh 'mvn -s $MAVEN_SETTINGS install'
+                    }
+                }
+            }
+        }
+        stage('Build : Cached') {
+            dir('Palisade-common') {
+                git url: 'https://github.com/gchq/Palisade-common.git'
+                sh "git checkout ${GIT_BRANCH_NAME}"
+                container('docker-cmds') {
+                    configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
+                        sh 'mvn -s $MAVEN_SETTINGS install'
+                    }
+                }
+            }
+        }
+        stage('Build : Cached : -T 1C') {
+            dir('Palisade-common') {
+                git url: 'https://github.com/gchq/Palisade-common.git'
+                sh "git checkout ${GIT_BRANCH_NAME}"
+                container('docker-cmds') {
+                    configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
+                        sh 'mvn -T 1C -s $MAVEN_SETTINGS install'
                     }
                 }
             }
@@ -130,3 +155,6 @@ spec:
         }
     }
 }
+
+}
+
