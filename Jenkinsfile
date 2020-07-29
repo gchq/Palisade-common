@@ -82,7 +82,7 @@ timestamps {
                     sh "git checkout ${GIT_BRANCH_NAME}"
                     container('docker-cmds') {
                         configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
-                            sh 'mvn -s $MAVEN_SETTINGS install'
+                            sh 'mvn -T 1C -s $MAVEN_SETTINGS install'
                         }
                     }
                 }
@@ -125,7 +125,7 @@ timestamps {
                             configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
                                 if (("${env.BRANCH_NAME}" == "develop") ||
                                         ("${env.BRANCH_NAME}" == "master")) {
-                                    sh 'mvn -s $MAVEN_SETTINGS deploy -P default,quick,avro'
+                                    sh 'mvn -T 1C -s $MAVEN_SETTINGS deploy -P default,quick,avro'
                                 } else {
                                     sh "echo - no deploy"
                                 }
