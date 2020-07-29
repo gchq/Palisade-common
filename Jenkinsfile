@@ -125,7 +125,7 @@ timestamps {
                             configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
                                 if (("${env.BRANCH_NAME}" == "develop") ||
                                         ("${env.BRANCH_NAME}" == "master")) {
-                                    sh 'mvn -T 1C -s $MAVEN_SETTINGS deploy -P default,quick,avro'
+                                    sh 'mvn -s $MAVEN_SETTINGS deploy -P default,quick,avro'
                                 } else {
                                     sh "echo - no deploy"
                                 }
