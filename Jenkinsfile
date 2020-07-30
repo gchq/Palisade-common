@@ -31,7 +31,7 @@ timestamps {
               matchExpressions:
               - key: palisade-node-name
                 operator: In
-                values: 
+                values:
                 - node1
                 - node2
                 - node3
@@ -39,7 +39,7 @@ timestamps {
       - name: jnlp
         image: jenkins/jnlp-slave
         imagePullPolicy: Always
-        args: 
+        args:
         - $(JENKINS_SECRET)
         - $(JENKINS_NAME)
         resources:
@@ -47,7 +47,7 @@ timestamps {
             ephemeral-storage: "4Gi"
           limits:
             ephemeral-storage: "8Gi"
-      
+
       - name: docker-cmds
         image: 779921734503.dkr.ecr.eu-west-1.amazonaws.com/jnlp-did:200608
         imagePullPolicy: IfNotPresent
@@ -62,12 +62,13 @@ timestamps {
           requests:
             ephemeral-storage: "4Gi"
           limits:
-            ephemeral-storage: "8Gi"            
+            ephemeral-storage: "8Gi"
+
     ''') {
-    
+
         node(POD_LABEL) {
             def GIT_BRANCH_NAME
-    
+
             stage('Bootstrap') {
                 if (env.CHANGE_BRANCH) {
                     GIT_BRANCH_NAME = env.CHANGE_BRANCH
@@ -78,8 +79,7 @@ timestamps {
             }
             stage('Install, Unit Tests, Checkstyle') {
                 dir('Palisade-common') {
-                    git url: 'https://github.com/gchq/Palisade-common.git'
-                    sh "git checkout ${GIT_BRANCH_NAME}"
+                    git branch: GIT_BRANCH_NAME, url: 'https://github.com/gchq/Palisade-common.git'
                     container('docker-cmds') {
                         configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
                             sh 'mvn -s $MAVEN_SETTINGS install'
@@ -87,7 +87,7 @@ timestamps {
                     }
                 }
             }
-    
+
             stage('SonarQube analysis') {
                 dir('Palisade-common') {
                     container('docker-cmds') {
@@ -106,7 +106,7 @@ timestamps {
                         }
                     }
                 }
-    
+
                 stage("SonarQube Quality Gate") {
                     // Wait for SonarQube to prepare the report
                     sleep(time: 10, unit: 'SECONDS')
