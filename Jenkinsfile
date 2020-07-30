@@ -82,7 +82,7 @@ timestamps {
                     sh "git checkout ${GIT_BRANCH_NAME}"
                     container('docker-cmds') {
                         configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
-                            sh 'mvn -T 1C -s $MAVEN_SETTINGS install'
+                            sh 'mvn -s $MAVEN_SETTINGS install'
                         }
                     }
                 }
