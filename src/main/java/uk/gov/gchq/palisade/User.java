@@ -46,6 +46,7 @@ import static java.util.Objects.requireNonNull;
         property = "class"
 )
 public class User implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private UserId userId;
     private Set<String> roles = new HashSet<>();
