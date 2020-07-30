@@ -26,6 +26,7 @@ import static java.util.Objects.requireNonNull;
  * A {@link UserId} uniquely identifies a {@link User}.
  */
 public class UserId implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private String id;
 
