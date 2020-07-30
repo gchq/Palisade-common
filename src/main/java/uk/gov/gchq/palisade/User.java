@@ -19,6 +19,7 @@ package uk.gov.gchq.palisade;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
@@ -44,7 +45,7 @@ import static java.util.Objects.requireNonNull;
         include = JsonTypeInfo.As.EXISTING_PROPERTY,
         property = "class"
 )
-public class User {
+public class User implements Serializable {
 
     private UserId userId;
     private Set<String> roles = new HashSet<>();
