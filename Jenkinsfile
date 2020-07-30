@@ -76,7 +76,7 @@ spec:
         }
         stage('Install, Unit Tests, Checkstyle') {
             dir('Palisade-common') {
-                git branch: 'develop' url: 'https://github.com/gchq/Palisade-common.git'
+                git branch: 'develop', url: 'https://github.com/gchq/Palisade-common.git'
                 sh "git checkout ${GIT_BRANCH_NAME}"
                 container('docker-cmds') {
                     configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
