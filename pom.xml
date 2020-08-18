@@ -18,7 +18,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>uk.gov.gchq.palisade</groupId>
     <artifactId>common</artifactId>
-    <version>0.4.0-${revision}</version>
+    <version>0.4.0</version>
     <description>Palisade common code</description>
     <url>https://github.com/gchq/Palisade-common</url>
 
