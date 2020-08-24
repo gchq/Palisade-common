@@ -34,7 +34,7 @@ import static java.util.Objects.requireNonNull;
  * See {@link FileResource} for a concrete implementation with an id.
  * This class is mostly used when deserialisation to a LeafResource is required, but the interface can't be used.
  */
-public abstract class AbstractLeafResource extends AbstractResource implements LeafResource, ChildResource, Serializable {
+public abstract class AbstractLeafResource extends AbstractResource implements LeafResource, ChildResource {
 
     private String type;
     private String serialisedFormat;
