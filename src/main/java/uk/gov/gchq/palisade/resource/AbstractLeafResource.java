@@ -20,6 +20,7 @@ import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.resource.impl.FileResource;
 import uk.gov.gchq.palisade.service.ConnectionDetail;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -33,7 +34,7 @@ import static java.util.Objects.requireNonNull;
  * See {@link FileResource} for a concrete implementation with an id.
  * This class is mostly used when deserialisation to a LeafResource is required, but the interface can't be used.
  */
-public abstract class AbstractLeafResource extends AbstractResource implements LeafResource, ChildResource {
+public abstract class AbstractLeafResource extends AbstractResource implements LeafResource, ChildResource, Serializable {
 
     private String type;
     private String serialisedFormat;

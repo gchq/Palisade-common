@@ -18,6 +18,7 @@ package uk.gov.gchq.palisade.resource;
 
 import uk.gov.gchq.palisade.Generated;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Objects;
 import java.util.StringJoiner;
@@ -29,7 +30,7 @@ import static java.util.Objects.requireNonNull;
  * methods required of a Resource.
  * This class is mostly used when deserialisation to a Resource is required, but the interface can't be used.
  */
-public abstract class AbstractResource implements Resource {
+public abstract class AbstractResource implements Resource, Serializable {
 
     private static Comparator<Resource> comp = Comparator.comparing(Resource::getId);
     protected String id;

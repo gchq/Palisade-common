@@ -26,6 +26,7 @@ import uk.gov.gchq.palisade.rule.PredicateRule;
 import uk.gov.gchq.palisade.rule.Rule;
 import uk.gov.gchq.palisade.rule.Rules;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.UUID;
@@ -43,7 +44,7 @@ import static java.util.Objects.requireNonNull;
  *            the format of, e.g. if T was String then a policy has Rules of type Resource for coarse filtering
  *            and Rules of type String for fine grain filtering of files where each record is a String
  */
-public class Policy<T> {
+public class Policy<T> implements Serializable {
     private Rules<T> recordRules;
     private Rules<Resource> resourceRules;
     private User owner;
