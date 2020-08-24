@@ -39,7 +39,7 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
     private String serialisedFormat;
     private ConnectionDetail connectionDetail;
     private ParentResource parent;
-    private Map<String, Object> attributes = new HashMap<>();
+    private HashMap<String, Object> attributes = new HashMap<>();
 
     public AbstractLeafResource() {
     }
@@ -140,7 +140,7 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
     @Generated
     public void setAttributes(final Map<String, Object> attributes) {
         requireNonNull(attributes);
-        this.attributes = attributes;
+        this.attributes = (HashMap<String, Object>) attributes;
     }
 
     @Generated

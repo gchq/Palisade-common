@@ -23,6 +23,7 @@ import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.jsonserialisation.JSONSerialiser;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -46,7 +47,7 @@ public class Rules<T> implements Serializable {
     public static final String NO_RULES_SET = "no rules set";
 
     private String message;
-    private Map<String, Rule<T>> rulesHashMap;
+    private LinkedHashMap<String, Rule<T>> rulesHashMap;
 
     /**
      * Constructs an empty instance of {@link Rules}.
@@ -163,7 +164,7 @@ public class Rules<T> implements Serializable {
     @Generated
     public void setRules(final Map<String, Rule<T>> rulesHashMap) {
         requireNonNull(rulesHashMap);
-        this.rulesHashMap = rulesHashMap;
+        this.rulesHashMap = (LinkedHashMap<String, Rule<T>>) rulesHashMap;
     }
 
     /**
