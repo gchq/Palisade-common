@@ -18,7 +18,6 @@ package uk.gov.gchq.palisade.resource;
 
 import uk.gov.gchq.palisade.Generated;
 
-import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Objects;
 import java.util.StringJoiner;
