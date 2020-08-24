@@ -25,8 +25,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import uk.gov.gchq.palisade.Context;
 import uk.gov.gchq.palisade.User;
 
-import java.io.Serializable;
-
 /**
  * <p>
  * A {@code Rule} is the fundamental interface for applying policy criteria.
@@ -51,7 +49,7 @@ import java.io.Serializable;
         include = As.EXISTING_PROPERTY,
         property = "class"
 )
-public interface Rule<T> extends Serializable {
+public interface Rule<T> {
     /**
      * Applies the rule logic to redact or modify the record based on the user and context.
      *
