@@ -24,6 +24,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 
 import uk.gov.gchq.palisade.resource.impl.FileResource;
 
+import java.io.Serializable;
+
 /**
  * A high level API to define a resource, where a resource could be a system, directory, file, stream, etc.
  * A resource is expected to have a unique identifier.
@@ -35,7 +37,7 @@ import uk.gov.gchq.palisade.resource.impl.FileResource;
         property = "class",
         defaultImpl = FileResource.class
 )
-public interface Resource extends Comparable<Resource> {
+public interface Resource extends Comparable<Resource>, Serializable {
 
     Resource id(String id);
 

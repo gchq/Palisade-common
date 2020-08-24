@@ -26,6 +26,8 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 public class StreamResource extends AbstractLeafResource {
+    private static final long serialVersionUID = 1L;
+
     protected long start;
     protected long end;
 

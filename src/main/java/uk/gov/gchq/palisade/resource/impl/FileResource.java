@@ -23,6 +23,7 @@ import uk.gov.gchq.palisade.service.ConnectionDetail;
 import java.util.Map;
 
 public class FileResource extends AbstractLeafResource {
+    private static final long serialVersionUID = 1L;
 
     public FileResource() {
         //no-args constructor needed for serialization only

@@ -22,6 +22,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.jsonserialisation.JSONSerialiser;
 
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -38,7 +39,8 @@ import static java.util.Objects.requireNonNull;
  * @param <T> The type of data records that the rules will be applied to.
  */
 @JsonPropertyOrder(value = {"message", "rules"}, alphabetic = true)
-public class Rules<T> {
+public class Rules<T> implements Serializable {
+    private static final long serialVersionUID = 1L;
     private static final String ID_CANNOT_BE_NULL = "The id field can not be null.";
     private static final String RULE_CANNOT_BE_NULL = "The rule can not be null.";
     public static final String NO_RULES_SET = "no rules set";

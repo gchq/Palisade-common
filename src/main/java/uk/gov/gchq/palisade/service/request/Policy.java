@@ -45,6 +45,8 @@ import static java.util.Objects.requireNonNull;
  *            and Rules of type String for fine grain filtering of files where each record is a String
  */
 public class Policy<T> implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private Rules<T> recordRules;
     private Rules<Resource> resourceRules;
     private User owner;
