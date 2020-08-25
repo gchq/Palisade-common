@@ -20,6 +20,7 @@ import java.io.Serializable;
 import java.util.function.Predicate;
 
 /**
+ * A serializable interface for a {@link Predicate}
  *
  * @param <T>   the type of the input to the predicate
  */

@@ -20,6 +20,7 @@ import java.io.Serializable;
 import java.util.function.UnaryOperator;
 
 /**
+ * A serializable interface for a {@link UnaryOperator}
  *
  * @param <T>   the type of the operand and result of the operator
  */
