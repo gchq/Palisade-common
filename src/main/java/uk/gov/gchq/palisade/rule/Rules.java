@@ -27,8 +27,6 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.StringJoiner;
-import java.util.function.Predicate;
-import java.util.function.UnaryOperator;
 
 import static java.util.Objects.requireNonNull;
 
@@ -125,7 +123,7 @@ public class Rules<T> implements Serializable {
      * @return this Rules instance
      */
     @Generated
-    public Rules<T> addSimplePredicateRule(final String id, final Predicate<T> rule) {
+    public Rules<T> addSimplePredicateRule(final String id, final SerializablePredicate<T> rule) {
         this.addRule(id, new WrappedRule<>(rule));
         return this;
     }
@@ -139,7 +137,7 @@ public class Rules<T> implements Serializable {
      * @return this Rules instance
      */
     @Generated
-    public Rules<T> addSimpleFunctionRule(final String id, final UnaryOperator<T> rule) {
+    public Rules<T> addSimpleFunctionRule(final String id, final SerializableUnaryOperator<T> rule) {
         this.addRule(id, new WrappedRule<>(rule));
         return this;
     }

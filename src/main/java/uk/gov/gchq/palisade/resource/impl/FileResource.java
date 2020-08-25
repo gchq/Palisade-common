@@ -16,11 +16,10 @@
 
 package uk.gov.gchq.palisade.resource.impl;
 
+import uk.gov.gchq.palisade.data.serialise.SerializableLinkedHashMap;
 import uk.gov.gchq.palisade.resource.AbstractLeafResource;
 import uk.gov.gchq.palisade.resource.ParentResource;
 import uk.gov.gchq.palisade.service.ConnectionDetail;
-
-import java.util.Map;
 
 public class FileResource extends AbstractLeafResource {
     private static final long serialVersionUID = 1L;
@@ -50,7 +49,7 @@ public class FileResource extends AbstractLeafResource {
     }
 
     @Override
-    public FileResource attributes(final Map<String, Object> attributes) {
+    public FileResource attributes(final SerializableLinkedHashMap<String, Object> attributes) {
         return (FileResource) super.attributes(attributes);
     }
 

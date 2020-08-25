@@ -63,7 +63,7 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
     }
 
     @Generated
-    public AbstractLeafResource attributes(final Map<String, Object> attributes) {
+    public AbstractLeafResource attributes(final SerializableLinkedHashMap<String, Object> attributes) {
         this.setAttributes(attributes);
         return this;
     }
@@ -138,9 +138,9 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
     }
 
     @Generated
-    public void setAttributes(final Map<String, Object> attributes) {
+    public void setAttributes(final SerializableLinkedHashMap<String, Object> attributes) {
         requireNonNull(attributes);
-        this.attributes = (SerializableLinkedHashMap<String, Object>) attributes;
+        this.attributes = attributes;
     }
 
     @Generated

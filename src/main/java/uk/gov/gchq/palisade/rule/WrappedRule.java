@@ -42,13 +42,15 @@ import static java.util.Objects.requireNonNull;
  *            by the record reader before being passed to the {@link Rule#apply(Object, User, Context)}.
  */
 public class WrappedRule<T> implements Rule<T> {
+
     public static final String WRAPPED_RULE_WAS_INITIALISED_WITH_NULL = "WrappedRule was initialised with null.";
     public static final String RULE_STRING = "rule";
     public static final String FUNCTION_STRING = "function";
     public static final String PREDICATE_STRING = "predicate";
+    private static final long serialVersionUID = 1L;
     private Rule<T> rule;
-    private UnaryOperator<T> function;
-    private Predicate<T> predicate;
+    private SerializableUnaryOperator<T> function;
+    private SerializablePredicate<T> predicate;
 
     /**
      * Constructs a {@link WrappedRule} with a null rule.
@@ -72,7 +74,7 @@ public class WrappedRule<T> implements Rule<T> {
      *
      * @param function the simple {@link UnaryOperator} rule to wrap.
      */
-    public WrappedRule(final UnaryOperator<T> function) {
+    public WrappedRule(final SerializableUnaryOperator<T> function) {
         requireNonNull(function, WRAPPED_RULE_WAS_INITIALISED_WITH_NULL + FUNCTION_STRING);
         this.function = function;
     }
@@ -83,15 +85,15 @@ public class WrappedRule<T> implements Rule<T> {
      *
      * @param predicate the simple {@link Predicate} rule to wrap.
      */
-    public WrappedRule(final Predicate<T> predicate) {
+    public WrappedRule(final SerializablePredicate<T> predicate) {
         requireNonNull(predicate, WRAPPED_RULE_WAS_INITIALISED_WITH_NULL + PREDICATE_STRING);
         this.predicate = predicate;
     }
 
     @JsonCreator
     public WrappedRule(@JsonProperty("rule") final Rule<T> rule,
-                       @JsonProperty("function") final UnaryOperator<T> function,
-                       @JsonProperty("predicate") final Predicate<T> predicate) {
+                       @JsonProperty("function") final SerializableUnaryOperator<T> function,
+                       @JsonProperty("predicate") final SerializablePredicate<T> predicate) {
         checkNullCount(rule, function, predicate);
         this.rule = rule;
         this.function = function;

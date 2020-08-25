@@ -25,13 +25,13 @@ import uk.gov.gchq.palisade.resource.Resource;
 import uk.gov.gchq.palisade.rule.PredicateRule;
 import uk.gov.gchq.palisade.rule.Rule;
 import uk.gov.gchq.palisade.rule.Rules;
+import uk.gov.gchq.palisade.rule.SerializablePredicate;
+import uk.gov.gchq.palisade.rule.SerializableUnaryOperator;
 
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.UUID;
-import java.util.function.Predicate;
-import java.util.function.UnaryOperator;
 
 import static java.util.Objects.requireNonNull;
 
@@ -132,7 +132,7 @@ public class Policy<T> implements Serializable {
      * @return the policy
      */
     @Generated
-    public Policy<T> recordLevelSimplePredicateRule(final String message, final Predicate<T> rule) {
+    public Policy<T> recordLevelSimplePredicateRule(final String message, final SerializablePredicate<T> rule) {
         Rules<T> recordLevelRules = getRecordRules();
         recordLevelRules.addSimplePredicateRule(generateUUID(), rule);
         addMessage(message, recordLevelRules);
@@ -147,7 +147,7 @@ public class Policy<T> implements Serializable {
      * @return the policy
      */
     @Generated
-    public Policy<T> recordLevelSimpleFunctionRule(final String message, final UnaryOperator<T> rule) {
+    public Policy<T> recordLevelSimpleFunctionRule(final String message, final SerializableUnaryOperator<T> rule) {
         Rules<T> recordLevelRules = getRecordRules();
         recordLevelRules.addSimpleFunctionRule(generateUUID(), rule);
         addMessage(message, recordLevelRules);
@@ -192,7 +192,7 @@ public class Policy<T> implements Serializable {
      * @return the policy
      */
     @Generated
-    public Policy<T> resourceLevelSimplePredicateRule(final String message, final Predicate<Resource> rule) {
+    public Policy<T> resourceLevelSimplePredicateRule(final String message, final SerializablePredicate<Resource> rule) {
         Rules<Resource> resourceLevelRules = getResourceRules();
         resourceLevelRules.addSimplePredicateRule(generateUUID(), rule);
         addMessage(message, resourceLevelRules);
@@ -207,7 +207,7 @@ public class Policy<T> implements Serializable {
      * @return the policy
      */
     @Generated
-    public Policy<T> resourceLevelSimpleFunctionRule(final String message, final UnaryOperator<Resource> rule) {
+    public Policy<T> resourceLevelSimpleFunctionRule(final String message, final SerializableUnaryOperator<Resource> rule) {
         Rules<Resource> resourceLevelRules = getResourceRules();
         resourceLevelRules.addSimpleFunctionRule(generateUUID(), rule);
         addMessage(message, resourceLevelRules);

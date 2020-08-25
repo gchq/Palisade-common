@@ -14,24 +14,14 @@
  * limitations under the License.
  */
 
-package uk.gov.gchq.palisade.data.serialise;
+package uk.gov.gchq.palisade.rule;
 
-import java.util.LinkedHashMap;
+import java.io.Serializable;
+import java.util.function.UnaryOperator;
 
 /**
- * A Serializable implementation of a LinkedHashMap
  *
- * @param <K>   the key for the map entry
- * @param <V>   the value for the map entry
+ * @param <T>   the type of the operand and result of the operator
  */
-public class SerializableLinkedHashMap<K, V> extends LinkedHashMap<K, V> {
-
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * Constructs an empty insertion-ordered {@link SerializableLinkedHashMap} instance
-     */
-    public SerializableLinkedHashMap() {
-        super();
-    }
+public interface SerializableUnaryOperator<T> extends UnaryOperator<T>, Serializable {
 }
