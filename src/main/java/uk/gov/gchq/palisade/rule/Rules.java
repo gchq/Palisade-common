@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
 import uk.gov.gchq.palisade.Generated;
+import uk.gov.gchq.palisade.data.serialise.SerializableMap;
 import uk.gov.gchq.palisade.jsonserialisation.JSONSerialiser;
 
 import java.io.Serializable;
@@ -46,13 +47,13 @@ public class Rules<T> implements Serializable {
     public static final String NO_RULES_SET = "no rules set";
 
     private String message;
-    private LinkedHashMap<String, Rule<T>> rulesHashMap;
+    private SerializableMap<String, Rule<T>> rulesHashMap;
 
     /**
      * Constructs an empty instance of {@link Rules}.
      */
     public Rules() {
-        rulesHashMap = new LinkedHashMap<>();
+        rulesHashMap = new SerializableMap<>();
         message = NO_RULES_SET;
     }
 
@@ -163,7 +164,7 @@ public class Rules<T> implements Serializable {
     @Generated
     public void setRules(final Map<String, Rule<T>> rulesHashMap) {
         requireNonNull(rulesHashMap);
-        this.rulesHashMap = (LinkedHashMap<String, Rule<T>>) rulesHashMap;
+        this.rulesHashMap = (SerializableMap<String, Rule<T>>) rulesHashMap;
     }
 
     /**

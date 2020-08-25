@@ -17,10 +17,10 @@
 package uk.gov.gchq.palisade.resource;
 
 import uk.gov.gchq.palisade.Generated;
+import uk.gov.gchq.palisade.data.serialise.SerializableMap;
 import uk.gov.gchq.palisade.resource.impl.FileResource;
 import uk.gov.gchq.palisade.service.ConnectionDetail;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.StringJoiner;
@@ -39,7 +39,7 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
     private String serialisedFormat;
     private ConnectionDetail connectionDetail;
     private ParentResource parent;
-    private HashMap<String, Object> attributes = new HashMap<>();
+    private SerializableMap<String, Object> attributes = new SerializableMap<>();
 
     public AbstractLeafResource() {
     }
@@ -140,7 +140,7 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
     @Generated
     public void setAttributes(final Map<String, Object> attributes) {
         requireNonNull(attributes);
-        this.attributes = (HashMap<String, Object>) attributes;
+        this.attributes = (SerializableMap<String, Object>) attributes;
     }
 
     @Generated
