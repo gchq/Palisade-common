@@ -17,7 +17,11 @@
 package uk.gov.gchq.palisade.data.serialise;
 
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
-public class SerializableMap<K, V> extends HashMap<K, V> implements Serializable {
+public class SerializableLinkedHashMap<K, V> extends LinkedHashMap<K, V> implements Serializable {
+
+    public SerializableLinkedHashMap() {
+        super();
+    }
 }
