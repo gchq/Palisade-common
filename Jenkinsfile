@@ -68,12 +68,20 @@ timestamps {
 
         node(POD_LABEL) {
             def GIT_BRANCH_NAME
+            def COMMON_REVISION
 
             stage('Bootstrap') {
                 if (env.CHANGE_BRANCH) {
                     GIT_BRANCH_NAME = env.CHANGE_BRANCH
                 } else {
                     GIT_BRANCH_NAME = env.BRANCH_NAME
+                }
+                COMMON_REVISION = "BUILD"
+                if (("${env.BRANCH_NAME}" == "develop") {
+                    COMMON_REVISION = "SNAPSHOT"
+                }
+                if ("${env.BRANCH_NAME}" == "main")) {
+                    COMMON_REVISION = "RELEASE"
                 }
                 echo sh(script: 'env | sort', returnStdout: true)
             }
@@ -82,7 +90,7 @@ timestamps {
                     git branch: GIT_BRANCH_NAME, url: 'https://github.com/gchq/Palisade-common.git'
                     container('docker-cmds') {
                         configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
-                            sh 'mvn -s $MAVEN_SETTINGS install'
+                            sh 'mvn -s $MAVEN_SETTINGS install -D revision=${COMMON_REVISION}'
                         }
                     }
                 }
@@ -96,11 +104,11 @@ timestamps {
                                          file(credentialsId: "${env.SQ_KEY_STORE}", variable: 'KEYSTORE')]) {
                             configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
                                 withSonarQubeEnv(installationName: 'sonar') {
-                                    if (env.CHANGE_BRANCH) {
-                                        sh 'mvn -s $MAVEN_SETTINGS org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar -Dsonar.projectKey="Palisade-Common-${CHANGE_BRANCH}" -Dsonar.projectName="Palisade-Common-${CHANGE_BRANCH}" -Dsonar.webhooks.project=$SONARQUBE_WEBHOOK -Djavax.net.ssl.trustStore=$KEYSTORE -Djavax.net.ssl.trustStorePassword=$KEYSTORE_PASS'
-                                    } else {
-                                        sh 'mvn -s $MAVEN_SETTINGS org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar -Dsonar.projectKey="Palisade-Common-${BRANCH_NAME}" -Dsonar.projectName="Palisade-Common-${BRANCH_NAME}" -Dsonar.webhooks.project=$SONARQUBE_WEBHOOK -Djavax.net.ssl.trustStore=$KEYSTORE -Djavax.net.ssl.trustStorePassword=$KEYSTORE_PASS'
-                                    }
+//                                     if (env.CHANGE_BRANCH) {
+                                        sh 'mvn -s $MAVEN_SETTINGS org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar -Dsonar.projectKey="Palisade-Common-${GIT_BRANCH_NAME}" -Dsonar.projectName="Palisade-Common-${GIT_BRANCH_NAME}" -Dsonar.webhooks.project=$SONARQUBE_WEBHOOK -Djavax.net.ssl.trustStore=$KEYSTORE -Djavax.net.ssl.trustStorePassword=$KEYSTORE_PASS'
+//                                     } else {
+//                                         sh 'mvn -s $MAVEN_SETTINGS org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar -Dsonar.projectKey="Palisade-Common-${BRANCH_NAME}" -Dsonar.projectName="Palisade-Common-${BRANCH_NAME}" -Dsonar.webhooks.project=$SONARQUBE_WEBHOOK -Djavax.net.ssl.trustStore=$KEYSTORE -Djavax.net.ssl.trustStorePassword=$KEYSTORE_PASS'
+//                                     }
                                 }
                             }
                         }
@@ -123,11 +131,12 @@ timestamps {
                     dir('Palisade-common') {
                         container('docker-cmds') {
                             configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
-                                if (("${env.BRANCH_NAME}" == "develop") ||
-                                        ("${env.BRANCH_NAME}" == "master")) {
-                                    sh 'mvn -s $MAVEN_SETTINGS deploy -P default,quick,avro'
-                                } else {
-                                    sh "echo - no deploy"
+                                sh 'mvn -s $MAVEN_SETTINGS deploy -P default,quick,avro -D revision=${COMMON_REVISION}'
+//                                 if (("${env.BRANCH_NAME}" == "develop") ||
+//                                         ("${env.BRANCH_NAME}" == "master")) {
+//                                     sh 'mvn -s $MAVEN_SETTINGS deploy -P default,quick,avro'
+//                                 } else {
+//                                     sh "echo - no deploy"
                                 }
                             }
                         }
