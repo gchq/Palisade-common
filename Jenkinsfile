@@ -71,21 +71,19 @@ timestamps {
             def COMMON_REVISION
 
             stage('Bootstrap') {
-                container('docker-cmds') {
-                    if (env.CHANGE_BRANCH) {
-                        GIT_BRANCH_NAME = env.CHANGE_BRANCH
-                    } else {
-                        GIT_BRANCH_NAME = env.BRANCH_NAME
-                    }
-                    COMMON_REVISION = "BUILD"
-                    if ("${env.BRANCH_NAME}" == "develop") {
-                        COMMON_REVISION = "SNAPSHOT"
-                    }
-                    if ("${env.BRANCH_NAME}" == "main") {
-                        COMMON_REVISION = "RELEASE"
-                    }
-                    echo sh(script: 'env | sort', returnStdout: true)
+                if (env.CHANGE_BRANCH) {
+                    GIT_BRANCH_NAME = env.CHANGE_BRANCH
+                } else {
+                    GIT_BRANCH_NAME = env.BRANCH_NAME
                 }
+                COMMON_REVISION = "BUILD"
+                if ("${env.BRANCH_NAME}" == "develop") {
+                    COMMON_REVISION = "SNAPSHOT"
+                }
+                if ("${env.BRANCH_NAME}" == "main") {
+                    COMMON_REVISION = "RELEASE"
+                }
+                echo sh(script: 'env | sort', returnStdout: true)
             }
             stage('Install, Unit Tests, Checkstyle') {
                 dir('Palisade-common') {
