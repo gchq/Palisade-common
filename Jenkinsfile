@@ -77,7 +77,7 @@ timestamps {
                     GIT_BRANCH_NAME = env.BRANCH_NAME
                 }
                 COMMON_REVISION = "BUILD"
-                if (("${env.BRANCH_NAME}" == "develop") {
+                if ("${env.BRANCH_NAME}" == "develop") {
                     COMMON_REVISION = "SNAPSHOT"
                 }
                 if ("${env.BRANCH_NAME}" == "main") {
