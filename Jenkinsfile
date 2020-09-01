@@ -80,7 +80,7 @@ timestamps {
                 if (("${env.BRANCH_NAME}" == "develop") {
                     COMMON_REVISION = "SNAPSHOT"
                 }
-                if ("${env.BRANCH_NAME}" == "main")) {
+                if ("${env.BRANCH_NAME}" == "main") {
                     COMMON_REVISION = "RELEASE"
                 }
                 echo sh(script: 'env | sort', returnStdout: true)
