@@ -76,7 +76,8 @@ timestamps {
                 } else {
                     GIT_BRANCH_NAME = env.BRANCH_NAME
                 }
-                COMMON_REVISION = "BUILD"
+                def GIT_BRANCH_NAME_UPPER = GIT_BRANCH_NAME.toUpperCase().take(7)
+                COMMON_REVISION = "${GIT_BRANCH_NAME_UPPER}-BRANCH-SNAPSHOT"
                 if ("${env.BRANCH_NAME}" == "develop") {
                     COMMON_REVISION = "SNAPSHOT"
                 }
@@ -90,7 +91,7 @@ timestamps {
                     git branch: GIT_BRANCH_NAME, url: 'https://github.com/gchq/Palisade-common.git'
                     container('docker-cmds') {
                         configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
-                            sh "mvn -s $MAVEN_SETTINGS install -D revision=$COMMON_REVISION"
+                            sh "mvn -s ${MAVEN_SETTINGS} install -D revision=${COMMON_REVISION}"
                         }
                     }
                 }
@@ -104,7 +105,7 @@ timestamps {
                                          file(credentialsId: "${env.SQ_KEY_STORE}", variable: 'KEYSTORE')]) {
                             configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
                                 withSonarQubeEnv(installationName: 'sonar') {
-                                    sh 'mvn -s $MAVEN_SETTINGS org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar -Dsonar.projectKey="Palisade-Common-${GIT_BRANCH_NAME}" -Dsonar.projectName="Palisade-Common-${GIT_BRANCH_NAME}" -Dsonar.webhooks.project=$SONARQUBE_WEBHOOK -Djavax.net.ssl.trustStore=$KEYSTORE -Djavax.net.ssl.trustStorePassword=$KEYSTORE_PASS'
+                                    sh "mvn -s ${MAVEN_SETTINGS} org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar -Dsonar.projectKey=Palisade-Common-${GIT_BRANCH_NAME} -Dsonar.projectName=Palisade-Common-${GIT_BRANCH_NAME} -Dsonar.webhooks.project=$SONARQUBE_WEBHOOK -Djavax.net.ssl.trustStore=$KEYSTORE -Djavax.net.ssl.trustStorePassword=$KEYSTORE_PASS"
                                 }
                             }
                         }
@@ -129,7 +130,7 @@ timestamps {
                 dir('Palisade-common') {
                     container('docker-cmds') {
                         configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
-                            sh "mvn -s $MAVEN_SETTINGS deploy -P default,quick,avro -D revision=$COMMON_REVISION"
+                            sh "mvn -s ${MAVEN_SETTINGS} deploy -P default,quick,avro -D revision=${COMMON_REVISION}"
                         }
                     }
                 }
