@@ -137,7 +137,7 @@ timestamps {
 //                                     sh 'mvn -s $MAVEN_SETTINGS deploy -P default,quick,avro'
 //                                 } else {
 //                                     sh "echo - no deploy"
-                                }
+//                                 }
                             }
                         }
                     }
