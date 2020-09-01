@@ -76,8 +76,8 @@ timestamps {
                 } else {
                     GIT_BRANCH_NAME = env.BRANCH_NAME
                 }
-                def GIT_BRANCH_NAME_UPPER = GIT_BRANCH_NAME.toUpperCase().take(7)
-                COMMON_REVISION = "${GIT_BRANCH_NAME_UPPER}-BRANCH-SNAPSHOT"
+                def GIT_BRANCH_NAME_LOWER = GIT_BRANCH_NAME.toLowerCase().take(7)
+                COMMON_REVISION = "${GIT_BRANCH_NAME_LOWER}-BRANCH-SNAPSHOT"
                 if ("${env.BRANCH_NAME}" == "develop") {
                     COMMON_REVISION = "SNAPSHOT"
                 }
