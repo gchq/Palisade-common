@@ -86,12 +86,13 @@ timestamps {
                 }
                 echo sh(script: 'env | sort', returnStdout: true)
             }
+
             stage('Install, Unit Tests, Checkstyle') {
                 dir('Palisade-common') {
                     git branch: GIT_BRANCH_NAME, url: 'https://github.com/gchq/Palisade-common.git'
                     container('docker-cmds') {
                         configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
-                            sh "mvn -s ${MAVEN_SETTINGS} install -D revision=${COMMON_REVISION}"
+                            sh "mvn -s ${MAVEN_SETTINGS} -D revision=${COMMON_REVISION} install"
                         }
                     }
                 }
@@ -130,7 +131,7 @@ timestamps {
                 dir('Palisade-common') {
                     container('docker-cmds') {
                         configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
-                            sh "mvn -s ${MAVEN_SETTINGS} deploy -P default,quick,avro -D revision=${COMMON_REVISION}"
+                            sh "mvn -s ${MAVEN_SETTINGS} -P default,quick,avro -D revision=${COMMON_REVISION} deploy"
                         }
                     }
                 }
