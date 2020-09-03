@@ -21,7 +21,7 @@ import uk.gov.gchq.palisade.resource.AbstractLeafResource;
 import uk.gov.gchq.palisade.resource.ParentResource;
 import uk.gov.gchq.palisade.service.ConnectionDetail;
 
-import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.StringJoiner;
 
@@ -56,7 +56,7 @@ public class StreamResource extends AbstractLeafResource {
     }
 
     @Override
-    public StreamResource attributes(final LinkedHashMap<String, Object> attributes) {
+    public StreamResource attributes(final Map<String, Object> attributes) {
         return (StreamResource) super.attributes(attributes);
     }
 
