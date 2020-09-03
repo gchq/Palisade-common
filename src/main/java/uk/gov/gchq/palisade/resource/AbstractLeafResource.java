@@ -33,13 +33,13 @@ import static java.util.Objects.requireNonNull;
  * See {@link FileResource} for a concrete implementation with an id.
  * This class is mostly used when deserialisation to a LeafResource is required, but the interface can't be used.
  */
-public abstract class AbstractLeafResource extends AbstractResource implements LeafResource, ChildResource {
+public abstract class AbstractLeafResource extends AbstractResource implements LeafResource {
 
     private String type;
     private String serialisedFormat;
     private ConnectionDetail connectionDetail;
     private ParentResource parent;
-    private LinkedHashMap<String, Object> attributes = new LinkedHashMap<>();
+    private Map<String, Object> attributes = new LinkedHashMap<>();
 
     public AbstractLeafResource() {
     }
@@ -63,7 +63,7 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
     }
 
     @Generated
-    public AbstractLeafResource attributes(final LinkedHashMap<String, Object> attributes) {
+    public AbstractLeafResource attributes(final Map<String, Object> attributes) {
         this.setAttributes(attributes);
         return this;
     }
@@ -138,7 +138,7 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
     }
 
     @Generated
-    public void setAttributes(final LinkedHashMap<String, Object> attributes) {
+    public void setAttributes(final Map<String, Object> attributes) {
         requireNonNull(attributes);
         this.attributes = attributes;
     }

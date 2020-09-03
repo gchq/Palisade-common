@@ -44,7 +44,7 @@ public class Rules<T> implements Serializable {
     public static final String NO_RULES_SET = "no rules set";
 
     private String message;
-    private LinkedHashMap<String, Rule<T>> rulesHashMap;
+    private Map<String, Rule<T>> rulesHashMap;
 
     /**
      * Constructs an empty instance of {@link Rules}.
@@ -61,7 +61,7 @@ public class Rules<T> implements Serializable {
      * @return this Rules instance
      */
     @Generated
-    public Rules<T> rules(final LinkedHashMap<String, Rule<T>> rules) {
+    public Rules<T> rules(final Map<String, Rule<T>> rules) {
         this.setRules(rules);
         return this;
     }
@@ -159,7 +159,7 @@ public class Rules<T> implements Serializable {
     }
 
     @Generated
-    public void setRules(final LinkedHashMap<String, Rule<T>> rulesHashMap) {
+    public void setRules(final Map<String, Rule<T>> rulesHashMap) {
         requireNonNull(rulesHashMap);
         this.rulesHashMap = rulesHashMap;
     }
