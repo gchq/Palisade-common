@@ -20,10 +20,10 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
 import uk.gov.gchq.palisade.Generated;
-import uk.gov.gchq.palisade.data.serialise.SerializableLinkedHashMap;
 import uk.gov.gchq.palisade.jsonserialisation.JSONSerialiser;
 
 import java.io.Serializable;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.StringJoiner;
@@ -44,13 +44,13 @@ public class Rules<T> implements Serializable {
     public static final String NO_RULES_SET = "no rules set";
 
     private String message;
-    private SerializableLinkedHashMap<String, Rule<T>> rulesHashMap;
+    private LinkedHashMap<String, Rule<T>> rulesHashMap;
 
     /**
      * Constructs an empty instance of {@link Rules}.
      */
     public Rules() {
-        rulesHashMap = new SerializableLinkedHashMap<>();
+        rulesHashMap = new LinkedHashMap<>();
         message = NO_RULES_SET;
     }
 
@@ -61,7 +61,7 @@ public class Rules<T> implements Serializable {
      * @return this Rules instance
      */
     @Generated
-    public Rules<T> rules(final SerializableLinkedHashMap<String, Rule<T>> rules) {
+    public Rules<T> rules(final LinkedHashMap<String, Rule<T>> rules) {
         this.setRules(rules);
         return this;
     }
@@ -159,7 +159,7 @@ public class Rules<T> implements Serializable {
     }
 
     @Generated
-    public void setRules(final SerializableLinkedHashMap<String, Rule<T>> rulesHashMap) {
+    public void setRules(final LinkedHashMap<String, Rule<T>> rulesHashMap) {
         requireNonNull(rulesHashMap);
         this.rulesHashMap = rulesHashMap;
     }
