@@ -37,7 +37,7 @@ import static java.util.Objects.requireNonNull;
  * @param <T> The type of data records that the rules will be applied to.
  */
 @JsonPropertyOrder(value = {"message", "rules"}, alphabetic = true)
-public class Rules<T> implements Serializable {
+public class Rules<T extends Serializable> implements Serializable {
     private static final long serialVersionUID = 1L;
     private static final String ID_CANNOT_BE_NULL = "The id field can not be null.";
     private static final String RULE_CANNOT_BE_NULL = "The rule can not be null.";

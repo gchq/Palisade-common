@@ -20,6 +20,7 @@ import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.resource.impl.FileResource;
 import uk.gov.gchq.palisade.service.ConnectionDetail;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -39,7 +40,7 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
     private String serialisedFormat;
     private ConnectionDetail connectionDetail;
     private ParentResource parent;
-    private HashMap<String, Object> attributes = new HashMap<>();
+    private HashMap<String, Serializable> attributes = new HashMap<>();
 
     public AbstractLeafResource() {
     }
@@ -63,13 +64,13 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
     }
 
     @Generated
-    public AbstractLeafResource attributes(final Map<String, Object> attributes) {
+    public AbstractLeafResource attributes(final Map<String, Serializable> attributes) {
         this.setAttributes(attributes);
         return this;
     }
 
     @Generated
-    public AbstractLeafResource attribute(final String attributeKey, final Object attributeValue) {
+    public AbstractLeafResource attribute(final String attributeKey, final Serializable attributeValue) {
         this.setAttribute(attributeKey, attributeValue);
         return this;
     }
@@ -133,12 +134,12 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
     }
 
     @Generated
-    public Map<String, Object> getAttributes() {
+    public HashMap<String, Serializable> getAttributes() {
         return attributes;
     }
 
     @Generated
-    public void setAttributes(final Map<String, Object> attributes) {
+    public void setAttributes(final Map<String, Serializable> attributes) {
         requireNonNull(attributes);
         this.attributes = new HashMap<>(attributes);
     }
@@ -155,7 +156,7 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
 
 
     @Generated
-    public void setAttribute(final String attributeKey, final Object attributeValue) {
+    public void setAttribute(final String attributeKey, final Serializable attributeValue) {
         requireNonNull(attributeKey, "The attributeKey cannot be set to null.");
         requireNonNull(attributeKey, "The attributeValue cannot be set to null.");
         this.attributes.put(attributeKey, attributeValue);

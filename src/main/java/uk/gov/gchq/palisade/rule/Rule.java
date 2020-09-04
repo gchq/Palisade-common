@@ -51,7 +51,7 @@ import java.io.Serializable;
         include = As.EXISTING_PROPERTY,
         property = "class"
 )
-public interface Rule<T> extends Serializable {
+public interface Rule<T extends Serializable> extends Serializable {
     /**
      * Applies the rule logic to redact or modify the record based on the user and context.
      *
