@@ -80,7 +80,7 @@ timestamps {
                     IS_PR="false"
                 }
                 def GIT_BRANCH_NAME_LOWER = GIT_BRANCH_NAME.toLowerCase().take(7)
-                COMMON_REVISION = "BRANCH-SNAPSHOT-${GIT_BRANCH_NAME_LOWER}"
+                COMMON_REVISION = "BRANCH-${GIT_BRANCH_NAME_LOWER}-SNAPSHOT"
                 if ("${env.BRANCH_NAME}" == "develop") {
                     COMMON_REVISION = "SNAPSHOT"
                 }
