@@ -26,7 +26,7 @@ import java.io.Serializable;
  * tests whether a record should be fully redacted or not.
  *
  * @param <T> The type of the record. In normal cases the raw data will be deserialised
- *            by the record reader before being passed to the {@link PredicateRule#apply(T, User, Context)}.
+ *            by the record reader before being passed to the apply(T, User, Context) method.
  */
 public interface PredicateRule<T extends Serializable> extends Rule<T> {
     /**
