@@ -44,7 +44,7 @@ import static java.util.Objects.requireNonNull;
  *            the format of, e.g. if T was String then a policy has Rules of type Resource for coarse filtering
  *            and Rules of type String for fine grain filtering of files where each record is a String
  */
-public class Policy<T> implements Serializable {
+public class Policy<T extends Serializable> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Rules<T> recordRules;

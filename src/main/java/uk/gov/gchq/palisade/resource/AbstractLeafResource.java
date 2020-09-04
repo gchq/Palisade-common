@@ -134,7 +134,7 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
     }
 
     @Generated
-    public HashMap<String, Serializable> getAttributes() {
+    public Map<String, Serializable> getAttributes() {
         return attributes;
     }
 
