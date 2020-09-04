@@ -42,7 +42,7 @@ import java.io.Serializable;
  * </p>
  *
  * @param <T> The type of the record. In normal cases the raw data will be deserialised
- *            by the record reader before being passed to the {@link Rule#apply(Object, User, Context)}.
+ *            by the record reader before being passed to the {@link Rule#apply(T, User, Context)}.
  */
 @FunctionalInterface
 @JsonPropertyOrder(value = {"class"}, alphabetic = true)
