@@ -63,7 +63,7 @@ public class UtilTest {
         //when
         final String actual1 = applyRulesToItem("String", null, null, rules);
         //then
-        assertThat(actual1, allOf(
+        assertThat("item should have all rules applied", actual1, allOf(
                 containsString("fromRule"),
                 containsString("2ndRule"),
                 containsString("String")));
