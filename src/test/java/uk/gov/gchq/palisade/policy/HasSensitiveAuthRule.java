@@ -22,7 +22,7 @@ import uk.gov.gchq.palisade.rule.Rule;
 
 import java.io.Serializable;
 
-public class HasSensitiveAuthRule<T> implements Serializable, Rule<T> {
+public class HasSensitiveAuthRule<T extends Serializable> implements Serializable, Rule<T> {
     @Override
     public T apply(final T record, final User user, final Context context) {
         if (user.getAuths().contains("Sensitive")) {

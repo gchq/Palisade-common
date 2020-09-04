@@ -60,7 +60,7 @@ public class WrappedRuleTest {
     @Test(expected = IllegalArgumentException.class)
     public void shouldNotConstructNullRule() {
         //When
-        new WrappedRule<>(null, (SerializableUnaryOperator<Object>) Object::toString, o -> true);
+        new WrappedRule<>(null, (SerializableUnaryOperator<String>) String::toString, o -> true);
         //Then it should throw an IllegalArgumentException
     }
 

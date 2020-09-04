@@ -22,7 +22,7 @@ import uk.gov.gchq.palisade.rule.Rule;
 
 import java.io.Serializable;
 
-public class HasTestingPurpose<T> implements Serializable, Rule<T> {
+public class HasTestingPurpose<T extends Serializable> implements Serializable, Rule<T> {
     @Override
     public T apply(final T record, final User user, final Context context) {
         if (context.getPurpose().equalsIgnoreCase("testing")) {

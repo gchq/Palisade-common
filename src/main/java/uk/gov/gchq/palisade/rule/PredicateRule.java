@@ -19,6 +19,8 @@ package uk.gov.gchq.palisade.rule;
 import uk.gov.gchq.palisade.Context;
 import uk.gov.gchq.palisade.User;
 
+import java.io.Serializable;
+
 /**
  * A {@link PredicateRule} is a simplified implementation of {@link Rule} that simply
  * tests whether a record should be fully redacted or not.
@@ -26,7 +28,7 @@ import uk.gov.gchq.palisade.User;
  * @param <T> The type of the record. In normal cases the raw data will be deserialised
  *            by the record reader before being passed to the {@link PredicateRule#apply(Object, User, Context)}.
  */
-public interface PredicateRule<T> extends Rule<T> {
+public interface PredicateRule<T extends Serializable> extends Rule<T> {
     /**
      * Applies the rule logic to test whether a record should be redacted based on the user and context.
      *

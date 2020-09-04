@@ -25,6 +25,7 @@ import uk.gov.gchq.palisade.Context;
 import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.User;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.function.Predicate;
@@ -41,7 +42,7 @@ import static java.util.Objects.requireNonNull;
  * @param <T> The type of the record. In normal cases the raw data will be deserialised
  *            by the record reader before being passed to the {@link Rule#apply(Object, User, Context)}.
  */
-public class WrappedRule<T> implements Rule<T> {
+public class WrappedRule<T extends Serializable> implements Rule<T> {
 
     public static final String WRAPPED_RULE_WAS_INITIALISED_WITH_NULL = "WrappedRule was initialised with null.";
     public static final String RULE_STRING = "rule";
