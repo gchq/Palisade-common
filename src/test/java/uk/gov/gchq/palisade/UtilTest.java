@@ -26,7 +26,10 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.core.AllOf.allOf;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static uk.gov.gchq.palisade.Util.applyRulesToItem;
 
@@ -55,12 +58,15 @@ public class UtilTest {
     public void shouldUpdateRecordFromAllRules() {
         //given
         final Rules<String> rules = new Rules<String>()
-                .addRule("r1", (record, user, context) -> "fromRule")
+                .addRule("r1", (record, user, context) -> record.concat("fromRule"))
                 .addRule("r2", (record, user, context) -> record.concat("2ndRule"));
         //when
         final String actual1 = applyRulesToItem("String", null, null, rules);
         //then
-        assertEquals("'fromRule2ndRule' should be returned as the record has been updated for all rules", "fromRule" + "2ndRule", actual1);
+        assertThat(actual1, allOf(
+                containsString("fromRule"),
+                containsString("2ndRule"),
+                containsString("String")));
     }
 
     @Test
