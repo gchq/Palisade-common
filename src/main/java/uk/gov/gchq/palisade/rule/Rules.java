@@ -23,7 +23,6 @@ import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.jsonserialisation.JSONSerialiser;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
