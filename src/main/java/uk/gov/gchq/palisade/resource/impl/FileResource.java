@@ -20,9 +20,11 @@ import uk.gov.gchq.palisade.resource.AbstractLeafResource;
 import uk.gov.gchq.palisade.resource.ParentResource;
 import uk.gov.gchq.palisade.service.ConnectionDetail;
 
+import java.io.Serializable;
 import java.util.Map;
 
 public class FileResource extends AbstractLeafResource {
+    private static final long serialVersionUID = 1L;
 
     public FileResource() {
         //no-args constructor needed for serialization only
@@ -49,12 +51,12 @@ public class FileResource extends AbstractLeafResource {
     }
 
     @Override
-    public FileResource attributes(final Map<String, Object> attributes) {
+    public FileResource attributes(final Map<String, Serializable> attributes) {
         return (FileResource) super.attributes(attributes);
     }
 
     @Override
-    public FileResource attribute(final String attributeKey, final Object attributeValue) {
+    public FileResource attribute(final String attributeKey, final Serializable attributeValue) {
         return (FileResource) super.attribute(attributeKey, attributeValue);
     }
 

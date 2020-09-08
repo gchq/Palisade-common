@@ -18,9 +18,8 @@ package uk.gov.gchq.palisade.policy;
 import org.junit.Assert;
 import org.junit.Test;
 
+import uk.gov.gchq.palisade.rule.SerializableUnaryOperator;
 import uk.gov.gchq.palisade.rule.WrappedRule;
-
-import java.util.function.UnaryOperator;
 
 public class WrappedRuleTest {
 
@@ -61,7 +60,7 @@ public class WrappedRuleTest {
     @Test(expected = IllegalArgumentException.class)
     public void shouldNotConstructNullRule() {
         //When
-        new WrappedRule<>(null, (UnaryOperator<Object>) Object::toString, o -> true);
+        new WrappedRule<>(null, (SerializableUnaryOperator<String>) String::toString, o -> true);
         //Then it should throw an IllegalArgumentException
     }
 
