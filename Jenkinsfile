@@ -133,16 +133,6 @@ timestamps {
                     }
                 }
             }
-
-            stage('Maven deploy') {
-                dir('Palisade-common') {
-                    container('docker-cmds') {
-                        configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
-                            sh "mvn -s ${MAVEN_SETTINGS} -P default,quick,avro -D revision=${COMMON_REVISION} deploy"
-                        }
-                    }
-                }
-            }
         }
     }
 
