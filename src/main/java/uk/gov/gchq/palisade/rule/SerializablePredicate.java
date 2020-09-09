@@ -14,17 +14,15 @@
  * limitations under the License.
  */
 
-package uk.gov.gchq.palisade.policy;
-
-import uk.gov.gchq.palisade.Context;
-import uk.gov.gchq.palisade.User;
-import uk.gov.gchq.palisade.rule.Rule;
+package uk.gov.gchq.palisade.rule;
 
 import java.io.Serializable;
+import java.util.function.Predicate;
 
-public class PassThroughRule<T extends Serializable> implements Serializable, Rule<T> {
-    @Override
-    public T apply(final T record, final User user, final Context context) {
-        return record;
-    }
+/**
+ * A serializable interface for a {@link Predicate}
+ *
+ * @param <T>   the type of the input to the predicate
+ */
+public interface SerializablePredicate<T> extends Predicate<T>, Serializable {
 }

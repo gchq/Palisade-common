@@ -30,8 +30,8 @@ import static java.util.Objects.requireNonNull;
  * This class is mostly used when deserialisation to a Resource is required, but the interface can't be used.
  */
 public abstract class AbstractResource implements Resource {
+    private static final Comparator<Resource> COMP = Comparator.comparing(Resource::getId);
 
-    private static Comparator<Resource> comp = Comparator.comparing(Resource::getId);
     protected String id;
 
     public AbstractResource() {
@@ -86,7 +86,7 @@ public abstract class AbstractResource implements Resource {
 
     @Override
     public int compareTo(final Resource o) {
-        return comp.compare(this, o);
+        return COMP.compare(this, o);
     }
 
 }

@@ -27,6 +27,7 @@ import java.util.StringJoiner;
 import static java.util.Objects.requireNonNull;
 
 public class DirectoryResource extends AbstractResource implements ChildResource, ParentResource {
+    private static final long serialVersionUID = 1L;
 
     private ParentResource parent;
 

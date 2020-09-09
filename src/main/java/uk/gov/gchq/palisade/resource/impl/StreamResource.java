@@ -21,11 +21,14 @@ import uk.gov.gchq.palisade.resource.AbstractLeafResource;
 import uk.gov.gchq.palisade.resource.ParentResource;
 import uk.gov.gchq.palisade.service.ConnectionDetail;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.StringJoiner;
 
 public class StreamResource extends AbstractLeafResource {
+    private static final long serialVersionUID = 1L;
+
     protected long start;
     protected long end;
 
@@ -54,12 +57,12 @@ public class StreamResource extends AbstractLeafResource {
     }
 
     @Override
-    public StreamResource attributes(final Map<String, Object> attributes) {
+    public StreamResource attributes(final Map<String, Serializable> attributes) {
         return (StreamResource) super.attributes(attributes);
     }
 
     @Override
-    public StreamResource attribute(final String attributeKey, final Object attributeValue) {
+    public StreamResource attribute(final String attributeKey, final Serializable attributeValue) {
         return (StreamResource) super.attribute(attributeKey, attributeValue);
     }
 

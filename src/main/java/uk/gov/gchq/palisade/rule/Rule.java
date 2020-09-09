@@ -25,6 +25,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import uk.gov.gchq.palisade.Context;
 import uk.gov.gchq.palisade.User;
 
+import java.io.Serializable;
+
 /**
  * <p>
  * A {@code Rule} is the fundamental interface for applying policy criteria.
@@ -40,7 +42,7 @@ import uk.gov.gchq.palisade.User;
  * </p>
  *
  * @param <T> The type of the record. In normal cases the raw data will be deserialised
- *            by the record reader before being passed to the {@link Rule#apply(Object, User, Context)}.
+ *            by the record reader before being passed to the apply(T, User, Context) method.
  */
 @FunctionalInterface
 @JsonPropertyOrder(value = {"class"}, alphabetic = true)
@@ -49,7 +51,7 @@ import uk.gov.gchq.palisade.User;
         include = As.EXISTING_PROPERTY,
         property = "class"
 )
-public interface Rule<T> {
+public interface Rule<T extends Serializable> extends Serializable {
     /**
      * Applies the rule logic to redact or modify the record based on the user and context.
      *

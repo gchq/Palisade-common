@@ -22,6 +22,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 
+import java.io.Serializable;
+
 /**
  * A High level API for passing details of how to connect to a resource
  */
@@ -32,7 +34,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
         property = "class",
         defaultImpl = SimpleConnectionDetail.class
 )
-public interface ConnectionDetail {
+public interface ConnectionDetail extends Serializable {
 
     String createConnection();
 
