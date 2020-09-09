@@ -14,17 +14,15 @@
  * limitations under the License.
  */
 
-package uk.gov.gchq.palisade.policy;
-
-import uk.gov.gchq.palisade.Context;
-import uk.gov.gchq.palisade.User;
-import uk.gov.gchq.palisade.rule.Rule;
+package uk.gov.gchq.palisade.rule;
 
 import java.io.Serializable;
+import java.util.function.UnaryOperator;
 
-public class PassThroughRule<T extends Serializable> implements Serializable, Rule<T> {
-    @Override
-    public T apply(final T record, final User user, final Context context) {
-        return record;
-    }
+/**
+ * A serializable interface for a {@link UnaryOperator}
+ *
+ * @param <T>   the type of the operand and result of the operator
+ */
+public interface SerializableUnaryOperator<T> extends UnaryOperator<T>, Serializable {
 }

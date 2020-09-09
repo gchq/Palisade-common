@@ -20,6 +20,8 @@ import uk.gov.gchq.palisade.resource.AbstractResource;
 import uk.gov.gchq.palisade.resource.ParentResource;
 
 public class SystemResource extends AbstractResource implements ParentResource {
+    private static final long serialVersionUID = 1L;
+
     public SystemResource() {
         //no-args constructor needed for serialization only
     }

@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import uk.gov.gchq.palisade.rule.Rule;
 import uk.gov.gchq.palisade.rule.Rules;
 
+import java.io.Serializable;
 import java.net.URL;
 import java.security.CodeSource;
 import java.time.Duration;
@@ -61,7 +62,7 @@ public final class Util {
      * @param recordsReturned  a counter for the number of records being returned
      * @return filtered stream
      */
-    public static <T> Stream<T> applyRulesToStream(final Stream<T> records, final User user, final Context context, final Rules<T> rules, final AtomicLong recordsProcessed, final AtomicLong recordsReturned) {
+    public static <T extends Serializable> Stream<T> applyRulesToStream(final Stream<T> records, final User user, final Context context, final Rules<T> rules, final AtomicLong recordsProcessed, final AtomicLong recordsReturned) {
         Objects.requireNonNull(records);
         if (isNull(rules) || isNull(rules.getRules()) || rules.getRules().isEmpty()) {
             return records;
@@ -84,7 +85,7 @@ public final class Util {
      * @param <T>     record type
      * @return item with rules applied
      */
-    public static <T> T applyRulesToItem(final T item, final User user, final Context context, final Rules<T> rules) {
+    public static <T extends Serializable> T applyRulesToItem(final T item, final User user, final Context context, final Rules<T> rules) {
         if (isNull(rules) || isNull(rules.getRules()) || rules.getRules().isEmpty()) {
             return item;
         }

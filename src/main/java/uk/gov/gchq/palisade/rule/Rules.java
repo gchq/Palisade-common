@@ -22,12 +22,11 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.jsonserialisation.JSONSerialiser;
 
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.StringJoiner;
-import java.util.function.Predicate;
-import java.util.function.UnaryOperator;
 
 import static java.util.Objects.requireNonNull;
 
@@ -38,19 +37,20 @@ import static java.util.Objects.requireNonNull;
  * @param <T> The type of data records that the rules will be applied to.
  */
 @JsonPropertyOrder(value = {"message", "rules"}, alphabetic = true)
-public class Rules<T> {
+public class Rules<T extends Serializable> implements Serializable {
+    private static final long serialVersionUID = 1L;
     private static final String ID_CANNOT_BE_NULL = "The id field can not be null.";
     private static final String RULE_CANNOT_BE_NULL = "The rule can not be null.";
     public static final String NO_RULES_SET = "no rules set";
 
     private String message;
-    private Map<String, Rule<T>> rulesHashMap;
+    private LinkedHashMap<String, Rule<T>> rulesMap;
 
     /**
      * Constructs an empty instance of {@link Rules}.
      */
     public Rules() {
-        rulesHashMap = new LinkedHashMap<>();
+        rulesMap = new LinkedHashMap<>();
         message = NO_RULES_SET;
     }
 
@@ -70,7 +70,7 @@ public class Rules<T> {
     @Generated
     public Rules<T> addRules(final Map<String, Rule<T>> rules) {
         requireNonNull(rules, "Cannot add null to the existing rules.");
-        this.rulesHashMap.putAll(rules);
+        this.rulesMap.putAll(rules);
         return this;
     }
 
@@ -97,7 +97,7 @@ public class Rules<T> {
     public Rules<T> addRule(final String id, final Rule<T> rule) {
         requireNonNull(id, ID_CANNOT_BE_NULL);
         requireNonNull(rule, RULE_CANNOT_BE_NULL);
-        rulesHashMap.put(id, rule);
+        rulesMap.put(id, rule);
         return this;
     }
 
@@ -123,7 +123,7 @@ public class Rules<T> {
      * @return this Rules instance
      */
     @Generated
-    public Rules<T> addSimplePredicateRule(final String id, final Predicate<T> rule) {
+    public Rules<T> addSimplePredicateRule(final String id, final SerializablePredicate<T> rule) {
         this.addRule(id, new WrappedRule<>(rule));
         return this;
     }
@@ -137,7 +137,7 @@ public class Rules<T> {
      * @return this Rules instance
      */
     @Generated
-    public Rules<T> addSimpleFunctionRule(final String id, final UnaryOperator<T> rule) {
+    public Rules<T> addSimpleFunctionRule(final String id, final SerializableUnaryOperator<T> rule) {
         this.addRule(id, new WrappedRule<>(rule));
         return this;
     }
@@ -155,13 +155,13 @@ public class Rules<T> {
 
     @Generated
     public Map<String, Rule<T>> getRules() {
-        return rulesHashMap;
+        return rulesMap;
     }
 
     @Generated
-    public void setRules(final Map<String, Rule<T>> rulesHashMap) {
-        requireNonNull(rulesHashMap);
-        this.rulesHashMap = rulesHashMap;
+    public void setRules(final Map<String, Rule<T>> rulesMap) {
+        requireNonNull(rulesMap);
+        this.rulesMap = new LinkedHashMap<>(rulesMap);
     }
 
     /**
@@ -170,7 +170,7 @@ public class Rules<T> {
      * @return {@code true} if this rule set contains at least one rule
      */
     public boolean containsRules() {
-        return !rulesHashMap.isEmpty();
+        return !rulesMap.isEmpty();
     }
 
     @Override
@@ -182,13 +182,13 @@ public class Rules<T> {
 
             final EqualsBuilder builder = new EqualsBuilder()
                     .append(message, that.message)
-                    .append(this.rulesHashMap.keySet(), that.getRules().keySet());
+                    .append(this.rulesMap.keySet(), that.getRules().keySet());
 
             if (builder.isEquals()) {
-                for (final Map.Entry<String, Rule<T>> entry : this.rulesHashMap.entrySet()) {
+                for (final Map.Entry<String, Rule<T>> entry : this.rulesMap.entrySet()) {
                     final String ruleName = entry.getKey();
-                    final Rule thisRule = entry.getValue();
-                    final Rule thatRule = that.getRules().get(ruleName);
+                    final Rule<?> thisRule = entry.getValue();
+                    final Rule<?> thatRule = that.getRules().get(ruleName);
 
                     builder.append(thisRule.getClass(), thatRule.getClass());
                     if (builder.isEquals()) {
@@ -209,7 +209,7 @@ public class Rules<T> {
     @Override
     @Generated
     public int hashCode() {
-        return Objects.hash(message, rulesHashMap);
+        return Objects.hash(message, rulesMap);
     }
 
     @Override
@@ -217,7 +217,7 @@ public class Rules<T> {
     public String toString() {
         return new StringJoiner(", ", Rules.class.getSimpleName() + "[", "]")
                 .add("message='" + message + "'")
-                .add("rulesHashMap=" + rulesHashMap)
+                .add("rulesHashMap=" + rulesMap)
                 .add(super.toString())
                 .toString();
     }
