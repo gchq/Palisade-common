@@ -133,6 +133,20 @@ timestamps {
                     }
                 }
             }
+
+            stage('Maven deploy') {
+                dir('Palisade-common') {
+                    container('docker-cmds') {
+                        configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
+                            if (("${env.BRANCH_NAME}" == "develop") || ("${env.BRANCH_NAME}" == "main")) {
+                                sh 'mvn -s $MAVEN_SETTINGS deploy -P quick'
+                            } else {
+                                sh "echo - no deploy"
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
