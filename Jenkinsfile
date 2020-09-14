@@ -70,22 +70,26 @@ timestamps {
             def GIT_BRANCH_NAME
             def COMMON_REVISION
             def IS_PR
+            def NOT_FEATURE_BRANCH
 
             stage('Bootstrap') {
                 if (env.CHANGE_BRANCH) {
                     GIT_BRANCH_NAME = env.CHANGE_BRANCH
-                    IS_PR="true"
+                    IS_PR = "true"
                 } else {
                     GIT_BRANCH_NAME = env.BRANCH_NAME
-                    IS_PR="false"
+                    IS_PR = "false"
                 }
                 def GIT_BRANCH_NAME_LOWER = GIT_BRANCH_NAME.toLowerCase().take(7)
                 COMMON_REVISION = "BRANCH-${GIT_BRANCH_NAME_LOWER}-SNAPSHOT"
+                NOT_FEATURE_BRANCH = "false"
                 if ("${env.BRANCH_NAME}" == "develop") {
                     COMMON_REVISION = "SNAPSHOT"
+                    NOT_FEATURE_BRANCH="true"
                 }
                 if ("${env.BRANCH_NAME}" == "main") {
                     COMMON_REVISION = "RELEASE"
+                    NOT_FEATURE_BRANCH="true"
                 }
                 echo sh(script: 'env | sort', returnStdout: true)
             }
@@ -95,8 +99,8 @@ timestamps {
                     git branch: GIT_BRANCH_NAME, url: 'https://github.com/gchq/Palisade-common.git'
                     container('docker-cmds') {
                         configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
-                            if (IS_PR == "true") {
-                                sh "mvn -s ${MAVEN_SETTINGS} -D revision=${COMMON_REVISION} -P quick deploy"
+                            if (IS_PR == "true" || NOT_FEATURE_BRANCH == "true") {
+                                sh "mvn -s ${MAVEN_SETTINGS} -D revision=${COMMON_REVISION} deploy"
                             } else {
                                 sh "mvn -s ${MAVEN_SETTINGS} -D revision=${COMMON_REVISION} install"
                             }
@@ -130,20 +134,6 @@ timestamps {
                     def qg = waitForQualityGate()
                     if (qg.status != 'OK') {
                         error "Pipeline aborted due to SonarQube quality gate failure: ${qg.status}"
-                    }
-                }
-            }
-
-            stage('Maven deploy') {
-                dir('Palisade-common') {
-                    container('docker-cmds') {
-                        configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
-                            if (("${env.BRANCH_NAME}" == "develop") || ("${env.BRANCH_NAME}" == "main")) {
-                                sh "mvn -s ${MAVEN_SETTINGS} -D revision=${COMMON_REVISION} -P quick deploy"
-                            } else {
-                                sh "echo - no deploy"
-                            }
-                        }
                     }
                 }
             }
