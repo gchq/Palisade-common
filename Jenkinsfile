@@ -70,7 +70,7 @@ timestamps {
             def GIT_BRANCH_NAME
             def COMMON_REVISION
             def IS_PR
-            def NOT_FEATURE_BRANCH
+            def FEATURE_BRANCH
 
             stage('Bootstrap') {
                 if (env.CHANGE_BRANCH) {
@@ -82,14 +82,14 @@ timestamps {
                 }
                 def GIT_BRANCH_NAME_LOWER = GIT_BRANCH_NAME.toLowerCase().take(7)
                 COMMON_REVISION = "BRANCH-${GIT_BRANCH_NAME_LOWER}-SNAPSHOT"
-                NOT_FEATURE_BRANCH = "false"
+                FEATURE_BRANCH = "true"
                 if ("${env.BRANCH_NAME}" == "develop") {
                     COMMON_REVISION = "SNAPSHOT"
-                    NOT_FEATURE_BRANCH="true"
+                    FEATURE_BRANCH = "false"
                 }
                 if ("${env.BRANCH_NAME}" == "main") {
                     COMMON_REVISION = "RELEASE"
-                    NOT_FEATURE_BRANCH="true"
+                    FEATURE_BRANCH = "false"
                 }
                 echo sh(script: 'env | sort', returnStdout: true)
             }
@@ -99,7 +99,7 @@ timestamps {
                     git branch: GIT_BRANCH_NAME, url: 'https://github.com/gchq/Palisade-common.git'
                     container('docker-cmds') {
                         configFileProvider([configFile(fileId: "${env.CONFIG_FILE}", variable: 'MAVEN_SETTINGS')]) {
-                            if (IS_PR == "true" || NOT_FEATURE_BRANCH == "true") {
+                            if (IS_PR == "true" || FEATURE_BRANCH == "false") {
                                 sh "mvn -s ${MAVEN_SETTINGS} -D revision=${COMMON_REVISION} deploy"
                             } else {
                                 sh "mvn -s ${MAVEN_SETTINGS} -D revision=${COMMON_REVISION} install"
