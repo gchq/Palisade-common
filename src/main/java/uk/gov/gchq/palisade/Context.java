@@ -45,7 +45,7 @@ import static java.util.Objects.requireNonNull;
         property = "class"
 )
 public class Context implements Serializable {
-    static final long serialVersionUID = 1;
+    private static final long serialVersionUID = 1;
 
     private static final String PURPOSE = "purpose";
 
