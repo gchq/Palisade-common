@@ -79,6 +79,7 @@ public class Context implements Serializable {
      * This map's values Ojbects must technically implement Serializable, but this isn't type-checked
      *
      * @param contents a map of keys to (Serializable) Object values, in particular the purpose of the request
+     * @return this Context object
      */
     @Generated
     public Context contents(final Map<String, Object> contents) {
