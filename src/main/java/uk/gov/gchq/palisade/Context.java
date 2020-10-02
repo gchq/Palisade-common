@@ -47,31 +47,36 @@ import static java.util.Objects.requireNonNull;
 public class Context implements Serializable {
 
     private static final String PURPOSE = "purpose";
-    private HashMap<String, Serializable> contents;
+
+    // The map here technically has the bound that Object must be serializable
+    // Replacing with a Map<String, Serializable> causes serialization problems (interfaces don't have default constructors)
+    // Replacing with a Map<String, ? extends Serializable> forces all values to be of the same type
+    // Java doesn't support a Map<String, Serializalbe & Object> join type
+    @SuppressWarnings("java:S1948")
+    private HashMap<String, Object> contents;
 
     public Context() {
         this(new HashMap<>());
     }
 
     @JsonCreator
-    public Context(@JsonProperty("contents") final Map<String, Serializable> contents) {
+    public Context(@JsonProperty("contents") final Map<String, Object> contents) {
         this.setContents(contents);
     }
 
     @Generated
-    public Context contents(final Map<String, Serializable> contents) {
+    public Context contents(final Map<String, Object> contents) {
         this.setContents(contents);
         return this;
     }
 
-
     @Generated
-    public Map<String, Serializable> getContents() {
+    public Map<String, Object> getContents() {
         return contents;
     }
 
     @Generated
-    public void setContents(final Map<String, Serializable> contents) {
+    public void setContents(final Map<String, Object> contents) {
         requireNonNull(contents);
         this.contents = new HashMap<>(contents);
     }
@@ -104,7 +109,7 @@ public class Context implements Serializable {
     }
 
     @Generated
-    public Context put(final String key, final Serializable value) {
+    public Context put(final String key, final Object value) {
         requireNonNull(key, "The key cannot be null.");
         requireNonNull(value, "The value cannot be null.");
         contents.put(key, value);
@@ -112,7 +117,7 @@ public class Context implements Serializable {
     }
 
     @Generated
-    public Context putIfAbsent(final String key, final Serializable value) {
+    public Context putIfAbsent(final String key, final Object value) {
         requireNonNull(key, "The key cannot be null.");
         requireNonNull(value, "The value cannot be null.");
         contents.putIfAbsent(key, value);
