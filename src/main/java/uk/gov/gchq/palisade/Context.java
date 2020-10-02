@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,36 +44,36 @@ import static java.util.Objects.requireNonNull;
         include = JsonTypeInfo.As.EXISTING_PROPERTY,
         property = "class"
 )
-public class Context {
+public class Context implements Serializable {
 
     private static final String PURPOSE = "purpose";
-    private Map<String, Object> contents;
+    private HashMap<String, Serializable> contents;
 
     public Context() {
         this(new HashMap<>());
     }
 
     @JsonCreator
-    public Context(@JsonProperty("contents") final Map<String, Object> contents) {
+    public Context(@JsonProperty("contents") final Map<String, Serializable> contents) {
         this.setContents(contents);
     }
 
     @Generated
-    public Context contents(final Map<String, Object> contents) {
+    public Context contents(final Map<String, Serializable> contents) {
         this.setContents(contents);
         return this;
     }
 
 
     @Generated
-    public Map<String, Object> getContents() {
+    public Map<String, Serializable> getContents() {
         return contents;
     }
 
     @Generated
-    public void setContents(final Map<String, Object> contents) {
+    public void setContents(final Map<String, Serializable> contents) {
         requireNonNull(contents);
-        this.contents = contents;
+        this.contents = new HashMap<>(contents);
     }
 
     @JsonIgnore
@@ -103,7 +104,7 @@ public class Context {
     }
 
     @Generated
-    public Context put(final String key, final Object value) {
+    public Context put(final String key, final Serializable value) {
         requireNonNull(key, "The key cannot be null.");
         requireNonNull(value, "The value cannot be null.");
         contents.put(key, value);
@@ -111,7 +112,7 @@ public class Context {
     }
 
     @Generated
-    public Context putIfAbsent(final String key, final Object value) {
+    public Context putIfAbsent(final String key, final Serializable value) {
         requireNonNull(key, "The key cannot be null.");
         requireNonNull(value, "The value cannot be null.");
         contents.putIfAbsent(key, value);
