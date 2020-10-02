@@ -36,7 +36,7 @@ import static java.util.Objects.requireNonNull;
  * A structure to store contextual information from the client at query time that can be used when interacting with resources.
  * Interaction with a resource include both reading and writing and will often require
  * additional information that can be stored and recovered in this structure and passed along with the request/operation.
- * i.e. A users purpose for requesting the contents of a file.
+ * i.e. a user's purpose for requesting the contents of a file.
  */
 @JsonPropertyOrder(value = {"class", "contents"}, alphabetic = true)
 @JsonTypeInfo(
@@ -45,6 +45,7 @@ import static java.util.Objects.requireNonNull;
         property = "class"
 )
 public class Context implements Serializable {
+    static final long serialVersionUID = 1;
 
     private static final String PURPOSE = "purpose";
 
@@ -55,15 +56,30 @@ public class Context implements Serializable {
     @SuppressWarnings("java:S1948")
     private HashMap<String, Object> contents;
 
+    /**
+     * Default constructor for a Context object, sets the contents to an empty map
+     */
     public Context() {
         this(new HashMap<>());
     }
 
+    /**
+     * Create a new Context object, specifying the contents of the context with a map
+     * This map's values Ojbects must technically implement Serializable, but this isn't type-checked
+     *
+     * @param contents a map of keys to (Serializable) Object values, in particular the purpose of the request
+     */
     @JsonCreator
     public Context(@JsonProperty("contents") final Map<String, Object> contents) {
         this.setContents(contents);
     }
 
+    /**
+     * Create a new Context object, specifying the contents of the context with a map
+     * This map's values Ojbects must technically implement Serializable, but this isn't type-checked
+     *
+     * @param contents a map of keys to (Serializable) Object values, in particular the purpose of the request
+     */
     @Generated
     public Context contents(final Map<String, Object> contents) {
         this.setContents(contents);
@@ -108,6 +124,14 @@ public class Context implements Serializable {
         return contents.get(key);
     }
 
+    /**
+     * Wraps the contents Map::put method.
+     * Add a key-value pair to the context contents
+     *
+     * @param key   the map key
+     * @param value the (Serializable) map value
+     * @return this Context object
+     */
     @Generated
     public Context put(final String key, final Object value) {
         requireNonNull(key, "The key cannot be null.");
@@ -116,6 +140,14 @@ public class Context implements Serializable {
         return this;
     }
 
+    /**
+     * Wraps the contents Map::put method.
+     * Add a key-value pair to the context contents, only if the key is absent from the map
+     *
+     * @param key   the map key
+     * @param value the (Serializable) map value
+     * @return this Context object
+     */
     @Generated
     public Context putIfAbsent(final String key, final Object value) {
         requireNonNull(key, "The key cannot be null.");
