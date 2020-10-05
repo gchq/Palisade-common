@@ -65,7 +65,7 @@ public class Context implements Serializable {
 
     /**
      * Create a new Context object, specifying the contents of the context with a map
-     * This map's values Ojbects must technically implement Serializable, but this isn't type-checked
+     * This map's values Objects must technically implement Serializable, but this isn't type-checked
      *
      * @param contents a map of keys to (Serializable) Object values, in particular the purpose of the request
      */
@@ -76,7 +76,7 @@ public class Context implements Serializable {
 
     /**
      * Create a new Context object, specifying the contents of the context with a map
-     * This map's values Ojbects must technically implement Serializable, but this isn't type-checked
+     * This map's values Objects must technically implement Serializable, but this isn't type-checked
      *
      * @param contents a map of keys to (Serializable) Object values, in particular the purpose of the request
      * @return this Context object
