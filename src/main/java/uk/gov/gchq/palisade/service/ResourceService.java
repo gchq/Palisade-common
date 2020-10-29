@@ -19,6 +19,7 @@ package uk.gov.gchq.palisade.service;
 import uk.gov.gchq.palisade.resource.LeafResource;
 import uk.gov.gchq.palisade.resource.Resource;
 
+import java.util.Iterator;
 import java.util.stream.Stream;
 
 /**
@@ -45,18 +46,18 @@ public interface ResourceService extends Service {
      * details on the contained files.
      *
      * @param resource the resource to request
-     * @return a {@link Stream} of resources, each with an appropriate {@link ConnectionDetail}
+     * @return an {@link Iterator} of resources, each with an appropriate {@link ConnectionDetail}
      */
-    Stream<LeafResource> getResourcesByResource(final Resource resource);
+    Iterator<LeafResource> getResourcesByResource(final Resource resource);
 
     /**
      * Retrieve resource and connection details by resource ID. The request object allows the client to specify the
      * resource ID and obtain the connection details once the returned future has completed.
      *
      * @param resourceId the ID to request
-     * @return a {@link Stream} of resources, each with an appropriate {@link ConnectionDetail}
+     * @return an {@link Iterator} of resources, each with an appropriate {@link ConnectionDetail}
      */
-    Stream<LeafResource> getResourcesById(final String resourceId);
+    Iterator<LeafResource> getResourcesById(final String resourceId);
 
     /**
      * Obtain a list of resources that match a specific resource type. This method allows a client to obtain potentially
@@ -65,9 +66,9 @@ public interface ResourceService extends Service {
      * because a resource is available does not guarantee that the requesting client has the right to access it.
      *
      * @param type the type of resource to retrieve.
-     * @return a {@link Stream} of resources, each with an appropriate {@link ConnectionDetail}
+     * @return an {@link Iterator} of resources, each with an appropriate {@link ConnectionDetail}
      */
-    Stream<LeafResource> getResourcesByType(final String type);
+    Iterator<LeafResource> getResourcesByType(final String type);
 
     /**
      * Find all resources that match a particular data format. Resources of a particular data format may not share a
@@ -76,9 +77,9 @@ public interface ResourceService extends Service {
      * potentially return large ${@code Map}s with many mappings.
      *
      * @param serialisedFormat the specific format for retrieval
-     * @return a {@link Stream} of resources, each with an appropriate {@link ConnectionDetail}
+     * @return an {@link Iterator} of resources, each with an appropriate {@link ConnectionDetail}
      */
-    Stream<LeafResource> getResourcesBySerialisedFormat(final String serialisedFormat);
+    Iterator<LeafResource> getResourcesBySerialisedFormat(final String serialisedFormat);
 
     /**
      * Informs Palisade about a specific resource that it may return to users. This lets Palisade clients request access
