@@ -20,12 +20,11 @@ import uk.gov.gchq.palisade.resource.LeafResource;
 import uk.gov.gchq.palisade.resource.Resource;
 
 import java.util.Iterator;
-import java.util.stream.Stream;
 
 /**
  * The resource service is the Palisade component that determines what resources are available that meet a specific
  * (type of) request and how they should be accessed. This interface details several methods for obtaining a list of
- * resources, e.g. by type or by data format. The methods of this service all return {@link Stream}s which link a valid
+ * resources, e.g. by type or by data format. The methods of this service all return {@link Iterator}s which link a valid
  * {@link LeafResource} with a {@link ConnectionDetail} object. The ${@link ConnectionDetail} objects contain
  * information on how to set up a connection to retrieve a particular resource. Implementations of this service do not
  * deal with the filtering or application of security policy to the resources. Therefore, a result returned from a
@@ -33,7 +32,7 @@ import java.util.stream.Stream;
  * components of the Palisade system will enforce the necessary policy controls to prevent access to resources by users
  * without the necessary access rights.
  * Implementation note: None of the ${@code getResourcesByXXX} methods in this class will return in error if there
- * don't happen to be any resources that do not match a request, instead they will simply return empty ${@link Stream}
+ * don't happen to be any resources that do not match a request, instead they will simply return empty ${@link Iterator}
  * instances.
  */
 public interface ResourceService extends Service {
