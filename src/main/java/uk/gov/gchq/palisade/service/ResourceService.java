@@ -19,12 +19,12 @@ package uk.gov.gchq.palisade.service;
 import uk.gov.gchq.palisade.resource.LeafResource;
 import uk.gov.gchq.palisade.resource.Resource;
 
-import java.util.stream.Stream;
+import java.util.Iterator;
 
 /**
  * The resource service is the Palisade component that determines what resources are available that meet a specific
  * (type of) request and how they should be accessed. This interface details several methods for obtaining a list of
- * resources, e.g. by type or by data format. The methods of this service all return {@link Stream}s which link a valid
+ * resources, e.g. by type or by data format. The methods of this service all return {@link Iterator}s which link a valid
  * {@link LeafResource} with a {@link ConnectionDetail} object. The ${@link ConnectionDetail} objects contain
  * information on how to set up a connection to retrieve a particular resource. Implementations of this service do not
  * deal with the filtering or application of security policy to the resources. Therefore, a result returned from a
@@ -32,7 +32,7 @@ import java.util.stream.Stream;
  * components of the Palisade system will enforce the necessary policy controls to prevent access to resources by users
  * without the necessary access rights.
  * Implementation note: None of the ${@code getResourcesByXXX} methods in this class will return in error if there
- * don't happen to be any resources that do not match a request, instead they will simply return empty ${@link Stream}
+ * don't happen to be any resources that do not match a request, instead they will simply return empty ${@link Iterator}
  * instances.
  */
 public interface ResourceService extends Service {
@@ -45,18 +45,18 @@ public interface ResourceService extends Service {
      * details on the contained files.
      *
      * @param resource the resource to request
-     * @return a {@link Stream} of resources, each with an appropriate {@link ConnectionDetail}
+     * @return an {@link Iterator} of resources, each with an appropriate {@link ConnectionDetail}
      */
-    Stream<LeafResource> getResourcesByResource(final Resource resource);
+    Iterator<LeafResource> getResourcesByResource(final Resource resource);
 
     /**
      * Retrieve resource and connection details by resource ID. The request object allows the client to specify the
      * resource ID and obtain the connection details once the returned future has completed.
      *
      * @param resourceId the ID to request
-     * @return a {@link Stream} of resources, each with an appropriate {@link ConnectionDetail}
+     * @return an {@link Iterator} of resources, each with an appropriate {@link ConnectionDetail}
      */
-    Stream<LeafResource> getResourcesById(final String resourceId);
+    Iterator<LeafResource> getResourcesById(final String resourceId);
 
     /**
      * Obtain a list of resources that match a specific resource type. This method allows a client to obtain potentially
@@ -65,9 +65,9 @@ public interface ResourceService extends Service {
      * because a resource is available does not guarantee that the requesting client has the right to access it.
      *
      * @param type the type of resource to retrieve.
-     * @return a {@link Stream} of resources, each with an appropriate {@link ConnectionDetail}
+     * @return an {@link Iterator} of resources, each with an appropriate {@link ConnectionDetail}
      */
-    Stream<LeafResource> getResourcesByType(final String type);
+    Iterator<LeafResource> getResourcesByType(final String type);
 
     /**
      * Find all resources that match a particular data format. Resources of a particular data format may not share a
@@ -76,9 +76,9 @@ public interface ResourceService extends Service {
      * potentially return large ${@code Map}s with many mappings.
      *
      * @param serialisedFormat the specific format for retrieval
-     * @return a {@link Stream} of resources, each with an appropriate {@link ConnectionDetail}
+     * @return an {@link Iterator} of resources, each with an appropriate {@link ConnectionDetail}
      */
-    Stream<LeafResource> getResourcesBySerialisedFormat(final String serialisedFormat);
+    Iterator<LeafResource> getResourcesBySerialisedFormat(final String serialisedFormat);
 
     /**
      * Informs Palisade about a specific resource that it may return to users. This lets Palisade clients request access
