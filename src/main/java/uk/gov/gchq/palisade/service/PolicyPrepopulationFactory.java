@@ -25,11 +25,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import uk.gov.gchq.palisade.resource.LeafResource;
-import uk.gov.gchq.palisade.resource.Resource;
 import uk.gov.gchq.palisade.rule.Rules;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Map.Entry;
 
 /**
@@ -47,21 +45,20 @@ import java.util.Map.Entry;
 public interface PolicyPrepopulationFactory {
 
     /**
-     * Creates a {@link Rules} of type {@link LeafResource} that is associated
-     * to a {@link Resource} using the data within an implementation of the {@link PolicyPrepopulationFactory}
+     * Creates a {@link Rules} of type {@link LeafResource} that is associated to a resourceId using the
+     * data within an implementation of the {@link PolicyPrepopulationFactory}
      *
-     * @param resources a {@link List} of {@link ResourcePrepopulationFactory} implementations
-     * @return an {@link Entry} value that consists of a {@link Resource} and the created {@link Rules} of type {@link LeafResource}.
+     * @return an {@link Entry} value that consists of a resourceId and the created {@link Rules} of type {@link LeafResource}.
      */
-    Entry<Resource, Rules<LeafResource>> buildResourceRules(List<? extends ResourcePrepopulationFactory> resources);
+    Entry<String, Rules<LeafResource>> buildResourceRules();
 
     /**
-     * Creates a {@link Rules} of type {@link Serializable} that is associated to a {@link Resource} using the data within an implementation of the {@link PolicyPrepopulationFactory}.
+     * Creates a {@link Rules} of type {@link Serializable} that is associated to a resourceId using the
+     * data within an implementation of the {@link PolicyPrepopulationFactory}.
      *
-     * @param resources a {@link List} of {@link ResourcePrepopulationFactory} implementations
-     * @return an {@link Entry} value that consists of a {@link Resource} and the created {@link Rules} of type {@link Serializable}.
+     * @return an {@link Entry} value that consists of a resourceId and the created {@link Rules} of type {@link Serializable}.
      */
-    Entry<Resource, Rules<Serializable>> buildRecordRules(List<? extends ResourcePrepopulationFactory> resources);
+    Entry<String, Rules<Serializable>> buildRecordRules();
 
     @JsonGetter("class")
     default String getClassName() {
