@@ -41,7 +41,7 @@ import java.util.Map.Entry;
         include = As.EXISTING_PROPERTY,
         property = "class"
 )
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public interface PolicyPrepopulationFactory {
 
     /**
