@@ -63,11 +63,6 @@ public interface Rule<T extends Serializable> extends Serializable {
     T apply(final T record, final User user, final Context context);
 
     /**
-     * Flag use to indicate that this rule needs to be applied to the record.
-     * @return true if the rule does need to be applied
-     */
-
-    /**
      * Flag used to indicate that this rule needs to be applied to the record.
      *
      * @param record  the record to be checked.
