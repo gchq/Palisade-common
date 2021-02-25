@@ -62,6 +62,23 @@ public interface Rule<T extends Serializable> extends Serializable {
      */
     T apply(final T record, final User user, final Context context);
 
+    /**
+     * Flag use to indicate that this rule needs to be applied to the record.
+     * @return true if the rule does need to be applied
+     */
+
+    /**
+     * Flag use to indicate that this rule needs to be applied to the record.
+     *
+     * @param record  the record to be checked.
+     * @param user    the user
+     * @param context the query context
+     * @return true if the rule does need to be applied false if it can be bypassed
+     */
+    default boolean isApplicable(final T record, final User user, final Context context) {
+        return true;
+    }
+
     @JsonGetter("class")
     default String getClassName() {
         return getClass().getName();
