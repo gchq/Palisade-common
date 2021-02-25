@@ -68,7 +68,7 @@ public interface Rule<T extends Serializable> extends Serializable {
      */
 
     /**
-     * Flag use to indicate that this rule needs to be applied to the record.
+     * Flag used to indicate that this rule needs to be applied to the record.
      *
      * @param record  the record to be checked.
      * @param user    the user
