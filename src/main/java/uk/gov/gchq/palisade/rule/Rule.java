@@ -63,11 +63,11 @@ public interface Rule<T extends Serializable> extends Serializable {
     T apply(final T record, final User user, final Context context);
 
     /**
-     * Flag used to indicate that this rule needs to be applied to the record.
+     * Used to indicate that this rule needs to be applied to the record.
      *
      * @param user    the user
      * @param context the query context
-     * @return true if the rule does need to be applied false if it can be bypassed
+     * @return true if the rule does need to be applied false if this rule can be bypassed
      */
     default boolean isApplicable(final User user, final Context context) {
         return true;
