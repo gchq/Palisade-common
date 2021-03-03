@@ -63,6 +63,8 @@ public interface Rule<T extends Serializable> extends Serializable {
 
     /**
      * Used to indicate that this rule needs to be applied to the record.
+     * If false, the application of this rule may be skipped.
+     * This allows skipping resource deserialisation if all record rules are not applicable.
      *
      * @param user    the user
      * @param context the query context
