@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package uk.gov.gchq.palisade.rule;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
@@ -61,6 +60,19 @@ public interface Rule<T extends Serializable> extends Serializable {
      * @return the modified record or null if the record should be fully redacted.
      */
     T apply(final T record, final User user, final Context context);
+
+    /**
+     * Used to indicate that this rule needs to be applied to the record.
+     * If false, the application of this rule may be skipped.
+     * This allows skipping resource deserialisation if all record rules are not applicable.
+     *
+     * @param user    the user
+     * @param context the query context
+     * @return true if the rule does need to be applied false if this rule can be bypassed
+     */
+    default boolean isApplicable(final User user, final Context context) {
+        return true;
+    }
 
     @JsonGetter("class")
     default String getClassName() {
