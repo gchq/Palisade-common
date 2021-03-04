@@ -38,7 +38,7 @@
     </licenses>
 
     <properties>
-        <!-- Versions -->
+        <!-- Dependency properties -->
         <java.version>11</java.version>
         <revision>SNAPSHOT</revision>
         <maven.compiler.source>${java.version}</maven.compiler.source>
@@ -47,29 +47,24 @@
         <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
 
-        <!-- Plugins -->
-        <jar.plugin.version>3.1.1</jar.plugin.version>
-        <javadoc.plugin.version>3.2.0</javadoc.plugin.version>
+        <!-- Plugin versions -->
+        <jar.plugin.version>3.1.0</jar.plugin.version>
+        <depends.maven.version>3.1.2</depends.maven.version>
+        <javadoc.plugin.version>3.1.0</javadoc.plugin.version>
         <compiler.plugin.version>3.8.0</compiler.plugin.version>
-        <depends.maven.version>3.1.1</depends.maven.version>
-
-        <!-- Dependencies -->
         <slf4j.api.version>1.7.25</slf4j.api.version>
-        <slf4j.simple.version>1.7.25</slf4j.simple.version>
         <jackson.version>2.10.0</jackson.version>
         <commons-io.version>2.6</commons-io.version>
         <commons-lang3.version>3.8.1</commons-lang3.version>
         <avro.version>1.8.2</avro.version>
 
-        <!-- Testing properties -->
+        <!-- Testing versions -->
         <junit.version>4.13.1</junit.version>
         <surefire.plugin.version>2.22.1</surefire.plugin.version>
         <failsafe.version>2.22.1</failsafe.version>
         <checkstyle.plugin.version>3.1.0</checkstyle.plugin.version>
-        <mockito.core>3.1.0</mockito.core>
-        <common-maths>3.1.1</common-maths>
 
-        <!-- Sonar -->
+        <!-- SonarQube Configuration -->
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
         <sonar.jacoco.xmlReportPaths>${project.basedir}/../target/site/jacoco/jacoco.xml</sonar.jacoco.xmlReportPaths>
@@ -93,68 +88,69 @@
     </distributionManagement>
 
     <dependencies>
-        <!-- JSON Serialisation/De-serialisation dependencies -->
+        <!--
+        ~ JSON Serialisation/De-serialisation Dependencies
+        -->
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
-        <dependency>
+            <!-- Core Jackson ObjectMapper API -->
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
         </dependency>
         <dependency>
+            <!-- Add-on module for Jackson (http://jackson.codehaus.org) to support JDK 8 data types -->
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jdk8</artifactId>
             <version>${jackson.version}</version>
         </dependency>
         <dependency>
+            <!-- Add-on module to support JSR-310 (Java 8 Date & Time API) data types. -->
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>${jackson.version}</version>
         </dependency>
+
+        <!--
+        ~ Apache Dependencies
+        -->
         <dependency>
+            <!-- Utility classes used mainly for byte conversions -->
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>${commons-io.version}</version>
         </dependency>
         <dependency>
+            <!-- A package of utility classes for classes in java.lang's hierarchy -->
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
         </dependency>
+
+        <!--
+        ~ Logging Dependencies
+         -->
         <dependency>
+            <!-- Used for Logging within Palisade -->
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.api.version}</version>
         </dependency>
+
         <dependency>
+            <!-- Avro core components -->
             <groupId>org.apache.avro</groupId>
             <artifactId>avro</artifactId>
             <version>${avro.version}</version>
         </dependency>
+
+        <!--
+        ~ Testing Dependencies
+        -->
         <dependency>
+            <!-- Java testing framework -->
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>${mockito.core}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-math3</artifactId>
-            <version>${common-maths}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -173,6 +169,7 @@
             </properties>
         </profile>
         <profile>
+            <!-- Used to generate avro test data -->
             <id>avro</id>
             <build>
                 <plugins>
@@ -189,8 +186,7 @@
                                 <configuration>
                                     <sourceDirectory>${project.basedir}/src/main/resources/avro</sourceDirectory>
                                     <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
-                                    <testSourceDirectory>${project.basedir}/src/test/resources/avro
-                                    </testSourceDirectory>
+                                    <testSourceDirectory>${project.basedir}/src/test/resources/avro</testSourceDirectory>
                                     <testOutputDirectory>${project.basedir}/src/test/java</testOutputDirectory>
                                 </configuration>
                             </execution>
@@ -226,6 +222,7 @@
                 </configuration>
             </plugin>
             <plugin>
+                <!-- Used to generate Javadoc for the project -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>${javadoc.plugin.version}</version>
@@ -274,11 +271,13 @@
                 </executions>
             </plugin>
             <plugin>
+                <!-- Used for running unit tests -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire.plugin.version}</version>
             </plugin>
             <plugin>
+                <!-- Generates a dependency tree that is tracked within git -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <version>${depends.maven.version}</version>
@@ -296,6 +295,7 @@
                 </executions>
             </plugin>
             <plugin>
+                <!-- Maven plugin to download and collect license files from project dependencies -->
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>license-maven-plugin</artifactId>
                 <version>2.0.0</version>
@@ -377,6 +377,7 @@
                 </configuration>
             </plugin>
             <plugin>
+                <!-- Used to generate a report for code coverage used by SonarQube -->
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.5</version>
@@ -402,6 +403,7 @@
                 </executions>
             </plugin>
             <plugin>
+                <!-- Used to generate a jar of the project -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>${jar.plugin.version}</version>
@@ -414,6 +416,7 @@
                 </executions>
             </plugin>
             <plugin>
+                <!-- Used to verify code quality and standards -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>${checkstyle.plugin.version}</version>
