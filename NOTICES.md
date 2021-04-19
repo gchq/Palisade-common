@@ -17,3 +17,4 @@ List of third-party dependencies grouped by their license type
 ### [MIT License](./licenses/mit_license.html):
 * mockito-core ([org.mockito:mockito-core:3.1.0](https://github.com/mockito/mockito))
 * SLF4J API Module ([org.slf4j:slf4j-api:1.7.25](http://www.slf4j.org))
+
