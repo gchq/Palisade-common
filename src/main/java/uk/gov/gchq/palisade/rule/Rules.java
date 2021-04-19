@@ -17,10 +17,8 @@
 package uk.gov.gchq.palisade.rule;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.apache.commons.lang3.builder.EqualsBuilder;
 
 import uk.gov.gchq.palisade.Generated;
-import uk.gov.gchq.palisade.jsonserialisation.JSONSerialiser;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
@@ -101,47 +99,6 @@ public class Rules<T extends Serializable> implements Serializable {
         return this;
     }
 
-    /**
-     * Adds a predicate rule.
-     *
-     * @param id   the unique rule id
-     * @param rule the predicate rule
-     * @return this Rules instance
-     */
-    @Generated
-    public Rules<T> addPredicateRule(final String id, final PredicateRule<T> rule) {
-        this.addRule(id, rule);
-        return this;
-    }
-
-    /**
-     * Adds a simple predicate rule that just takes the record and returns true or false. Note - using this means your
-     * rule will not be given the User or Context.
-     *
-     * @param id   the unique rule id
-     * @param rule the simple predicate rule
-     * @return this Rules instance
-     */
-    @Generated
-    public Rules<T> addSimplePredicateRule(final String id, final SerializablePredicate<T> rule) {
-        this.addRule(id, new WrappedRule<>(rule));
-        return this;
-    }
-
-    /**
-     * Adds a simple function rule that just takes the record and returns a modified record or null if the record should
-     * be fully redacted. Note - using this means your rule will not be given the User or Context.
-     *
-     * @param id   the unique rule id
-     * @param rule the simple function rule
-     * @return this Rules instance
-     */
-    @Generated
-    public Rules<T> addSimpleFunctionRule(final String id, final SerializableUnaryOperator<T> rule) {
-        this.addRule(id, new WrappedRule<>(rule));
-        return this;
-    }
-
     @Generated
     public String getMessage() {
         return message;
@@ -175,35 +132,8 @@ public class Rules<T extends Serializable> implements Serializable {
 
     @Override
     public boolean equals(final Object o) {
-        boolean rtn = (this == o);
-        if (!rtn && (o != null && this.getClass() == o.getClass())) {
+        return o != null && this.getClass() == o.getClass();
 
-            final Rules<?> that = (Rules<?>) o;
-
-            final EqualsBuilder builder = new EqualsBuilder()
-                    .append(message, that.message)
-                    .append(this.rulesMap.keySet(), that.getRules().keySet());
-
-            if (builder.isEquals()) {
-                for (final Map.Entry<String, Rule<T>> entry : this.rulesMap.entrySet()) {
-                    final String ruleName = entry.getKey();
-                    final Rule<?> thisRule = entry.getValue();
-                    final Rule<?> thatRule = that.getRules().get(ruleName);
-
-                    builder.append(thisRule.getClass(), thatRule.getClass());
-                    if (builder.isEquals()) {
-                        // This is expensive - but we don't have any other way of doing it
-                        builder.append(JSONSerialiser.serialise(thisRule), JSONSerialiser.serialise(thatRule));
-                    }
-
-                    if (!builder.isEquals()) {
-                        return false;
-                    }
-                }
-            }
-            rtn = builder.isEquals();
-        }
-        return rtn;
     }
 
     @Override
@@ -218,7 +148,6 @@ public class Rules<T extends Serializable> implements Serializable {
         return new StringJoiner(", ", Rules.class.getSimpleName() + "[", "]")
                 .add("message='" + message + "'")
                 .add("rulesHashMap=" + rulesMap)
-                .add(super.toString())
                 .toString();
     }
 }
