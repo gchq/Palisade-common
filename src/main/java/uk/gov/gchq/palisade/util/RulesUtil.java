@@ -17,9 +17,9 @@
 package uk.gov.gchq.palisade.util;
 
 import uk.gov.gchq.palisade.Context;
-import uk.gov.gchq.palisade.user.User;
 import uk.gov.gchq.palisade.rule.Rule;
 import uk.gov.gchq.palisade.rule.Rules;
+import uk.gov.gchq.palisade.user.User;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -27,7 +27,6 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Stream;
 
 import static java.util.Objects.isNull;
-import static java.util.Objects.requireNonNull;
 
 /**
  * Common utility methods.
