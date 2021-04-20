@@ -22,9 +22,13 @@ import uk.gov.gchq.palisade.Generated;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.requireNonNull;
 
@@ -132,8 +136,22 @@ public class Rules<T extends Serializable> implements Serializable {
 
     @Override
     public boolean equals(final Object o) {
-        return o != null && this.getClass() == o.getClass();
-
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Rules)) {
+            return false;
+        }
+        Rules<?> other = (Rules<?>) o;
+        List<Optional<? extends Class<? extends Rule>>> thisRuleClasses = this.rulesMap.values().stream()
+                .map(Optional::ofNullable)
+                .map(rule -> rule.map(Rule::getClass))
+                .collect(Collectors.toList());
+        List<Optional<? extends Class<? extends Rule>>> otherRuleClasses = other.rulesMap.values().stream()
+                .map(Optional::ofNullable)
+                .map(rule -> rule.map(Rule::getClass))
+                .collect(Collectors.toList());
+        return thisRuleClasses.equals(otherRuleClasses);
     }
 
     @Override

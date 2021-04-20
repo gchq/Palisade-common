@@ -57,13 +57,4 @@ public interface Serialiser<I> extends Serializable {
      */
     Stream<I> deserialise(final InputStream stream) throws IOException;
 
-    @JsonGetter("class")
-    default String getClassName() {
-        return getClass().getName();
-    }
-
-    @JsonSetter("class")
-    default void setClassName(final String className) {
-        // do nothing.
-    }
 }
