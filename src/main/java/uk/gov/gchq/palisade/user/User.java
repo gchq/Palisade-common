@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.palisade.user;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import uk.gov.gchq.palisade.Generated;
@@ -42,11 +41,7 @@ import static java.util.Objects.requireNonNull;
  * The user auths are used specifically to decide what visibilities users can see.
  * </p>
  */
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.CLASS,
-        include = JsonTypeInfo.As.EXISTING_PROPERTY,
-        property = "class"
-)
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -191,12 +186,6 @@ public class User implements Serializable {
     public void setAuths(final Set<String> auths) {
         requireNonNull(auths);
         this.auths = auths;
-    }
-
-    @JsonGetter("class")
-    @Generated
-    public String getClassName() {
-        return getClass().getName();
     }
 
     @Override
