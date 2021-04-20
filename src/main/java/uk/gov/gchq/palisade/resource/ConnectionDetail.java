@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
-package uk.gov.gchq.palisade.service;
+package uk.gov.gchq.palisade.resource;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
+
+import uk.gov.gchq.palisade.resource.impl.SimpleConnectionDetail;
 
 import java.io.Serializable;
 

@@ -14,27 +14,49 @@
  * limitations under the License.
  */
 
-package uk.gov.gchq.palisade;
+package uk.gov.gchq.palisade.user;
 
+import uk.gov.gchq.palisade.Generated;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.StringJoiner;
 
 import static java.util.Objects.requireNonNull;
 
 /**
- * This class contains the information that makes a request unique.
+ * A {@link UserId} uniquely identifies a {@link User}.
  */
-public class RequestId {
+public class UserId implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private String id;
 
-    public RequestId() {
+    /**
+     * Constructs an empty {@link UserId}.
+     */
+    public UserId() {
         //no-args constructor needed for serialization only
     }
 
+    /**
+     * Copy constructor for a {@link UserId}.
+     *
+     * @param userId the {@link UserId} that will be copied.
+     */
+    UserId(final UserId userId) {
+        requireNonNull(userId, "UserId to be cloned cannot be null");
+        this.setId(userId.getId());
+    }
+
+    /**
+     * Updates the id of the UserID
+     *
+     * @param id a non null String representing the id of the user
+     * @return the UserId object
+     */
     @Generated
-    public RequestId id(final String id) {
+    public UserId id(final String id) {
         this.setId(id);
         return this;
     }
@@ -56,11 +78,11 @@ public class RequestId {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof RequestId)) {
+        if (!(o instanceof UserId)) {
             return false;
         }
-        RequestId requestId = (RequestId) o;
-        return id.equals(requestId.id);
+        UserId userId = (UserId) o;
+        return id.equals(userId.id);
     }
 
     @Override
@@ -72,7 +94,7 @@ public class RequestId {
     @Override
     @Generated
     public String toString() {
-        return new StringJoiner(", ", RequestId.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", UserId.class.getSimpleName() + "[", "]")
                 .add("id='" + id + "'")
                 .toString();
     }

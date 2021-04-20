@@ -15,8 +15,6 @@
  */
 package uk.gov.gchq.palisade.data.serialise;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 
@@ -57,13 +55,4 @@ public interface Serialiser<I> extends Serializable {
      */
     Stream<I> deserialise(final InputStream stream) throws IOException;
 
-    @JsonGetter("class")
-    default String getClassName() {
-        return getClass().getName();
-    }
-
-    @JsonSetter("class")
-    default void setClassName(final String className) {
-        // do nothing.
-    }
 }

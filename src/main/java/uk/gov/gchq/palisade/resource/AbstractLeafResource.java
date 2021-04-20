@@ -18,7 +18,6 @@ package uk.gov.gchq.palisade.resource;
 
 import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.resource.impl.FileResource;
-import uk.gov.gchq.palisade.service.ConnectionDetail;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -66,8 +65,8 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
     /**
      * Sets the attributes for the {@link AbstractLeafResource}
      *
-     * @param attributes    a {@link Map} of {@link String} and {@link Serializable}.
-     * @return              a {@link AbstractLeafResource} object.
+     * @param attributes a {@link Map} of {@link String} and {@link Serializable}.
+     * @return a {@link AbstractLeafResource} object.
      */
     @Generated
     public AbstractLeafResource attributes(final Map<String, Serializable> attributes) {
@@ -78,9 +77,9 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
     /**
      * Sets the attributes for the {@link AbstractLeafResource}
      *
-     * @param attributeKey      a {@link String} value for the key.
-     * @param attributeValue    a {@link Serializable} value
-     * @return  the {@link AbstractLeafResource} object
+     * @param attributeKey   a {@link String} value for the key.
+     * @param attributeValue a {@link Serializable} value
+     * @return the {@link AbstractLeafResource} object
      */
     @Generated
     public AbstractLeafResource attribute(final String attributeKey, final Serializable attributeValue) {
@@ -170,8 +169,8 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
     /**
      * Sets the key and value of the attributes {@link Map} for the {@link AbstractLeafResource}
      *
-     * @param attributeKey      a {@link String} value for the attribute key.
-     * @param attributeValue    a {@link Serializable} value for the attribute value.
+     * @param attributeKey   a {@link String} value for the attribute key.
+     * @param attributeValue a {@link Serializable} value for the attribute value.
      */
     @Generated
     public void setAttribute(final String attributeKey, final Serializable attributeValue) {

@@ -19,13 +19,13 @@ package uk.gov.gchq.palisade.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import uk.gov.gchq.palisade.resource.ConnectionDetail;
 import uk.gov.gchq.palisade.resource.LeafResource;
 import uk.gov.gchq.palisade.resource.ParentResource;
 import uk.gov.gchq.palisade.resource.Resource;
 import uk.gov.gchq.palisade.resource.impl.DirectoryResource;
 import uk.gov.gchq.palisade.resource.impl.FileResource;
 import uk.gov.gchq.palisade.resource.impl.SystemResource;
-import uk.gov.gchq.palisade.service.ConnectionDetail;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,6 +33,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -47,12 +48,16 @@ import java.util.Objects;
  * - {@link SystemResource}
  * Any parents automatically constructed will also be from this collection.
  * If another method of creating a resource is required (i.e. directly using strings)
- * there is no guarantee that this can correctly resolve parents. Instead use the
+ * there is no guarantee that this can correctly resolve parents. Instead, use the
  * methods provided by the appropriate resource impl.
  */
 public class ResourceBuilder {
     private static final Logger LOGGER = LoggerFactory.getLogger(ResourceBuilder.class);
     private static final URI ROOT;
+
+    public ResourceBuilder() {
+        // Empty Constructor
+    }
 
     static {
         File userDir = new File(System.getProperty("user.dir"));
@@ -66,27 +71,23 @@ public class ResourceBuilder {
         ROOT = root;
     }
 
-    private ResourceBuilder() {
-        // empty private constructor
-    }
-
     private enum Scheme {
         FILE,
         HDFS
     }
 
-    public static boolean canCreate(final URI uri) {
-        try {
-            Scheme.valueOf(uri.getScheme()); // Or throw
-            return uri.isAbsolute();
-        } catch (IllegalArgumentException ex) {
-            return false;
-        }
-    }
-
-    // Create a leafResource from a uri, connectionDetail, type, serialisedFormat and attribute map
-    // Throw IllegalArgumentException if unsupported scheme
-    // Throw ClassCastException if uri did not point to a leaf resource
+    /**
+     * Create a leafResource from a uri, connectionDetail, type, serialisedFormat and attribute map
+     * Throw IllegalArgumentException if unsupported scheme
+     * Throw ClassCastException if uri did not point to a leaf resource
+     *
+     * @param uri              the uri location of the resource
+     * @param connectionDetail the service storing the resource
+     * @param type             the type of resource
+     * @param serialisedFormat the format of the resource e.g avro, txt
+     * @param attributes       any additional attributes about the resource
+     * @return a new LeafResource populated with these resources
+     */
     public static LeafResource create(final URI uri, final ConnectionDetail connectionDetail, final String type, final String serialisedFormat, final Map<String, String> attributes) {
         return ((LeafResource) create(uri, attributes))
                 .connectionDetail(connectionDetail)
@@ -94,8 +95,14 @@ public class ResourceBuilder {
                 .serialisedFormat(serialisedFormat);
     }
 
-    // Create a resource from a uri and attribute map
-    // Throw IllegalArgumentException if unsupported scheme
+    /**
+     * Create a resource from a uri and attribute map
+     * Throw IllegalArgumentException if unsupported scheme
+     *
+     * @param uri        the id of the resource
+     * @param attributes any additional attributes about the resource
+     * @return a new resource created using this uri
+     */
     public static Resource create(final URI uri, final Map<String, String> attributes) {
         // If passed relative paths, we can resolve them against the user.dir system property
         URI absolute;
@@ -115,7 +122,7 @@ public class ResourceBuilder {
 
         // This should be assigning the attributes map to the returned object, once resources support attribute maps
 
-        switch (Scheme.valueOf(normal.getScheme().toUpperCase())) {
+        switch (Scheme.valueOf(normal.getScheme().toUpperCase(Locale.ENGLISH))) {
             // Both file:/ and hdfs:/ schema produce filesystem-like structures
             case FILE:
             case HDFS:
@@ -125,15 +132,41 @@ public class ResourceBuilder {
         }
     }
 
-    // Create a resource from a uri
-    // Default to an empty attribute map
-    // Throw IllegalArgumentException if unsupported scheme
+    /**
+     * Used to validate URIs and check that they can be created
+     *
+     * @param uri the uri to validate or attach to a resource
+     * @return a boolean true/false if the uri scheme is valid.
+     */
+    public static boolean canCreate(final URI uri) {
+        try {
+            Scheme.valueOf(uri.getScheme()); // Or throw
+            return uri.isAbsolute();
+        } catch (IllegalArgumentException ex) {
+            return false;
+        }
+    }
+
+    /**
+     * Create a resource from a uri
+     * Default to an empty attribute map
+     * Throw IllegalArgumentException if unsupported scheme
+     *
+     * @param uri an id of a resource
+     * @return a newly created resource with an empty map of attributes
+     */
     public static Resource create(final URI uri) {
         return create(uri, Collections.emptyMap());
     }
 
-    // Create a resource from a uri string and attribute map
-    // Throw IllegalArgumentException if invalid uri string or unsupported scheme
+    /**
+     * Create a resource from a uri string and attribute map
+     * Throw IllegalArgumentException if invalid uri string or unsupported scheme
+     *
+     * @param uriString  a string value of a url used to create a new resource
+     * @param attributes any additional attributes about the resource
+     * @return a newly created resource using these parameters
+     */
     public static Resource create(final String uriString, final Map<String, String> attributes) {
         try {
             return create(new URI(uriString), attributes);
@@ -142,9 +175,14 @@ public class ResourceBuilder {
         }
     }
 
-    // Create a resource from a uri string
-    // Default to an empty attribute map
-    // Throw IllegalArgumentException if invalid uri string or unsupported scheme
+    /**
+     * Create a resource from a uri string
+     * Default to an empty attribute map
+     * Throw IllegalArgumentException if invalid uri string or unsupported scheme
+     *
+     * @param uriString a string value of a url used to create a new resource
+     * @return a newly created resource with this url and an empty map of attributes
+     */
     public static Resource create(final String uriString) {
         return create(uriString, Collections.emptyMap());
     }

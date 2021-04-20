@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package uk.gov.gchq.palisade.service;
+package uk.gov.gchq.palisade.resource.impl;
 
 import uk.gov.gchq.palisade.Generated;
+import uk.gov.gchq.palisade.resource.ConnectionDetail;
 
 import java.util.Objects;
 import java.util.StringJoiner;
@@ -24,7 +25,7 @@ import java.util.StringJoiner;
 import static java.util.Objects.requireNonNull;
 
 /**
- * A simple implementation of the {@link ConnectionDetail} that holds a reference to the {@link Service}
+ * A simple implementation of the {@link ConnectionDetail} that holds a reference to the Service
  */
 public class SimpleConnectionDetail implements ConnectionDetail {
     private static final long serialVersionUID = 1L;
