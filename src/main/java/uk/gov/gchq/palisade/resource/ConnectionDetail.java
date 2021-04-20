@@ -16,37 +16,16 @@
 
 package uk.gov.gchq.palisade.resource;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
-
-import uk.gov.gchq.palisade.resource.impl.SimpleConnectionDetail;
 
 import java.io.Serializable;
 
 /**
  * A High level API for passing details of how to connect to a resource
  */
-@JsonPropertyOrder(value = {"class", "host", "port"}, alphabetic = true)
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.CLASS,
-        include = As.EXISTING_PROPERTY,
-        property = "class",
-        defaultImpl = SimpleConnectionDetail.class
-)
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 public interface ConnectionDetail extends Serializable {
 
     String createConnection();
 
-    @JsonGetter("class")
-    default String getClassName() {
-        return getClass().getName();
-    }
-
-    @JsonSetter("class")
-    default void setClassName(final String className) {
-        // do nothing.
-    }
 }
