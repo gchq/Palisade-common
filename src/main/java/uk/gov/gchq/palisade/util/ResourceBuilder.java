@@ -19,6 +19,8 @@ package uk.gov.gchq.palisade.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import uk.gov.gchq.palisade.resource.ConnectionDetail;
+import uk.gov.gchq.palisade.resource.LeafResource;
 import uk.gov.gchq.palisade.resource.Resource;
 
 import java.net.URI;
@@ -81,5 +83,23 @@ public class ResourceBuilder {
         } catch (URISyntaxException ex) {
             throw new IllegalArgumentException("URISyntaxException converting string '" + uriString + "' to uri", ex);
         }
+    }
+
+    /**
+     * Create a leafResource from a uri, connectionDetail, type, serialisedFormat and attribute map
+     * Throw IllegalArgumentException if unsupported scheme
+     * Throw ClassCastException if uri did not point to a leaf resource
+     *
+     * @param uri              the uri location of the resource
+     * @param connectionDetail the service storing the resource
+     * @param type             the type of resource
+     * @param serialisedFormat the format of the resource e.g avro, txt
+     * @return a new LeafResource populated with these resources
+     */
+    public static LeafResource create(final URI uri, final ConnectionDetail connectionDetail, final String type, final String serialisedFormat) {
+        return ((LeafResource) create(uri))
+                .connectionDetail(connectionDetail)
+                .type(type)
+                .serialisedFormat(serialisedFormat);
     }
 }
