@@ -16,26 +16,31 @@
 
 package uk.gov.gchq.palisade.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.gov.gchq.palisade.resource.Resource;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 public class ResourceBuilder {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ResourceBuilder.class);
     private static final Map<String, Function<URI, Resource>> SCHEME_REGISTRY = new ConcurrentHashMap<>();
+
+    private ResourceBuilder() {
+        // Empty Constructor
+    }
 
     public static void registerBuilder(final String scheme, final Function<URI, Resource> builder) {
         if (SCHEME_REGISTRY.containsKey(scheme)) {
             throw new IllegalArgumentException("Scheme registry already has entry for " + scheme);
         }
         SCHEME_REGISTRY.put(scheme, builder);
-    }
-
-    private ResourceBuilder() {
-        // Empty Constructor
     }
 
     /**
@@ -61,5 +66,20 @@ public class ResourceBuilder {
 
     public static boolean canCreate(final URI uri) {
         return SCHEME_REGISTRY.containsKey(uri.getScheme());
+    }
+
+    /**
+     * Create a resource from a uri string and attribute map
+     * Throw IllegalArgumentException if invalid uri string or unsupported scheme
+     *
+     * @param uriString  a string value of a url used to create a new resource
+     * @return a newly created resource using these parameters
+     */
+    public static Resource create(final String uriString) {
+        try {
+            return create(new URI(uriString));
+        } catch (URISyntaxException ex) {
+            throw new IllegalArgumentException("URISyntaxException converting string '" + uriString + "' to uri", ex);
+        }
     }
 }
