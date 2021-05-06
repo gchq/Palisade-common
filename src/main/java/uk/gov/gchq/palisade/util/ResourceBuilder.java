@@ -29,7 +29,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 public class ResourceBuilder {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ResourceBuilder.class);
     private static final Map<String, Function<URI, Resource>> SCHEME_REGISTRY = new ConcurrentHashMap<>();
 
     private ResourceBuilder() {
