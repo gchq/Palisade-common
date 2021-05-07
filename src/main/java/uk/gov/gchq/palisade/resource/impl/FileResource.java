@@ -20,7 +20,6 @@ import uk.gov.gchq.palisade.resource.AbstractLeafResource;
 import uk.gov.gchq.palisade.resource.ConnectionDetail;
 import uk.gov.gchq.palisade.resource.ParentResource;
 
-import java.io.Serializable;
 import java.util.Map;
 
 /**

@@ -20,7 +20,6 @@ import uk.gov.gchq.palisade.resource.Resource;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.ServiceLoader.Provider;
 
