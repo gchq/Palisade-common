@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Path;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Provides a common set of utilities for constructing resources with all parents
@@ -45,11 +46,12 @@ import java.util.Objects;
  * there is no guarantee that this can correctly resolve parents. Instead, use the
  * methods provided by the appropriate resource impl.
  */
-public class FileResourceBuilder {
+public class FileResourceBuilder extends ResourceBuilder {
     private static final Logger LOGGER = LoggerFactory.getLogger(FileResourceBuilder.class);
     private static final URI ROOT;
+    private static final Set<String> ACCEPTED_SCHEMES = Set.of("hdfs", "file");
 
-    private FileResourceBuilder() {
+    public FileResourceBuilder() {
         // Empty Constructor
     }
 
@@ -63,21 +65,18 @@ public class FileResourceBuilder {
             root = userDir.getAbsoluteFile().toURI();
         }
         ROOT = root;
-
-        ResourceBuilder.registerBuilder("file", FileResourceBuilder::filesystemSchema);
-        ResourceBuilder.registerBuilder("hdfs", FileResourceBuilder::filesystemSchema);
     }
 
     private static FileResource fileResource(final URI uri) {
         return new FileResource()
                 .id(uri.normalize().toString())
-                .parent((ParentResource) filesystemSchema(uri.resolve(".")));
+                .parent((ParentResource) filesystemScheme(uri.resolve(".")));
     }
 
     private static DirectoryResource directoryResource(final URI uri) {
         return new DirectoryResource()
                 .id(uri.normalize().toString())
-                .parent((ParentResource) filesystemSchema(uri.resolve("..")));
+                .parent((ParentResource) filesystemScheme(uri.resolve("..")));
     }
 
     private static SystemResource systemResource(final URI uri) {
@@ -85,7 +84,7 @@ public class FileResourceBuilder {
                 .id(uri.normalize().toString());
     }
 
-    private static Resource filesystemSchema(final URI uri) {
+    private static Resource filesystemScheme(final URI uri) {
         // If passed relative paths, we can resolve them against the user.dir system property
         URI absolute;
         if (uri.isAbsolute()) {
@@ -101,5 +100,15 @@ public class FileResourceBuilder {
         } else {
             return systemResource(absolute);
         }
+    }
+
+    @Override
+    public Resource build(final URI resourceUri) {
+        return filesystemScheme(resourceUri);
+    }
+
+    @Override
+    public boolean accepts(final URI resourceUri) {
+        return ACCEPTED_SCHEMES.contains(resourceUri.getScheme());
     }
 }

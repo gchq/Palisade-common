@@ -21,56 +21,25 @@ import uk.gov.gchq.palisade.resource.Resource;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Map;
-import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
+import java.util.ServiceLoader;
+import java.util.ServiceLoader.Provider;
 
-public class ResourceBuilder {
-    private static final Map<String, Function<URI, Resource>> SCHEME_REGISTRY = new ConcurrentHashMap<>();
+public abstract class ResourceBuilder {
+    private static final ServiceLoader<ResourceBuilder> LOADER = ServiceLoader.load(ResourceBuilder.class);
 
-    private ResourceBuilder() {
-        // Empty Constructor
+    public static void refreshProviders() {
+        LOADER.reload();
     }
 
-    public static void registerBuilder(final String scheme, final Function<URI, Resource> builder) {
-        if (SCHEME_REGISTRY.containsKey(scheme)) {
-            throw new IllegalArgumentException("Scheme registry already has entry for " + scheme);
-        }
-        SCHEME_REGISTRY.put(scheme, builder);
+    public static Resource create(final URI resourceUri) {
+        ResourceBuilder resourceBuilder = LOADER.stream()
+                .map(Provider::get)
+                .filter(builder -> builder.accepts(resourceUri))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("No ResourceBuilder found that accepts " + resourceUri));
+        return resourceBuilder.buildNormal(resourceUri);
     }
 
-    /**
-     * Create a resource from a uri
-     * Throw IllegalArgumentException if unsupported scheme
-     *
-     * @param uri the id of the resource
-     * @return a new resource created using this uri
-     */
-    public static Resource create(final URI uri) {
-        // The hostname is all in the connectionDetail, so we never have a case of file://hostname/some/uri
-        // A lot of this is trying to normalize file:///some/uri (file://<no-hostname>/some/uri) to file:/some/uri
-        URI normal = UriBuilder.create(uri)
-                .withoutScheme()
-                .withoutAuthority()
-                .withoutPath()
-                .withoutQuery()
-                .withoutFragment();
-        return Optional.ofNullable(SCHEME_REGISTRY.get(normal.getScheme()))
-                .map(builder -> builder.apply(uri))
-                .orElseThrow(() -> new IllegalArgumentException("No builder registered for scheme " + uri.getScheme()));
-    }
-
-    public static boolean canCreate(final URI uri) {
-        return SCHEME_REGISTRY.containsKey(uri.getScheme());
-    }
-
-    /**
-     * Create a resource from a uri string and attribute map
-     * Throw IllegalArgumentException if invalid uri string or unsupported scheme
-     *
-     * @param uriString a string value of a url used to create a new resource
-     * @return a newly created resource using these parameters
-     */
     public static Resource create(final String uriString) {
         try {
             return create(new URI(uriString));
@@ -78,4 +47,18 @@ public class ResourceBuilder {
             throw new IllegalArgumentException("URISyntaxException converting string '" + uriString + "' to uri", ex);
         }
     }
+
+    public Resource buildNormal(final URI uri) {
+        URI normal = UriBuilder.create(uri)
+                .withoutScheme()
+                .withoutAuthority()
+                .withoutPath()
+                .withoutQuery()
+                .withoutFragment();
+        return build(normal);
+    }
+
+    public abstract Resource build(URI resourceUri);
+
+    public abstract boolean accepts(URI resourceUri);
 }

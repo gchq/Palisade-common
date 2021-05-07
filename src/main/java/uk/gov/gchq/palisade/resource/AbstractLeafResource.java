@@ -19,7 +19,6 @@ package uk.gov.gchq.palisade.resource;
 import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.resource.impl.FileResource;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -39,9 +38,9 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
     private String serialisedFormat;
     private ConnectionDetail connectionDetail;
     private ParentResource parent;
-    private HashMap<String, Serializable> attributes = new HashMap<>();
+    private HashMap<String, String> attributes = new HashMap<>();
 
-    public AbstractLeafResource() {
+    protected AbstractLeafResource() {
     }
 
     @Generated
@@ -65,11 +64,11 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
     /**
      * Sets the attributes for the {@link AbstractLeafResource}
      *
-     * @param attributes a {@link Map} of {@link String} and {@link Serializable}.
+     * @param attributes a {@link Map} of {@link String} keys and {@link String} values.
      * @return a {@link AbstractLeafResource} object.
      */
     @Generated
-    public AbstractLeafResource attributes(final Map<String, Serializable> attributes) {
+    public AbstractLeafResource attributes(final Map<String, String> attributes) {
         this.setAttributes(attributes);
         return this;
     }
@@ -78,11 +77,11 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
      * Sets the attributes for the {@link AbstractLeafResource}
      *
      * @param attributeKey   a {@link String} value for the key.
-     * @param attributeValue a {@link Serializable} value
+     * @param attributeValue a {@link String} value
      * @return the {@link AbstractLeafResource} object
      */
     @Generated
-    public AbstractLeafResource attribute(final String attributeKey, final Serializable attributeValue) {
+    public AbstractLeafResource attribute(final String attributeKey, final String attributeValue) {
         this.setAttribute(attributeKey, attributeValue);
         return this;
     }
@@ -146,12 +145,12 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
     }
 
     @Generated
-    public Map<String, Serializable> getAttributes() {
+    public Map<String, String> getAttributes() {
         return attributes;
     }
 
     @Generated
-    public void setAttributes(final Map<String, Serializable> attributes) {
+    public void setAttributes(final Map<String, String> attributes) {
         requireNonNull(attributes);
         this.attributes = new HashMap<>(attributes);
     }
@@ -170,10 +169,10 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
      * Sets the key and value of the attributes {@link Map} for the {@link AbstractLeafResource}
      *
      * @param attributeKey   a {@link String} value for the attribute key.
-     * @param attributeValue a {@link Serializable} value for the attribute value.
+     * @param attributeValue a {@link String} value for the attribute value.
      */
     @Generated
-    public void setAttribute(final String attributeKey, final Serializable attributeValue) {
+    public void setAttribute(final String attributeKey, final String attributeValue) {
         requireNonNull(attributeKey, "The attributeKey cannot be set to null.");
         requireNonNull(attributeKey, "The attributeValue cannot be set to null.");
         this.attributes.put(attributeKey, attributeValue);

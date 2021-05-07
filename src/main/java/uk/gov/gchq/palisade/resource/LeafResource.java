@@ -16,6 +16,8 @@
 
 package uk.gov.gchq.palisade.resource;
 
+import java.util.Map;
+
 /**
  * A leaf resource is the interface for any resource that can be read for data
  * and is not just part of the hierarchical resource structure.
@@ -31,6 +33,8 @@ public interface LeafResource extends ChildResource {
 
     LeafResource connectionDetail(final ConnectionDetail connectionDetail);
 
+    LeafResource attributes(final Map<String, String> attributes);
+
     String getType();
 
     String getSerialisedFormat();
@@ -43,4 +47,7 @@ public interface LeafResource extends ChildResource {
 
     void setConnectionDetail(final ConnectionDetail connectionDetail);
 
+    Map<String, String> getAttributes();
+
+    void setAttributes(Map<String, String> attributes);
 }
