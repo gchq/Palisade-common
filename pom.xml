@@ -77,6 +77,7 @@
 
         <!-- Testing versions -->
         <checkstyle.plugin.version>3.1.0</checkstyle.plugin.version>
+        <licence.acceptPomPackaging>true</licence.acceptPomPackaging>
 
         <!-- SonarQube configuration -->
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
@@ -339,8 +340,8 @@
                         <id>licenses-report</id>
                         <phase>prepare-package</phase>
                         <goals>
-                            <goal>aggregate-download-licenses</goal>
-                            <goal>aggregate-add-third-party</goal>
+                            <goal>download-licenses</goal>
+                            <goal>add-third-party</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -438,31 +439,17 @@
                 </executions>
             </plugin>
             <plugin>
-                <!-- Used to generate a jar of the project -->
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>${jar.plugin.version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>test-jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <!-- Used to verify code quality and standards -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>${checkstyle.plugin.version}</version>
                 <configuration>
-                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                    <includeResources>false</includeResources>
                     <configLocation>code-style/checkstyle.xml</configLocation>
                     <encoding>UTF-8</encoding>
                     <consoleOutput>true</consoleOutput>
                     <failsOnError>true</failsOnError>
-                    <headerLocation>code-style/licenseHeader.txt
-                    </headerLocation>
+                    <headerLocation>code-style/licenseHeader.txt</headerLocation>
                     <suppressionsLocation>code-style/checkstyle-suppressions.xml</suppressionsLocation>
                     <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
                 </configuration>

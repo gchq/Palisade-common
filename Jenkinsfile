@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@Library('jenkinsfile-lib@PAL-1040-fix-revision-in-common')_
+@Library('jenkinsfile-lib')_
 
 timestamps {
     common()
