@@ -88,14 +88,6 @@
         <scm.url>https://github.com/gchq/Palisade-common</scm.url>
         <scm.connection>scm:git:https://github.com/gchq/Palisade-common.git</scm.connection>
         <scm.developer.connection>scm:git:https://github.com/gchq/Palisade-common.git</scm.developer.connection>
-
-        <!-- Release configuration -->
-        <releases.repository.id>ossrh</releases.repository.id>
-        <releases.repository.name>Sonatype Nexus release repository</releases.repository.name>
-        <releases.repository.url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</releases.repository.url>
-        <snapshots.repository.id>ossrh-snapshots</snapshots.repository.id>
-        <snapshots.repository.name>Sonatype Nexus snapshot repository</snapshots.repository.name>
-        <snapshots.repository.url>https://oss.sonatype.org/content/repositories/snapshots</snapshots.repository.url>
     </properties>
 
     <distributionManagement>
@@ -103,12 +95,14 @@
         <repository>
             <id>${releases.repository.id}</id>
             <name>${releases.repository.name}</name>
+            <!--suppress UnresolvedMavenProperty -->
             <url>${releases.repository.url}</url>
         </repository>
         <snapshotRepository>
             <id>${snapshots.repository.id}</id>
             <uniqueVersion>false</uniqueVersion>
             <name>${snapshots.repository.name}</name>
+            <!--suppress UnresolvedMavenProperty -->
             <url>${snapshots.repository.url}</url>
         </snapshotRepository>
     </distributionManagement>
@@ -174,6 +168,15 @@
         </profile>
         <profile>
             <id>release</id>
+            <properties>
+                <!-- Release configuration -->
+                <releases.repository.id>ossrh</releases.repository.id>
+                <releases.repository.name>Sonatype Nexus release repository</releases.repository.name>
+                <releases.repository.url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</releases.repository.url>
+                <snapshots.repository.id>ossrh-snapshots</snapshots.repository.id>
+                <snapshots.repository.name>Sonatype Nexus snapshot repository</snapshots.repository.name>
+                <snapshots.repository.url>https://oss.sonatype.org/content/repositories/snapshots</snapshots.repository.url>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -207,9 +210,6 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
                         <version>${javadoc.plugin.version}</version>
-                        <configuration>
-                            <source>8</source>
-                        </configuration>
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
