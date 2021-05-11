@@ -23,6 +23,9 @@ import java.net.URISyntaxException;
 import java.util.ServiceLoader;
 import java.util.ServiceLoader.Provider;
 
+/**
+ * ResourceBuilder, taking a URI and splitting it into a valid path.
+ */
 public abstract class ResourceBuilder {
     private static final ServiceLoader<ResourceBuilder> LOADER = ServiceLoader.load(ResourceBuilder.class);
 
@@ -39,6 +42,13 @@ public abstract class ResourceBuilder {
         return resourceBuilder.buildNormal(resourceUri);
     }
 
+    /**
+     * Create a resource from a uri string
+     * Throw IllegalArgumentException if invalid uri string or unsupported scheme
+     *
+     * @param uriString a string value of a url used to create a new resource
+     * @return a newly created resource using these parameters
+     */
     public static Resource create(final String uriString) {
         try {
             return create(new URI(uriString));
