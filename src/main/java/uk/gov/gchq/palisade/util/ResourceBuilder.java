@@ -89,7 +89,7 @@ public abstract class ResourceBuilder {
      * @param resourceUri the uri of the resource you want built
      * @return a newly created Resource with the id of the the resourceUri.
      */
-    public abstract Resource build(URI resourceUri);
+    protected abstract Resource build(URI resourceUri);
 
     /**
      * A abstract method used in building a resource, to check if the Builders provided can accept the resourceUri scheme
