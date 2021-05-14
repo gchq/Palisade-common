@@ -138,6 +138,11 @@
                 <dockerfile.skip>true</dockerfile.skip>
                 <license.skipAggregateAddThirdParty>true</license.skipAggregateAddThirdParty>
                 <license.skipAggregateDownloadLicenses>true</license.skipAggregateDownloadLicenses>
+                <!-- Build configuration for release -->
+                <image.repository>gchq/palisade-</image.repository>
+                <revision>RELEASE</revision>
+                <maven.test.skip>true</maven.test.skip>
+                <dockerfile.push.skip>true</dockerfile.push.skip>
             </properties>
         </profile>
         <profile>
