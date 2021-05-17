@@ -145,9 +145,6 @@
                 <license.skipAggregateDownloadLicenses>true</license.skipAggregateDownloadLicenses>
                 <!-- Build configuration for release -->
                 <image.repository>gchq/palisade-</image.repository>
-                <revision>RELEASE</revision>
-                <maven.test.skip>true</maven.test.skip>
-                <dockerfile.push.skip>true</dockerfile.push.skip>
             </properties>
         </profile>
         <profile>
@@ -187,6 +184,10 @@
                 <snapshots.repository.id>ossrh</snapshots.repository.id>
                 <snapshots.repository.name>Sonatype Nexus snapshot repository</snapshots.repository.name>
                 <snapshots.repository.url>https://oss.sonatype.org/content/repositories/snapshots</snapshots.repository.url>
+                <image.repository>gchq/palisade-</image.repository>
+                <revision>RELEASE</revision>
+                <maven.test.skip>true</maven.test.skip>
+                <dockerfile.push.skip>true</dockerfile.push.skip>
             </properties>
             <build>
                 <plugins>
@@ -337,6 +338,31 @@
                         <configuration>
                             <outputFile>mvn_dependency_tree.txt</outputFile>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>1.1.0</version>
+                <configuration>
+                    <updatePomFile>true</updatePomFile>
+                    <flattenMode>ossrh</flattenMode>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
