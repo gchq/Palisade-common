@@ -63,6 +63,7 @@
         <depends.maven.version>3.1.2</depends.maven.version>
         <jar.plugin.version>3.1.0</jar.plugin.version>
         <javadoc.plugin.version>3.1.0</javadoc.plugin.version>
+        <compiler.plugin.version>3.8.0</compiler.plugin.version>
 
         <!-- Release plugin versions -->
         <gpg.plugin.version>1.5</gpg.plugin.version>
@@ -73,6 +74,10 @@
 
         <!-- Dependency versions -->
         <jackson.version>2.10.0</jackson.version>
+        <slf4j.api.version>1.7.25</slf4j.api.version>
+        <jackson.version>2.11.0</jackson.version>
+        <commons-io.version>2.6</commons-io.version>
+        <commons-lang3.version>3.8.1</commons-lang3.version>
         <avro.version>1.8.2</avro.version>
 
         <!-- Testing versions -->
