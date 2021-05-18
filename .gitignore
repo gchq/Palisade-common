@@ -20,6 +20,8 @@ node_modules/
 .project
 .settings
 *.iml
+*.DS_Store
+.flattened-pom.xml
 ##VSCODE default files that dont need to be tracked
 .vscode/
 
