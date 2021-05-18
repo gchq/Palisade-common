@@ -16,201 +16,86 @@
 
 package uk.gov.gchq.palisade.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import uk.gov.gchq.palisade.resource.ConnectionDetail;
-import uk.gov.gchq.palisade.resource.LeafResource;
-import uk.gov.gchq.palisade.resource.ParentResource;
 import uk.gov.gchq.palisade.resource.Resource;
-import uk.gov.gchq.palisade.resource.impl.DirectoryResource;
-import uk.gov.gchq.palisade.resource.impl.FileResource;
-import uk.gov.gchq.palisade.resource.impl.SystemResource;
 
-import java.io.File;
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.file.Path;
-import java.util.Collections;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
+import java.util.ServiceLoader;
+import java.util.ServiceLoader.Provider;
 
 /**
- * Provides a common set of utilities for constructing resources with all parents
- * automatically constructed recursively. This primarily targets filesystem-like
- * resources (Files, Directories etc.)
- * Internally, the resourceId is converted to a URI.
- * Can produce any of the following output types:
- * - {@link FileResource}
- * - {@link DirectoryResource}
- * - {@link SystemResource}
- * Any parents automatically constructed will also be from this collection.
- * If another method of creating a resource is required (i.e. directly using strings)
- * there is no guarantee that this can correctly resolve parents. Instead, use the
- * methods provided by the appropriate resource impl.
+ * ResourceBuilder, taking a URI and building a Resource specific to each scheme
  */
-public class ResourceBuilder {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ResourceBuilder.class);
-    private static final URI ROOT;
-
-    public ResourceBuilder() {
-        // Empty Constructor
-    }
-
-    static {
-        File userDir = new File(System.getProperty("user.dir"));
-        URI root;
-        try {
-            root = userDir.getCanonicalFile().toURI();
-        } catch (IOException ex) {
-            LOGGER.error("ResourceBuilder threw an error when getting the CanonicalFile ", ex);
-            root = userDir.getAbsoluteFile().toURI();
-        }
-        ROOT = root;
-    }
-
-    private enum Scheme {
-        FILE,
-        HDFS
-    }
+public abstract class ResourceBuilder {
+    private static final ServiceLoader<ResourceBuilder> LOADER = ServiceLoader.load(ResourceBuilder.class);
 
     /**
-     * Create a leafResource from a uri, connectionDetail, type, serialisedFormat and attribute map
-     * Throw IllegalArgumentException if unsupported scheme
-     * Throw ClassCastException if uri did not point to a leaf resource
-     *
-     * @param uri              the uri location of the resource
-     * @param connectionDetail the service storing the resource
-     * @param type             the type of resource
-     * @param serialisedFormat the format of the resource e.g avro, txt
-     * @param attributes       any additional attributes about the resource
-     * @return a new LeafResource populated with these resources
+     * Clears this loader's provider cache so that all providers will be reloaded.
      */
-    public static LeafResource create(final URI uri, final ConnectionDetail connectionDetail, final String type, final String serialisedFormat, final Map<String, String> attributes) {
-        return ((LeafResource) create(uri, attributes))
-                .connectionDetail(connectionDetail)
-                .type(type)
-                .serialisedFormat(serialisedFormat);
+    public static void refreshProviders() {
+        LOADER.reload();
     }
 
     /**
-     * Create a resource from a uri and attribute map
-     * Throw IllegalArgumentException if unsupported scheme
+     * Taking a resourceUri, create a resource using the ResourceBuilder provided in the LOADER,
+     * or throw an exception if the resource scheme is not supported, or no builder exists to build that scheme
      *
-     * @param uri        the id of the resource
-     * @param attributes any additional attributes about the resource
-     * @return a new resource created using this uri
+     * @param resourceUri the Uri of the resource you want to build.
+     * @return a newly created resource
      */
-    public static Resource create(final URI uri, final Map<String, String> attributes) {
-        // If passed relative paths, we can resolve them against the user.dir system property
-        URI absolute;
-        if (uri.isAbsolute()) {
-            absolute = uri;
-        } else {
-            absolute = ROOT.resolve(uri);
-        }
-        // The hostname is all in the connectionDetail, so we never have a case of file://hostname/some/uri
-        // A lot of this is trying to normalize file:///some/uri (file://<no-hostname>/some/uri) to file:/some/uri
-        URI normal = UriBuilder.create(absolute)
-                .withoutScheme()
-                .withoutAuthority()
-                .withoutPath()
-                .withoutQuery()
-                .withoutFragment();
-
-        // This should be assigning the attributes map to the returned object, once resources support attribute maps
-
-        switch (Scheme.valueOf(normal.getScheme().toUpperCase(Locale.ENGLISH))) {
-            // Both file:/ and hdfs:/ schema produce filesystem-like structures
-            case FILE:
-            case HDFS:
-                return filesystemSchema(normal);
-            default:
-                throw new IllegalArgumentException("No such implementation for uri scheme " + normal.getScheme());
-        }
+    public static Resource create(final URI resourceUri) {
+        ResourceBuilder resourceBuilder = LOADER.stream()
+                .map(Provider::get)
+                .filter(builder -> builder.accepts(resourceUri))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("No ResourceBuilder found that accepts " + resourceUri));
+        return resourceBuilder.buildNormal(resourceUri);
     }
 
     /**
-     * Used to validate URIs and check that they can be created
-     *
-     * @param uri the uri to validate or attach to a resource
-     * @return a boolean true/false if the uri scheme is valid.
-     */
-    public static boolean canCreate(final URI uri) {
-        try {
-            Scheme.valueOf(uri.getScheme()); // Or throw
-            return uri.isAbsolute();
-        } catch (IllegalArgumentException ex) {
-            return false;
-        }
-    }
-
-    /**
-     * Create a resource from a uri
-     * Default to an empty attribute map
-     * Throw IllegalArgumentException if unsupported scheme
-     *
-     * @param uri an id of a resource
-     * @return a newly created resource with an empty map of attributes
-     */
-    public static Resource create(final URI uri) {
-        return create(uri, Collections.emptyMap());
-    }
-
-    /**
-     * Create a resource from a uri string and attribute map
+     * Create a resource from a uri string
      * Throw IllegalArgumentException if invalid uri string or unsupported scheme
      *
-     * @param uriString  a string value of a url used to create a new resource
-     * @param attributes any additional attributes about the resource
-     * @return a newly created resource using these parameters
+     * @param uriString a string value of a url used to create a new resource
+     * @return a newly created resource using these parameters.
      */
-    public static Resource create(final String uriString, final Map<String, String> attributes) {
+    public static Resource create(final String uriString) {
         try {
-            return create(new URI(uriString), attributes);
+            return create(new URI(uriString));
         } catch (URISyntaxException ex) {
             throw new IllegalArgumentException("URISyntaxException converting string '" + uriString + "' to uri", ex);
         }
     }
 
     /**
-     * Create a resource from a uri string
-     * Default to an empty attribute map
-     * Throw IllegalArgumentException if invalid uri string or unsupported scheme
+     * Build a resource, using the uri provided by calling {@link UriBuilder}
      *
-     * @param uriString a string value of a url used to create a new resource
-     * @return a newly created resource with this url and an empty map of attributes
+     * @param uri the uri of the resource you want built
+     * @return a newly created resource with the id of the uri.
      */
-    public static Resource create(final String uriString) {
-        return create(uriString, Collections.emptyMap());
+    public Resource buildNormal(final URI uri) {
+        URI normal = UriBuilder.create(uri)
+                .withoutScheme()
+                .withoutAuthority()
+                .withoutPath()
+                .withoutQuery()
+                .withoutFragment();
+        return build(normal);
     }
 
-    private static FileResource fileResource(final URI uri) {
-        return new FileResource()
-                .id(uri.normalize().toString())
-                .parent((ParentResource) filesystemSchema(uri.resolve(".")));
-    }
+    /**
+     * An abstract method used in building a resource
+     *
+     * @param resourceUri the uri of the resource you want built
+     * @return a newly created Resource with the id of the the resourceUri.
+     */
+    protected abstract Resource build(URI resourceUri);
 
-    private static DirectoryResource directoryResource(final URI uri) {
-        return new DirectoryResource()
-                .id(uri.normalize().toString())
-                .parent((ParentResource) filesystemSchema(uri.resolve("..")));
-    }
-
-    private static SystemResource systemResource(final URI uri) {
-        return new SystemResource()
-                .id(uri.normalize().toString());
-    }
-
-    private static Resource filesystemSchema(final URI uri) {
-        if (!uri.resolve(".").equals(uri)) {
-            return fileResource(uri);
-        } else if (Objects.nonNull(Path.of(uri).getParent())) {
-            return directoryResource(uri);
-        } else {
-            return systemResource(uri);
-        }
-    }
+    /**
+     * A abstract method used in building a resource, to check if the Builders provided can accept the resourceUri scheme
+     *
+     * @param resourceUri the uri of the resource you want built
+     * @return a true/false value if a builder exists that supports the uri scheme.
+     */
+    public abstract boolean accepts(URI resourceUri);
 }

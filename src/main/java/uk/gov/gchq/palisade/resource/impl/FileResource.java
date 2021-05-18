@@ -20,7 +20,6 @@ import uk.gov.gchq.palisade.resource.AbstractLeafResource;
 import uk.gov.gchq.palisade.resource.ConnectionDetail;
 import uk.gov.gchq.palisade.resource.ParentResource;
 
-import java.io.Serializable;
 import java.util.Map;
 
 /**
@@ -55,12 +54,12 @@ public class FileResource extends AbstractLeafResource {
     }
 
     @Override
-    public FileResource attributes(final Map<String, Serializable> attributes) {
+    public FileResource attributes(final Map<String, String> attributes) {
         return (FileResource) super.attributes(attributes);
     }
 
     @Override
-    public FileResource attribute(final String attributeKey, final Serializable attributeValue) {
+    public FileResource attribute(final String attributeKey, final String attributeValue) {
         return (FileResource) super.attribute(attributeKey, attributeValue);
     }
 
