@@ -110,7 +110,8 @@ public class FileResourceBuilder extends ResourceBuilder {
             String path;
             try {
                 path = localResourece.getCanonicalPath();
-            } catch (Exception e) {
+            } catch (IOException e) {
+                LOGGER.error("Unable to get the Canonical path value", e);
                 path = localResourece.getAbsolutePath();
             }
 
