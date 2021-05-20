@@ -104,7 +104,12 @@ public class FileResourceBuilder extends ResourceBuilder {
 
     @Override
     public Resource build(final URI resourceUri) {
-        return filesystemScheme(resourceUri);
+        String path = Path.of(resourceUri.getSchemeSpecificPart()).toAbsolutePath().toString();
+        URI absoluteResourceId = UriBuilder.create(resourceUri)
+                .withoutScheme().withoutAuthority()
+                .withPath(path)
+                .withoutQuery().withoutFragment();
+        return filesystemScheme(absoluteResourceId);
     }
 
     @Override
