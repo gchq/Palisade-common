@@ -74,13 +74,17 @@ public abstract class ResourceBuilder {
      * @return a newly created resource with the id of the uri.
      */
     public Resource buildNormal(final URI uri) {
-        URI normal = UriBuilder.create(uri)
-                .withoutScheme()
-                .withoutAuthority()
-                .withoutPath()
-                .withoutQuery()
-                .withoutFragment();
-        return build(normal);
+        try {
+            URI normal = UriBuilder.create(uri)
+                    .withoutScheme()
+                    .withoutAuthority()
+                    .withoutPath()
+                    .withoutQuery()
+                    .withoutFragment();
+            return build(normal);
+        } catch (Exception e) {
+            return build(uri);
+        }
     }
 
     /**

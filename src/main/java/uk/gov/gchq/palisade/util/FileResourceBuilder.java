@@ -104,11 +104,24 @@ public class FileResourceBuilder extends ResourceBuilder {
 
     @Override
     public Resource build(final URI resourceUri) {
-        String path = Path.of(resourceUri.getSchemeSpecificPart()).toAbsolutePath().toString();
-        URI absoluteResourceId = UriBuilder.create(resourceUri)
-                .withoutScheme().withoutAuthority()
-                .withPath(path)
-                .withoutQuery().withoutFragment();
+        URI absoluteResourceId = resourceUri;
+        if (!Path.of(resourceUri.getScheme()).isAbsolute()) {
+            File localResourece = new File(resourceUri.getSchemeSpecificPart());
+            String path;
+            try {
+                path = localResourece.getCanonicalPath();
+            } catch (Exception e) {
+                path = localResourece.getAbsolutePath();
+            }
+
+            if (localResourece.isDirectory() && !path.endsWith("/")) {
+                path += "/";
+            }
+            absoluteResourceId = UriBuilder.create(resourceUri)
+                    .withoutScheme().withoutAuthority()
+                    .withPath(path)
+                    .withoutQuery().withoutFragment();
+        }
         return filesystemScheme(absoluteResourceId);
     }
 
