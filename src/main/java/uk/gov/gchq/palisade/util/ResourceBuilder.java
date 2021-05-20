@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
 
 import uk.gov.gchq.palisade.resource.Resource;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ServiceLoader;
