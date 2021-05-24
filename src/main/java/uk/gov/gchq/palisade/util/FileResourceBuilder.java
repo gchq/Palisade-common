@@ -105,17 +105,20 @@ public class FileResourceBuilder extends ResourceBuilder {
     @Override
     public Resource build(final URI resourceUri) {
         URI absoluteResourceId = resourceUri;
+
+        // Check if the path is not absolute
         if (!Path.of(resourceUri.getScheme()).isAbsolute()) {
-            File localResourece = new File(resourceUri.getSchemeSpecificPart());
+            File localResource = new File(resourceUri.getSchemeSpecificPart());
             String path;
             try {
-                path = localResourece.getCanonicalPath();
+                path = localResource.getCanonicalPath();
             } catch (IOException e) {
                 LOGGER.error("Unable to get the Canonical path value", e);
-                path = localResourece.getAbsolutePath();
+                path = localResource.getAbsolutePath();
             }
 
-            if (localResourece.isDirectory() && !path.endsWith("/")) {
+            // Check if the resource is a directory and if the path ends with a "/"
+            if (localResource.isDirectory() && !path.endsWith("/")) {
                 path += "/";
             }
             absoluteResourceId = UriBuilder.create(resourceUri)
