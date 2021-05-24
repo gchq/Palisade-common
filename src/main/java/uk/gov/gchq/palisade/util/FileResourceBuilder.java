@@ -106,7 +106,7 @@ public class FileResourceBuilder extends ResourceBuilder {
     public Resource build(final URI resourceUri) {
         URI absoluteResourceId = resourceUri;
 
-        // Check if the path is not absolute
+        // Check if the path is not complete, and therefore needs enriching to locate resources
         if (!Path.of(resourceUri.getScheme()).isAbsolute()) {
             File localResource = new File(resourceUri.getSchemeSpecificPart());
             String path;
