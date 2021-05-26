@@ -16,6 +16,9 @@
 
 package uk.gov.gchq.palisade.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import uk.gov.gchq.palisade.resource.Resource;
 
 import java.net.URI;
@@ -28,6 +31,7 @@ import java.util.ServiceLoader.Provider;
  */
 public abstract class ResourceBuilder {
     private static final ServiceLoader<ResourceBuilder> LOADER = ServiceLoader.load(ResourceBuilder.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ResourceBuilder.class);
 
     /**
      * Clears this loader's provider cache so that all providers will be reloaded.
@@ -74,13 +78,18 @@ public abstract class ResourceBuilder {
      * @return a newly created resource with the id of the uri.
      */
     public Resource buildNormal(final URI uri) {
-        URI normal = UriBuilder.create(uri)
-                .withoutScheme()
-                .withoutAuthority()
-                .withoutPath()
-                .withoutQuery()
-                .withoutFragment();
-        return build(normal);
+        try {
+            URI normal = UriBuilder.create(uri)
+                    .withoutScheme()
+                    .withoutAuthority()
+                    .withoutPath()
+                    .withoutQuery()
+                    .withoutFragment();
+            return build(normal);
+        } catch (RuntimeException e) {
+            LOGGER.error("Unable to build a normal URI", e);
+            return build(uri);
+        }
     }
 
     /**
