@@ -27,6 +27,12 @@ import java.io.Serializable;
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 public interface Resource extends Comparable<Resource>, Serializable {
 
+    /**
+     * Set the id value of the resource.
+     *
+     * @param id the id value to be set
+     * @return the {@link Resource} object.
+     */
     Resource id(String id);
 
     String getId();

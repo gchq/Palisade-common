@@ -22,6 +22,12 @@ package uk.gov.gchq.palisade.resource;
  */
 public interface ChildResource extends Resource {
 
+    /**
+     * Sets the parent resource value on an {@link ChildResource}
+     *
+     * @param parent the reource to ve set as tge parent
+     * @return the {@link ChildResource} object
+     */
     ChildResource parent(ParentResource parent);
 
     ParentResource getParent();

@@ -63,9 +63,9 @@ public class User implements Serializable {
      */
     User(final User user) {
         requireNonNull(user, "User to be cloned cannot be null");
-        this.setUserId(user.getUserId());
-        this.setRoles(user.getRoles());
-        this.setAuths(user.getAuths());
+        this.userId = user.getUserId();
+        this.roles = user.getRoles();
+        this.auths = user.getAuths();
     }
 
     /**
@@ -117,6 +117,12 @@ public class User implements Serializable {
         return this;
     }
 
+    /**
+     * Adds the user auths.
+     *
+     * @param auths the user auths to add.
+     * @return the {@link User} instance
+     */
     @Generated
     public User addAuths(final Set<String> auths) {
         requireNonNull(auths, "Cannot add null auths.");
@@ -136,6 +142,12 @@ public class User implements Serializable {
         return this;
     }
 
+    /**
+     * Adds the user roles.
+     *
+     * @param roles the user roles to be added
+     * @return the {@link User} instance
+     */
     @Generated
     public User addRoles(final Set<String> roles) {
         requireNonNull(auths, "Cannot add null roles.");

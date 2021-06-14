@@ -46,7 +46,7 @@ public class UserId implements Serializable {
      */
     UserId(final UserId userId) {
         requireNonNull(userId, "UserId to be cloned cannot be null");
-        this.setId(userId.getId());
+        this.id = userId.getId();
     }
 
     /**

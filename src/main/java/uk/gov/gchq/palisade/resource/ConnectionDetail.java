@@ -26,6 +26,11 @@ import java.io.Serializable;
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 public interface ConnectionDetail extends Serializable {
 
+    /**
+     * Create a connection.
+     *
+     * @return return the string value for the connection
+     */
     String createConnection();
 
 }
