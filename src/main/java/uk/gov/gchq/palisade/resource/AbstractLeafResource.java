@@ -155,11 +155,23 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
         this.attributes = new HashMap<>(attributes);
     }
 
+    /**
+     * Get the attribute of the {@link Resource}
+     *
+     * @param attributeKey the key of the requested attribute
+     * @return the attribute value requested
+     */
     @Generated
     public Object getAttribute(final String attributeKey) {
         return this.attributes.getOrDefault(attributeKey, null);
     }
 
+    /**
+     * Check to see if an attribite has been set on a {@link Resource}
+     *
+     * @param attributeKey the key of the requested attribute
+     * @return a {@link Boolean} value
+     */
     @Generated
     public Boolean isAttributeSet(final String attributeKey) {
         return this.attributes.containsKey(attributeKey);

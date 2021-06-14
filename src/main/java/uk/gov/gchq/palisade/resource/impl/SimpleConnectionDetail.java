@@ -36,6 +36,12 @@ public class SimpleConnectionDetail implements ConnectionDetail {
         //no-args constructor needed for serialization only
     }
 
+    /**
+     * Sets the service name value within a {@link SimpleConnectionDetail} object.
+     *
+     * @param serviceName the string value of the service
+     * @return the {@link SimpleConnectionDetail} object
+     */
     @Generated
     public SimpleConnectionDetail serviceName(final String serviceName) {
         this.setServiceName(serviceName);
