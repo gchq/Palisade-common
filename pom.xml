@@ -84,11 +84,10 @@
         <checkstyle.plugin.version>3.1.0</checkstyle.plugin.version>
         <licence.acceptPomPackaging>true</licence.acceptPomPackaging>
 
-        <!-- SonarQube configuration -->
+        <!-- Jacoco/SonarQube configuration -->
+        <sonar.language>java</sonar.language>
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-        <sonar.jacoco.xmlReportPaths>${project.basedir}/../target/site/jacoco/jacoco.xml</sonar.jacoco.xmlReportPaths>
-        <sonar.language>java</sonar.language>
 
         <!-- SCM properties for Release plugin -->
         <scm.url>https://github.com/gchq/Palisade-common</scm.url>
@@ -444,27 +443,16 @@
                 </configuration>
             </plugin>
             <plugin>
-                <!-- Used to generate a report for code coverage used by SonarQube -->
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.5</version>
-                <configuration>
-                    <destFile>${sonar.jacoco.reportPath}</destFile>
-                    <append>true</append>
-                </configuration>
                 <executions>
                     <execution>
-                        <id>agent</id>
                         <goals>
                             <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>report</id>
-                        <phase>prepare-package</phase>
-                        <goals>
                             <goal>report</goal>
-                            <goal>report-aggregate</goal>
+                            <goal>prepare-agent-integration</goal>
+                            <goal>report-integration</goal>
                         </goals>
                     </execution>
                 </executions>
