@@ -22,6 +22,7 @@ import uk.gov.gchq.palisade.Generated;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -180,24 +181,24 @@ public class User implements Serializable {
 
     @Generated
     public Set<String> getRoles() {
-        return roles;
+        return Collections.unmodifiableSet(roles);
     }
 
     @Generated
     public void setRoles(final Set<String> roles) {
         requireNonNull(roles);
-        this.roles = roles;
+        this.roles = Collections.unmodifiableSet(roles);
     }
 
     @Generated
     public Set<String> getAuths() {
-        return auths;
+        return Collections.unmodifiableSet(auths);
     }
 
     @Generated
     public void setAuths(final Set<String> auths) {
         requireNonNull(auths);
-        this.auths = auths;
+        this.auths = Collections.unmodifiableSet(auths);
     }
 
     @Override
