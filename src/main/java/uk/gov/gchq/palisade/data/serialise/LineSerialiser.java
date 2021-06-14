@@ -70,7 +70,7 @@ public abstract class LineSerialiser<T> implements Serialiser<T> {
     public Serialiser<T> serialise(final Iterator<T> itr, final OutputStream output) {
         requireNonNull(output, "output");
         if (nonNull(itr)) {
-            try(PrintWriter printOut = new PrintWriter(new OutputStreamWriter(output, CHARSET));) {
+            try (PrintWriter printOut = new PrintWriter(new OutputStreamWriter(output, CHARSET));) {
                 itr.forEachRemaining(item -> printOut.println(serialiseLine(item)));
             }
         }
