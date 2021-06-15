@@ -25,30 +25,25 @@ import java.lang.annotation.Target;
  * Used by JaCoCo and SonarQube, any method annotated with an annotation with
  * a simple name of "Generated' is ignored from code coverage reports. For best
  * results, this should be integrated into one's IDE. In IntelliJ, this is done
- * through:
- * <ol>
- *     <li>Code -></li>
- *     <li>Generate -></li>
- *     <li>[method] -></li>
- *     <li>... -></li>
- *     <li>Prepend "@uk.gov.gchq.palisade.Generated" to the velocity template.</li>
- * </ol>
+ * through: Code ->
+ *          Generate ->
+ *          [method] ->
+ *          ... ->
+ *          Prepend "@uk.gov.gchq.palisade.Generated" to the velocity template.
+ *
  * Alternatively, xml files representing these code generation templates can
  * be found under ~/.IntelliJIdea${year.version}/config/options:
- * <ul>
- *     <li>equalsHashCodeTemplates.xml</li>
- *     <li>getterTemplates.xml</li>
- *     <li>setterTemplates.xml</li>
- *     <li>toStringTemplates.xml</li>
- * </ul>
+ * - equalsHashCodeTemplates.xml
+ * - getterTemplates.xml
+ * - setterTemplates.xml
+ * - toStringTemplates.xml
  *
  * It is recommended to include this in all code generation methods used, such
  * as: equals, hashCode, toString, getters, setters
  */
 
 /**
- * Used by JaCoCo and SonarQube, any method annotated with an annotation with
- * a simple name of "Generated' is ignored from code coverage reports.
+ * An annotation used to mark methods that are to be ignored by any code coverage reports.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.TYPE})
