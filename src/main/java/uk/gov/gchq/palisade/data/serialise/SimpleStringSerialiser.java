@@ -19,6 +19,7 @@ package uk.gov.gchq.palisade.data.serialise;
  * A simple implementation of the {@link AbstractLineSerialiser}
  */
 public class SimpleStringSerialiser extends AbstractLineSerialiser<String> {
+    private static final long serialVersionUID = 1L;
 
     @Override
     public String serialiseLine(final String obj) {

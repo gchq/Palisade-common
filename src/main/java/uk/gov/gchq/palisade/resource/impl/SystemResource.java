@@ -24,6 +24,7 @@ import uk.gov.gchq.palisade.resource.ParentResource;
  * {@code eg. "file:/dev/Palisade/pom.xml" = System "/" -> Directory "/dev/" -> Directory "/dev/Palisade/" -> File "/dev/Palisade/pom.xml" }
  */
 public class SystemResource extends AbstractResource implements ParentResource {
+    private static final long serialVersionUID = 1L;
 
     public SystemResource() {
         //no-args constructor needed for serialization only

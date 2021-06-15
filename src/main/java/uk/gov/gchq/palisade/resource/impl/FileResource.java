@@ -27,6 +27,7 @@ import java.util.Map;
  * {@code eg. "file:/dev/Palisade/pom.xml" = System "/" -> Directory "/dev/" -> Directory "/dev/Palisade/" -> File "/dev/Palisade/pom.xml" }
  */
 public class FileResource extends AbstractLeafResource {
+    private static final long serialVersionUID = 1L;
 
     public FileResource() {
         //no-args constructor needed for serialization only
