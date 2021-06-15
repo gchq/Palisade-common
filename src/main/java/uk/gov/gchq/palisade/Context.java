@@ -35,7 +35,6 @@ import static java.util.Objects.requireNonNull;
  * additional information that can be stored and recovered in this structure and passed along with the request/operation.
  * i.e. A users purpose for requesting the contents of a file.
  */
-@SuppressWarnings({"java:S112", "java:S1166", "java:S1699"})
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 public class Context {
 
@@ -55,6 +54,7 @@ public class Context {
      * @param contents a map of attributes, containing a purpose
      */
     @JsonCreator
+    @SuppressWarnings("java:S1699")
     public Context(@JsonProperty("contents") final Map<String, Object> contents) {
         this.setContents(contents);
     }
@@ -121,6 +121,7 @@ public class Context {
      *
      * @return a string value of the purpose
      */
+    @SuppressWarnings({"java:S112", "java:S1166"})
     @JsonIgnore
     public String getPurpose() {
         try {
