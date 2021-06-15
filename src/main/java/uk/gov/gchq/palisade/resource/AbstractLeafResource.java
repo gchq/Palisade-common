@@ -73,6 +73,13 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
         return this;
     }
 
+    /**
+     * Sets the attributes for the {@link AbstractLeafResource}
+     *
+     * @param attributeKey   a {@link String} value for the key.
+     * @param attributeValue a {@link String} value
+     * @return the {@link AbstractLeafResource} object
+     */
     @Generated
     public AbstractLeafResource attribute(final String attributeKey, final String attributeValue) {
         this.setAttribute(attributeKey, attributeValue);
