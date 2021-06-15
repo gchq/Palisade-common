@@ -44,7 +44,7 @@ import static java.util.Objects.requireNonNull;
  * @param <O> the domain object type
  */
 public class AvroSerialiser<O> implements Serialiser<O> {
-    private static final long serialVersionUID = 1L;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(AvroSerialiser.class);
     private final transient ReflectDatumWriter<O> datumWriter;
 

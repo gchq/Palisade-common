@@ -31,7 +31,6 @@ import static java.util.Objects.requireNonNull;
  * {@code eg. "file:/dev/Palisade/pom.xml" = System "/" -> Directory "/dev/" -> Directory "/dev/Palisade/" -> File "/dev/Palisade/pom.xml" }
  */
 public class DirectoryResource extends AbstractResource implements ChildResource, ParentResource {
-    private static final long serialVersionUID = 1L;
 
     private ParentResource parent;
 

@@ -46,7 +46,7 @@ import java.util.Set;
  * there is no guarantee that this can correctly resolve parents. Instead, use the
  * methods provided by the appropriate resource impl.
  */
-public class FileResourceBuilder extends ResourceBuilder {
+public class FileResourceBuilder extends AbstractResourceBuilder {
     private static final Logger LOGGER = LoggerFactory.getLogger(FileResourceBuilder.class);
     private static final URI ROOT;
     private static final Set<String> ACCEPTED_SCHEMES = Set.of("hdfs", "file");

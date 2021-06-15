@@ -29,9 +29,9 @@ import java.util.ServiceLoader.Provider;
 /**
  * ResourceBuilder, taking a URI and building a Resource specific to each scheme
  */
-public abstract class ResourceBuilder {
-    private static final ServiceLoader<ResourceBuilder> LOADER = ServiceLoader.load(ResourceBuilder.class);
-    private static final Logger LOGGER = LoggerFactory.getLogger(ResourceBuilder.class);
+public abstract class AbstractResourceBuilder {
+    private static final ServiceLoader<AbstractResourceBuilder> LOADER = ServiceLoader.load(AbstractResourceBuilder.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractResourceBuilder.class);
 
     /**
      * Clears this loader's provider cache so that all providers will be reloaded.
@@ -48,7 +48,7 @@ public abstract class ResourceBuilder {
      * @return a newly created resource
      */
     public static Resource create(final URI resourceUri) {
-        ResourceBuilder resourceBuilder = LOADER.stream()
+        AbstractResourceBuilder resourceBuilder = LOADER.stream()
                 .map(Provider::get)
                 .filter(builder -> builder.accepts(resourceUri))
                 .findAny()

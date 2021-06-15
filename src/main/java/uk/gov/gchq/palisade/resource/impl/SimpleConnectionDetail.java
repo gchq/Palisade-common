@@ -28,7 +28,6 @@ import static java.util.Objects.requireNonNull;
  * A simple implementation of the {@link ConnectionDetail} that holds a reference to the Service
  */
 public class SimpleConnectionDetail implements ConnectionDetail {
-    private static final long serialVersionUID = 1L;
 
     private String serviceName;
 

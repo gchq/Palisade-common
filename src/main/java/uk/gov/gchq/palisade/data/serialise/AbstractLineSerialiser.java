@@ -35,7 +35,7 @@ import static java.util.Objects.requireNonNull;
  *
  * @param <T> the domain object type
  */
-public abstract class LineSerialiser<T> implements Serialiser<T> {
+public abstract class AbstractLineSerialiser<T> implements Serialiser<T> {
     public static final Charset CHARSET = StandardCharsets.UTF_8;
 
     /**

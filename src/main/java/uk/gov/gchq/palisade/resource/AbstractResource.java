@@ -34,7 +34,7 @@ public abstract class AbstractResource implements Resource {
 
     protected String id;
 
-    public AbstractResource() {
+    protected AbstractResource() {
     }
 
     @Generated

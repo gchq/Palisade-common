@@ -44,7 +44,6 @@ import static java.util.Objects.requireNonNull;
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 public class User implements Serializable {
-    private static final long serialVersionUID = 1L;
 
     private UserId userId;
     private Set<String> roles = new HashSet<>();
@@ -101,7 +100,7 @@ public class User implements Serializable {
      * @return this User instance.
      */
     @Generated
-    public User auths(final String... auths) {
+    public User auths(final String[] auths) {
         this.setAuths(new HashSet<>(Arrays.asList(auths)));
         return this;
     }
@@ -138,7 +137,7 @@ public class User implements Serializable {
      * @return this User instance.
      */
     @Generated
-    public User roles(final String... roles) {
+    public User roles(final String[] roles) {
         this.setRoles(new HashSet<>(Arrays.asList(roles)));
         return this;
     }
