@@ -27,7 +27,8 @@ import java.util.ServiceLoader;
 import java.util.ServiceLoader.Provider;
 
 /**
- * ResourceBuilder, taking a URI and building a Resource specific to each scheme
+ * The AbstractResourceBuilder is an abstract factory for building {@link Resource}s. Given a URI,
+ * it will identify the appropriate implementation and use it to produce a {@link Resource}
  */
 public abstract class AbstractResourceBuilder {
     private static final ServiceLoader<AbstractResourceBuilder> LOADER = ServiceLoader.load(AbstractResourceBuilder.class);
@@ -41,7 +42,7 @@ public abstract class AbstractResourceBuilder {
     }
 
     /**
-     * Taking a resourceUri, create a resource using the ResourceBuilder provided in the LOADER,
+     * Taking a resourceUri, create a {@link Resource} using the appropriate implementation of the {@link AbstractResourceBuilder} provided in the LOADER,
      * or throw an exception if the resource scheme is not supported, or no builder exists to build that scheme
      *
      * @param resourceUri the Uri of the resource you want to build.
@@ -57,7 +58,7 @@ public abstract class AbstractResourceBuilder {
     }
 
     /**
-     * Create a resource from a uri string
+     * Create a {@link Resource} from a uri string
      * Throw IllegalArgumentException if invalid uri string or unsupported scheme
      *
      * @param uriString a string value of a url used to create a new resource
@@ -72,7 +73,7 @@ public abstract class AbstractResourceBuilder {
     }
 
     /**
-     * Build a resource, using the uri provided by calling {@link UriBuilder}
+     * Build a {@link Resource}, using the uri provided by calling {@link UriBuilder}
      *
      * @param uri the uri of the resource you want built
      * @return a newly created resource with the id of the uri.
@@ -93,7 +94,7 @@ public abstract class AbstractResourceBuilder {
     }
 
     /**
-     * An abstract method used in building a resource
+     * An abstract method used in building a {@link Resource}
      *
      * @param resourceUri the uri of the resource you want built
      * @return a newly created Resource with the id of the the resourceUri.
@@ -101,7 +102,7 @@ public abstract class AbstractResourceBuilder {
     protected abstract Resource build(URI resourceUri);
 
     /**
-     * A abstract method used in building a resource, to check if the Builders provided can accept the resourceUri scheme
+     * A abstract method used in building a {@link Resource}, to check if the Builders provided can accept the resourceUri scheme
      *
      * @param resourceUri the uri of the resource you want built
      * @return a true/false value if a builder exists that supports the uri scheme.
