@@ -69,61 +69,30 @@ public class User implements Serializable {
         this.auths = user.getAuths();
     }
 
-    /**
-     * Sets the userId.
-     *
-     * @param userId the userId
-     * @return this User instance.
-     */
     @Generated
     public User userId(final UserId userId) {
         this.setUserId(userId);
         return this;
     }
 
-
-    /**
-     * Sets the userId to a {@link UserId} with the given userId string.
-     *
-     * @param userId the unique user ID string.
-     * @return this User instance.
-     */
     @Generated
     public User userId(final String userId) {
         this.setUserId((new UserId()).id(userId));
         return this;
     }
 
-    /**
-     * Adds the user auths.
-     *
-     * @param auths the user auths to add
-     * @return this User instance.
-     */
     @Generated
     public User auths(final String[] auths) {
         this.setAuths(new HashSet<>(Arrays.asList(auths)));
         return this;
     }
 
-    /**
-     * Adds the user auths.
-     *
-     * @param auths the user auths to add
-     * @return this User instance.
-     */
     @Generated
     public User auths(final Set<String> auths) {
         this.setAuths(auths);
         return this;
     }
 
-    /**
-     * Adds the user auths.
-     *
-     * @param auths the user auths to add.
-     * @return the {@link User} instance
-     */
     @Generated
     public User addAuths(final Set<String> auths) {
         requireNonNull(auths, "Cannot add null auths.");
@@ -131,24 +100,12 @@ public class User implements Serializable {
         return this;
     }
 
-    /**
-     * Adds the user roles.
-     *
-     * @param roles the user roles to add
-     * @return this User instance.
-     */
     @Generated
     public User roles(final String[] roles) {
         this.setRoles(new HashSet<>(Arrays.asList(roles)));
         return this;
     }
 
-    /**
-     * Adds the user roles.
-     *
-     * @param roles the user roles to be added
-     * @return the {@link User} instance
-     */
     @Generated
     public User addRoles(final Set<String> roles) {
         requireNonNull(auths, "Cannot add null roles.");
@@ -156,12 +113,6 @@ public class User implements Serializable {
         return this;
     }
 
-    /**
-     * Adds the user roles.
-     *
-     * @param roles the user roles to add
-     * @return this User instance.
-     */
     @Generated
     public User roles(final Set<String> roles) {
         this.setRoles(roles);
