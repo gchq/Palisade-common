@@ -29,7 +29,7 @@ public interface ConnectionDetail extends Serializable {
     /**
      * Create a connection.
      *
-     * @return return the string value for the connection
+     * @return a connection string for a service, this may be a full URL, a DNS name or a key to be used for lookup elsewhere.
      */
     String createConnection();
 

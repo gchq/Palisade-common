@@ -25,7 +25,7 @@ public interface ChildResource extends Resource {
     /**
      * Sets the parent resource value on an {@link ChildResource}
      *
-     * @param parent the reource to ve set as tge parent
+     * @param parent the resource to be set as the parent
      * @return the {@link ChildResource} object
      */
     ChildResource parent(ParentResource parent);

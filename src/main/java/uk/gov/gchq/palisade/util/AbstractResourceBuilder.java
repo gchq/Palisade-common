@@ -28,7 +28,8 @@ import java.util.ServiceLoader.Provider;
 
 /**
  * The AbstractResourceBuilder is an abstract factory for building {@link Resource}s. Given a URI,
- * it will identify the appropriate implementation and use it to produce a {@link Resource}
+ * it will identify the appropriate implementation and use it to produce a {@link Resource}.
+ * This is done using Java's {@link ServiceLoader} mechanism.
  */
 public abstract class AbstractResourceBuilder {
     private static final ServiceLoader<AbstractResourceBuilder> LOADER = ServiceLoader.load(AbstractResourceBuilder.class);

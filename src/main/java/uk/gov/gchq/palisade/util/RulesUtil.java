@@ -56,7 +56,7 @@ public final class RulesUtil {
         return records
                 .map((T record) -> {
                     recordsProcessed.incrementAndGet();
-                    var returned =  applyRulesToItem(record, user, context, rules);
+                    var returned = applyRulesToItem(record, user, context, rules);
                     if (Objects.nonNull(returned)) {
                         recordsReturned.incrementAndGet();
                     }
