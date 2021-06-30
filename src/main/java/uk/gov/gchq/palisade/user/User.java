@@ -22,6 +22,7 @@ import uk.gov.gchq.palisade.Generated;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -63,9 +64,9 @@ public class User implements Serializable {
      */
     User(final User user) {
         requireNonNull(user, "User to be cloned cannot be null");
-        this.setUserId(user.getUserId());
-        this.setRoles(user.getRoles());
-        this.setAuths(user.getAuths());
+        this.userId = user.getUserId();
+        this.roles = user.getRoles();
+        this.auths = user.getAuths();
     }
 
     /**
@@ -79,7 +80,6 @@ public class User implements Serializable {
         this.setUserId(userId);
         return this;
     }
-
 
     /**
      * Sets the userId to a {@link UserId} with the given userId string.
@@ -100,7 +100,7 @@ public class User implements Serializable {
      * @return this User instance.
      */
     @Generated
-    public User auths(final String... auths) {
+    public User auths(final String[] auths) {
         this.setAuths(new HashSet<>(Arrays.asList(auths)));
         return this;
     }
@@ -117,6 +117,12 @@ public class User implements Serializable {
         return this;
     }
 
+    /**
+     * Adds the user auths.
+     *
+     * @param auths the user auths to add.
+     * @return the {@link User} instance
+     */
     @Generated
     public User addAuths(final Set<String> auths) {
         requireNonNull(auths, "Cannot add null auths.");
@@ -131,11 +137,17 @@ public class User implements Serializable {
      * @return this User instance.
      */
     @Generated
-    public User roles(final String... roles) {
+    public User roles(final String[] roles) {
         this.setRoles(new HashSet<>(Arrays.asList(roles)));
         return this;
     }
 
+    /**
+     * Adds the user roles.
+     *
+     * @param roles the user roles to be added
+     * @return the {@link User} instance
+     */
     @Generated
     public User addRoles(final Set<String> roles) {
         requireNonNull(auths, "Cannot add null roles.");
@@ -168,24 +180,24 @@ public class User implements Serializable {
 
     @Generated
     public Set<String> getRoles() {
-        return roles;
+        return Collections.unmodifiableSet(roles);
     }
 
     @Generated
     public void setRoles(final Set<String> roles) {
         requireNonNull(roles);
-        this.roles = roles;
+        this.roles = Collections.unmodifiableSet(roles);
     }
 
     @Generated
     public Set<String> getAuths() {
-        return auths;
+        return Collections.unmodifiableSet(auths);
     }
 
     @Generated
     public void setAuths(final Set<String> auths) {
         requireNonNull(auths);
-        this.auths = auths;
+        this.auths = Collections.unmodifiableSet(auths);
     }
 
     @Override

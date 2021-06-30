@@ -30,11 +30,28 @@ import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static java.util.Objects.requireNonNull;
 
-public abstract class LineSerialiser<T> implements Serialiser<T> {
+/**
+ * Standard serialiser used to serialise and deserialise file contents.
+ *
+ * @param <T> the domain object type
+ */
+public abstract class AbstractLineSerialiser<T> implements Serialiser<T> {
     public static final Charset CHARSET = StandardCharsets.UTF_8;
 
+    /**
+     * Serialises an object to a string value.
+     *
+     * @param obj the object to be serialised
+     * @return a string value of the object
+     */
     public abstract String serialiseLine(final T obj);
 
+    /**
+     * Deserialises a String value to an object.
+     *
+     * @param line the string value to be deserialised
+     * @return the object value of the string
+     */
     public abstract T deserialiseLine(final String line);
 
     @Override
@@ -42,19 +59,30 @@ public abstract class LineSerialiser<T> implements Serialiser<T> {
         serialise(objects.iterator(), output);
     }
 
+    /**
+     * Serialises a {@link Iterator} of objects to an {@link OutputStream}. If {@code objects} is {@code null}, then
+     * nothing will be written.
+     *
+     * @param itr the iterator of objects
+     * @param output the output stream to write the serialised bytes to
+     * @return the serialiser object
+     */
     public Serialiser<T> serialise(final Iterator<T> itr, final OutputStream output) {
         requireNonNull(output, "output");
         if (nonNull(itr)) {
-            PrintWriter printOut = new PrintWriter(new OutputStreamWriter(output, CHARSET));
-            try {
+            try (PrintWriter printOut = new PrintWriter(new OutputStreamWriter(output, CHARSET))) {
                 itr.forEachRemaining(item -> printOut.println(serialiseLine(item)));
-            } finally {
-                printOut.flush();
             }
         }
         return this;
     }
 
+    /**
+     * Deserialises an {@link InputStream} into a {@link Stream} of objects.
+     *
+     * @param stream the input stream to deserialise
+     * @return the stream of objects
+     */
     @Override
     public Stream<T> deserialise(final InputStream stream) {
         if (isNull(stream)) {

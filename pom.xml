@@ -84,10 +84,10 @@
         <checkstyle.plugin.version>3.1.0</checkstyle.plugin.version>
         <licence.acceptPomPackaging>true</licence.acceptPomPackaging>
 
-        <!-- SonarQube configuration -->
+        <!-- Jacoco/SonarQube configuration -->
         <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-        <sonar.jacoco.xmlReportPaths>${project.basedir}/../target/site/jacoco/jacoco.xml</sonar.jacoco.xmlReportPaths>
+        <sonar.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco-aggregate/jacoco.xml</sonar.jacoco.xmlReportPaths>
         <sonar.language>java</sonar.language>
 
         <!-- SCM properties for Release plugin -->
@@ -464,7 +464,6 @@
                         <phase>prepare-package</phase>
                         <goals>
                             <goal>report</goal>
-                            <goal>report-aggregate</goal>
                         </goals>
                     </execution>
                 </executions>

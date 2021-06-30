@@ -28,6 +28,8 @@ import java.util.stream.Stream;
  * calling either {@link Serialiser#deserialise(InputStream)} or {@link Serialiser#serialise(Stream, OutputStream)} concurrently.
  * The easiest and recommended way to do this is to make the {@code Serialiser} instance stateless; don't store anything related to
  * a particular de/serialisation operation in class member fields.
+ *
+ * @param <I> the domain object type
  */
 public interface Serialiser<I> extends Serializable {
 

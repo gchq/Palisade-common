@@ -54,10 +54,15 @@ public final class RulesUtil {
         }
 
         return records
-                .peek(processed -> recordsProcessed.incrementAndGet())
-                .map(record -> applyRulesToItem(record, user, context, rules))
-                .filter(Objects::nonNull)
-                .peek(returned -> recordsReturned.incrementAndGet());
+                .map((T record) -> {
+                    recordsProcessed.incrementAndGet();
+                    var returned = applyRulesToItem(record, user, context, rules);
+                    if (Objects.nonNull(returned)) {
+                        recordsReturned.incrementAndGet();
+                    }
+                    return returned;
+                })
+                .filter(Objects::nonNull);
     }
 
     /**

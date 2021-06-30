@@ -65,6 +65,12 @@ public class Rules<T extends Serializable> implements Serializable {
     }
 
 
+    /**
+     * Adds the provided rules to the rule set.
+     *
+     * @param rules the map of rules to be added
+     * @return the {@link Rules} object
+     */
     @Generated
     public Rules<T> addRules(final Map<String, Rule<T>> rules) {
         requireNonNull(rules, "Cannot add null to the existing rules.");

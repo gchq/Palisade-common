@@ -41,6 +41,10 @@ import java.lang.annotation.Target;
  * It is recommended to include this in all code generation methods used, such
  * as: equals, hashCode, toString, getters, setters
  */
+
+/**
+ * An annotation used to mark methods that are to be ignored by any code coverage reports.
+ */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.TYPE})
 public @interface Generated {
