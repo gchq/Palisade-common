@@ -19,7 +19,9 @@ package uk.gov.gchq.palisade.resource.impl;
 import uk.gov.gchq.palisade.resource.AbstractLeafResource;
 import uk.gov.gchq.palisade.resource.ConnectionDetail;
 import uk.gov.gchq.palisade.resource.ParentResource;
+import uk.gov.gchq.palisade.util.FileResourceBuilder;
 
+import java.net.URI;
 import java.util.Map;
 
 /**
@@ -64,7 +66,7 @@ public class FileResource extends AbstractLeafResource {
     }
 
     @Override
-    public FileResource parent(final ParentResource parent) {
-        return (FileResource) super.parent(parent);
+    public ParentResource getParent() {
+        return (ParentResource) new FileResourceBuilder().build(URI.create(id).resolve("."));
     }
 }

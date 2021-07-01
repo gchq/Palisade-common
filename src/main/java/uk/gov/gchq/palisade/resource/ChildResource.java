@@ -23,15 +23,11 @@ package uk.gov.gchq.palisade.resource;
 public interface ChildResource extends Resource {
 
     /**
-     * Sets the parent resource value on an {@link ChildResource}
+     * Gets the parent resource value on an {@link ChildResource}.
+     * This should be calculated and not stored/serialised with the rest of the object data.
      *
-     * @param parent the resource to be set as the parent
-     * @return the {@link ChildResource} object
+     * @return the {@link ParentResource} object that is the parent of this object
      */
-    ChildResource parent(ParentResource parent);
-
     ParentResource getParent();
-
-    void setParent(final ParentResource parent);
 
 }
