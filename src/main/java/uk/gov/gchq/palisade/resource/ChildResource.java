@@ -16,6 +16,8 @@
 
 package uk.gov.gchq.palisade.resource;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * This interface indicates that a resource has a parent resource provides
  * getter and setters to get the parent resource.
@@ -28,6 +30,7 @@ public interface ChildResource extends Resource {
      *
      * @return the {@link ParentResource} object that is the parent of this object
      */
+    @JsonIgnore
     ParentResource getParent();
 
 }

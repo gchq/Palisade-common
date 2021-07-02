@@ -19,7 +19,7 @@ package uk.gov.gchq.palisade.resource.impl;
 import uk.gov.gchq.palisade.resource.AbstractResource;
 import uk.gov.gchq.palisade.resource.ChildResource;
 import uk.gov.gchq.palisade.resource.ParentResource;
-import uk.gov.gchq.palisade.util.FileResourceBuilder;
+import uk.gov.gchq.palisade.util.AbstractResourceBuilder;
 
 import java.net.URI;
 
@@ -36,7 +36,7 @@ public class DirectoryResource extends AbstractResource implements ChildResource
 
     @Override
     public ParentResource getParent() {
-        return (ParentResource) new FileResourceBuilder().build(URI.create(id).resolve(".."));
+        return (ParentResource) AbstractResourceBuilder.create(URI.create(id).resolve(".."));
     }
 
     @Override
