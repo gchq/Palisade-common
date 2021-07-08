@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Crown Copyright
+ * Copyright 2018-2021 Crown Copyright
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package uk.gov.gchq.palisade.resource;
 
 import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.resource.impl.FileResource;
-import uk.gov.gchq.palisade.service.ConnectionDetail;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,15 +32,15 @@ import static java.util.Objects.requireNonNull;
  * See {@link FileResource} for a concrete implementation with an id.
  * This class is mostly used when deserialisation to a LeafResource is required, but the interface can't be used.
  */
-public abstract class AbstractLeafResource extends AbstractResource implements LeafResource, ChildResource {
+public abstract class AbstractLeafResource extends AbstractResource implements LeafResource {
 
     private String type;
     private String serialisedFormat;
     private ConnectionDetail connectionDetail;
     private ParentResource parent;
-    private Map<String, Object> attributes = new HashMap<>();
+    private HashMap<String, String> attributes = new HashMap<>();
 
-    public AbstractLeafResource() {
+    protected AbstractLeafResource() {
     }
 
     @Generated
@@ -62,14 +61,27 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
         return this;
     }
 
+    /**
+     * Sets the attributes for the {@link AbstractLeafResource}
+     *
+     * @param attributes a {@link Map} of {@link String} keys and {@link String} values.
+     * @return a {@link AbstractLeafResource} object.
+     */
     @Generated
-    public AbstractLeafResource attributes(final Map<String, Object> attributes) {
+    public AbstractLeafResource attributes(final Map<String, String> attributes) {
         this.setAttributes(attributes);
         return this;
     }
 
+    /**
+     * Sets the attributes for the {@link AbstractLeafResource}
+     *
+     * @param attributeKey   a {@link String} value for the key.
+     * @param attributeValue a {@link String} value
+     * @return the {@link AbstractLeafResource} object
+     */
     @Generated
-    public AbstractLeafResource attribute(final String attributeKey, final Object attributeValue) {
+    public AbstractLeafResource attribute(final String attributeKey, final String attributeValue) {
         this.setAttribute(attributeKey, attributeValue);
         return this;
     }
@@ -133,29 +145,46 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
     }
 
     @Generated
-    public Map<String, Object> getAttributes() {
+    public Map<String, String> getAttributes() {
         return attributes;
     }
 
     @Generated
-    public void setAttributes(final Map<String, Object> attributes) {
+    public void setAttributes(final Map<String, String> attributes) {
         requireNonNull(attributes);
-        this.attributes = attributes;
+        this.attributes = new HashMap<>(attributes);
     }
 
+    /**
+     * Get the attribute of the {@link Resource}
+     *
+     * @param attributeKey the key of the requested attribute
+     * @return the attribute value requested
+     */
     @Generated
     public Object getAttribute(final String attributeKey) {
         return this.attributes.getOrDefault(attributeKey, null);
     }
 
+    /**
+     * Check to see if an attribite has been set on a {@link Resource}
+     *
+     * @param attributeKey the key of the requested attribute
+     * @return a {@link Boolean} value
+     */
     @Generated
     public Boolean isAttributeSet(final String attributeKey) {
         return this.attributes.containsKey(attributeKey);
     }
 
-
+    /**
+     * Sets the key and value of the attributes {@link Map} for the {@link AbstractLeafResource}
+     *
+     * @param attributeKey   a {@link String} value for the attribute key.
+     * @param attributeValue a {@link String} value for the attribute value.
+     */
     @Generated
-    public void setAttribute(final String attributeKey, final Object attributeValue) {
+    public void setAttribute(final String attributeKey, final String attributeValue) {
         requireNonNull(attributeKey, "The attributeKey cannot be set to null.");
         requireNonNull(attributeKey, "The attributeValue cannot be set to null.");
         this.attributes.put(attributeKey, attributeValue);

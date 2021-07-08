@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Crown Copyright
+ * Copyright 2018-2021 Crown Copyright
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,17 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package uk.gov.gchq.palisade.rule;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 
 import uk.gov.gchq.palisade.Context;
-import uk.gov.gchq.palisade.User;
+import uk.gov.gchq.palisade.user.User;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -40,16 +37,11 @@ import uk.gov.gchq.palisade.User;
  * </p>
  *
  * @param <T> The type of the record. In normal cases the raw data will be deserialised
- *            by the record reader before being passed to the {@link Rule#apply(Object, User, Context)}.
+ *            by the record reader before being passed to the apply(T, User, Context) method.
  */
 @FunctionalInterface
-@JsonPropertyOrder(value = {"class"}, alphabetic = true)
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.CLASS,
-        include = As.EXISTING_PROPERTY,
-        property = "class"
-)
-public interface Rule<T> {
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
+public interface Rule<T extends Serializable> extends Serializable {
     /**
      * Applies the rule logic to redact or modify the record based on the user and context.
      *
@@ -60,13 +52,17 @@ public interface Rule<T> {
      */
     T apply(final T record, final User user, final Context context);
 
-    @JsonGetter("class")
-    default String getClassName() {
-        return getClass().getName();
+    /**
+     * Used to indicate that this rule needs to be applied to the record.
+     * If false, the application of this rule may be skipped.
+     * This allows skipping resource deserialisation if all record rules are not applicable.
+     *
+     * @param user    the user
+     * @param context the query context
+     * @return true if the rule does need to be applied false if this rule can be bypassed
+     */
+    default boolean isApplicable(final User user, final Context context) {
+        return true;
     }
 
-    @JsonSetter("class")
-    default void setClassName(final String className) {
-        // do nothing.
-    }
 }

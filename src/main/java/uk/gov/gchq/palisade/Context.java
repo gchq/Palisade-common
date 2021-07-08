@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Crown Copyright
+ * Copyright 2018-2021 Crown Copyright
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,10 +17,8 @@
 package uk.gov.gchq.palisade;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import java.util.Collections;
@@ -37,50 +35,80 @@ import static java.util.Objects.requireNonNull;
  * additional information that can be stored and recovered in this structure and passed along with the request/operation.
  * i.e. A users purpose for requesting the contents of a file.
  */
-@JsonPropertyOrder(value = {"class", "contents"}, alphabetic = true)
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.CLASS,
-        include = JsonTypeInfo.As.EXISTING_PROPERTY,
-        property = "class"
-)
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 public class Context {
 
     private static final String PURPOSE = "purpose";
     private Map<String, Object> contents;
 
+    /**
+     * Create a new context object with an empty hashMap of attributes
+     */
     public Context() {
         this(new HashMap<>());
     }
 
+    /**
+     * Create a new context object, passing in a map of attributes
+     *
+     * @param contents a map of attributes, containing a purpose
+     */
     @JsonCreator
+    @SuppressWarnings("java:S1699")
     public Context(@JsonProperty("contents") final Map<String, Object> contents) {
         this.setContents(contents);
     }
 
+    /**
+     * Sets the contents of this Context object
+     *
+     * @param contents a map of contents that will be added to this class
+     * @return the {@link Context} object
+     */
     @Generated
     public Context contents(final Map<String, Object> contents) {
         this.setContents(contents);
         return this;
     }
 
-
+    /**
+     * Get the contents map of the {@link Context}
+     *
+     * @return a map of {@link String} and {@link Object}
+     */
     @Generated
     public Map<String, Object> getContents() {
         return contents;
     }
 
+    /**
+     * Set the contents map of the {@link Context}
+     *
+     * @param contents the map to be added to the Context
+     */
     @Generated
     public void setContents(final Map<String, Object> contents) {
         requireNonNull(contents);
         this.contents = contents;
     }
 
+    /**
+     * Get a copy of the contents map of the {@link Context}
+     *
+     * @return an unmodifiable map of the contents
+     */
     @JsonIgnore
     @Generated
     public Map<String, Object> getContentsCopy() {
         return Collections.unmodifiableMap(contents);
     }
 
+    /**
+     * Adds a purpose, or reason for requesting data to the Context object.
+     *
+     * @param purpose a String containing why the User wants access to the data
+     * @return the Context object with the purpose added to the contents map
+     */
     @JsonIgnore
     @Generated
     public Context purpose(final String purpose) {
@@ -88,6 +116,12 @@ public class Context {
         return this;
     }
 
+    /**
+     * Get the purpose from the contents map of the {@link Context}
+     *
+     * @return a string value of the purpose
+     */
+    @SuppressWarnings({"java:S112", "java:S1166"})
     @JsonIgnore
     public String getPurpose() {
         try {
@@ -97,11 +131,24 @@ public class Context {
         }
     }
 
+    /**
+     * Get the purpose by the key value in the map
+     *
+     * @param key the key value associated with the purpose
+     * @return the Object purpose associated with to the String key
+     */
     @Generated
     public Object get(final String key) {
         return contents.get(key);
     }
 
+    /**
+     * Put the provided key and value into the contents map
+     *
+     * @param key   the key value
+     * @param value the value object
+     * @return the {@link Context} object
+     */
     @Generated
     public Context put(final String key, final Object value) {
         requireNonNull(key, "The key cannot be null.");
@@ -110,18 +157,19 @@ public class Context {
         return this;
     }
 
+    /**
+     * Put the provided key and value into the contents map if it does not already exist
+     *
+     * @param key   the key value
+     * @param value the value object
+     * @return the {@link Context} object
+     */
     @Generated
     public Context putIfAbsent(final String key, final Object value) {
         requireNonNull(key, "The key cannot be null.");
         requireNonNull(value, "The value cannot be null.");
         contents.putIfAbsent(key, value);
         return this;
-    }
-
-    @JsonGetter("class")
-    @Generated
-    public String getClassName() {
-        return getClass().getName();
     }
 
     @Override

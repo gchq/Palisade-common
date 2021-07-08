@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Crown Copyright
+ * Copyright 2018-2021 Crown Copyright
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,26 +15,21 @@
  */
 package uk.gov.gchq.palisade.data.serialise;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.stream.Stream;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = As.EXISTING_PROPERTY, property = "class")
 /**
  * Serialisers are the part of Palisade that convert from a particular data serialised format to a stream of objects
  * and back again.
- *
  * <b>IMPORTANT:</b> All instances of this interface must be thread safe. That is, they must support multiple threads performing
  * calling either {@link Serialiser#deserialise(InputStream)} or {@link Serialiser#serialise(Stream, OutputStream)} concurrently.
  * The easiest and recommended way to do this is to make the {@code Serialiser} instance stateless; don't store anything related to
  * a particular de/serialisation operation in class member fields.
+ *
+ * @param <I> the domain object type
  */
 public interface Serialiser<I> extends Serializable {
 
@@ -57,13 +52,4 @@ public interface Serialiser<I> extends Serializable {
      */
     Stream<I> deserialise(final InputStream stream) throws IOException;
 
-    @JsonGetter("class")
-    default String getClassName() {
-        return getClass().getName();
-    }
-
-    @JsonSetter("class")
-    default void setClassName(final String className) {
-        // do nothing.
-    }
 }

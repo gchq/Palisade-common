@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Crown Copyright
+ * Copyright 2018-2021 Crown Copyright
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,18 +16,16 @@
 
 package uk.gov.gchq.palisade.rule;
 
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-
 import uk.gov.gchq.palisade.Generated;
-import uk.gov.gchq.palisade.jsonserialisation.JSONSerialiser;
 
+import java.io.Serializable;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.StringJoiner;
-import java.util.function.Predicate;
-import java.util.function.UnaryOperator;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.requireNonNull;
 
@@ -37,20 +35,20 @@ import static java.util.Objects.requireNonNull;
  *
  * @param <T> The type of data records that the rules will be applied to.
  */
-@JsonPropertyOrder(value = {"message", "rules"}, alphabetic = true)
-public class Rules<T> {
+public class Rules<T extends Serializable> implements Serializable {
+    private static final long serialVersionUID = 1L;
     private static final String ID_CANNOT_BE_NULL = "The id field can not be null.";
     private static final String RULE_CANNOT_BE_NULL = "The rule can not be null.";
     public static final String NO_RULES_SET = "no rules set";
 
     private String message;
-    private Map<String, Rule<T>> rulesHashMap;
+    private LinkedHashMap<String, Rule<T>> rulesMap;
 
     /**
      * Constructs an empty instance of {@link Rules}.
      */
     public Rules() {
-        rulesHashMap = new LinkedHashMap<>();
+        rulesMap = new LinkedHashMap<>();
         message = NO_RULES_SET;
     }
 
@@ -67,10 +65,16 @@ public class Rules<T> {
     }
 
 
+    /**
+     * Adds the provided rules to the rule set.
+     *
+     * @param rules the map of rules to be added
+     * @return the {@link Rules} object
+     */
     @Generated
     public Rules<T> addRules(final Map<String, Rule<T>> rules) {
         requireNonNull(rules, "Cannot add null to the existing rules.");
-        this.rulesHashMap.putAll(rules);
+        this.rulesMap.putAll(rules);
         return this;
     }
 
@@ -97,48 +101,7 @@ public class Rules<T> {
     public Rules<T> addRule(final String id, final Rule<T> rule) {
         requireNonNull(id, ID_CANNOT_BE_NULL);
         requireNonNull(rule, RULE_CANNOT_BE_NULL);
-        rulesHashMap.put(id, rule);
-        return this;
-    }
-
-    /**
-     * Adds a predicate rule.
-     *
-     * @param id   the unique rule id
-     * @param rule the predicate rule
-     * @return this Rules instance
-     */
-    @Generated
-    public Rules<T> addPredicateRule(final String id, final PredicateRule<T> rule) {
-        this.addRule(id, rule);
-        return this;
-    }
-
-    /**
-     * Adds a simple predicate rule that just takes the record and returns true or false. Note - using this means your
-     * rule will not be given the User or Context.
-     *
-     * @param id   the unique rule id
-     * @param rule the simple predicate rule
-     * @return this Rules instance
-     */
-    @Generated
-    public Rules<T> addSimplePredicateRule(final String id, final Predicate<T> rule) {
-        this.addRule(id, new WrappedRule<>(rule));
-        return this;
-    }
-
-    /**
-     * Adds a simple function rule that just takes the record and returns a modified record or null if the record should
-     * be fully redacted. Note - using this means your rule will not be given the User or Context.
-     *
-     * @param id   the unique rule id
-     * @param rule the simple function rule
-     * @return this Rules instance
-     */
-    @Generated
-    public Rules<T> addSimpleFunctionRule(final String id, final UnaryOperator<T> rule) {
-        this.addRule(id, new WrappedRule<>(rule));
+        rulesMap.put(id, rule);
         return this;
     }
 
@@ -155,13 +118,13 @@ public class Rules<T> {
 
     @Generated
     public Map<String, Rule<T>> getRules() {
-        return rulesHashMap;
+        return rulesMap;
     }
 
     @Generated
-    public void setRules(final Map<String, Rule<T>> rulesHashMap) {
-        requireNonNull(rulesHashMap);
-        this.rulesHashMap = rulesHashMap;
+    public void setRules(final Map<String, Rule<T>> rulesMap) {
+        requireNonNull(rulesMap);
+        this.rulesMap = new LinkedHashMap<>(rulesMap);
     }
 
     /**
@@ -170,46 +133,33 @@ public class Rules<T> {
      * @return {@code true} if this rule set contains at least one rule
      */
     public boolean containsRules() {
-        return !rulesHashMap.isEmpty();
+        return !rulesMap.isEmpty();
     }
 
     @Override
     public boolean equals(final Object o) {
-        boolean rtn = (this == o);
-        if (!rtn && (o != null && this.getClass() == o.getClass())) {
-
-            final Rules<?> that = (Rules<?>) o;
-
-            final EqualsBuilder builder = new EqualsBuilder()
-                    .append(message, that.message)
-                    .append(this.rulesHashMap.keySet(), that.getRules().keySet());
-
-            if (builder.isEquals()) {
-                for (final Map.Entry<String, Rule<T>> entry : this.rulesHashMap.entrySet()) {
-                    final String ruleName = entry.getKey();
-                    final Rule thisRule = entry.getValue();
-                    final Rule thatRule = that.getRules().get(ruleName);
-
-                    builder.append(thisRule.getClass(), thatRule.getClass());
-                    if (builder.isEquals()) {
-                        // This is expensive - but we don't have any other way of doing it
-                        builder.append(JSONSerialiser.serialise(thisRule), JSONSerialiser.serialise(thatRule));
-                    }
-
-                    if (!builder.isEquals()) {
-                        return false;
-                    }
-                }
-            }
-            rtn = builder.isEquals();
+        if (this == o) {
+            return true;
         }
-        return rtn;
+        if (!(o instanceof Rules)) {
+            return false;
+        }
+        Rules<?> other = (Rules<?>) o;
+        List<Optional<? extends Class<? extends Rule>>> thisRuleClasses = this.rulesMap.values().stream()
+                .map(Optional::ofNullable)
+                .map(rule -> rule.map(Rule::getClass))
+                .collect(Collectors.toList());
+        List<Optional<? extends Class<? extends Rule>>> otherRuleClasses = other.rulesMap.values().stream()
+                .map(Optional::ofNullable)
+                .map(rule -> rule.map(Rule::getClass))
+                .collect(Collectors.toList());
+        return thisRuleClasses.equals(otherRuleClasses);
     }
 
     @Override
     @Generated
     public int hashCode() {
-        return Objects.hash(message, rulesHashMap);
+        return Objects.hash(message, rulesMap);
     }
 
     @Override
@@ -217,8 +167,7 @@ public class Rules<T> {
     public String toString() {
         return new StringJoiner(", ", Rules.class.getSimpleName() + "[", "]")
                 .add("message='" + message + "'")
-                .add("rulesHashMap=" + rulesHashMap)
-                .add(super.toString())
+                .add("rulesHashMap=" + rulesMap)
                 .toString();
     }
 }

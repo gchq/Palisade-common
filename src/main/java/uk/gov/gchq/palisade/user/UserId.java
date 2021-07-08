@@ -14,42 +14,58 @@
  * limitations under the License.
  */
 
-package uk.gov.gchq.palisade.resource;
+package uk.gov.gchq.palisade.user;
 
 import uk.gov.gchq.palisade.Generated;
 
-import java.util.Comparator;
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.StringJoiner;
 
 import static java.util.Objects.requireNonNull;
 
 /**
- * This is a partial implementation of a Resource which provides basic member-variable storage to implement
- * methods required of a Resource.
- * This class is mostly used when deserialisation to a Resource is required, but the interface can't be used.
+ * A {@link UserId} uniquely identifies a {@link User}.
  */
-public abstract class AbstractResource implements Resource {
-    private static final Comparator<Resource> COMP = Comparator.comparing(Resource::getId);
+public class UserId implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-    protected String id;
+    private String id;
 
-    protected AbstractResource() {
+    /**
+     * Constructs an empty {@link UserId}.
+     */
+    public UserId() {
+        //no-args constructor needed for serialization only
     }
 
+    /**
+     * Copy constructor for a {@link UserId}.
+     *
+     * @param userId the {@link UserId} that will be copied.
+     */
+    UserId(final UserId userId) {
+        requireNonNull(userId, "UserId to be cloned cannot be null");
+        this.id = userId.getId();
+    }
+
+    /**
+     * Updates the id of the UserID
+     *
+     * @param id a non null String representing the id of the user
+     * @return the UserId object
+     */
     @Generated
-    public AbstractResource id(final String id) {
+    public UserId id(final String id) {
         this.setId(id);
         return this;
     }
 
-    @Override
     @Generated
     public String getId() {
         return id;
     }
 
-    @Override
     @Generated
     public void setId(final String id) {
         requireNonNull(id);
@@ -62,11 +78,11 @@ public abstract class AbstractResource implements Resource {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof AbstractResource)) {
+        if (!(o instanceof UserId)) {
             return false;
         }
-        AbstractResource that = (AbstractResource) o;
-        return id.equals(that.getId());
+        UserId userId = (UserId) o;
+        return id.equals(userId.id);
     }
 
     @Override
@@ -78,15 +94,8 @@ public abstract class AbstractResource implements Resource {
     @Override
     @Generated
     public String toString() {
-        return new StringJoiner(", ", AbstractResource.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", UserId.class.getSimpleName() + "[", "]")
                 .add("id='" + id + "'")
-                .add(super.toString())
                 .toString();
     }
-
-    @Override
-    public int compareTo(final Resource o) {
-        return COMP.compare(this, o);
-    }
-
 }

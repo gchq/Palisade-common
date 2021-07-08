@@ -1,6 +1,6 @@
 
 <!---
-Copyright 2019 Crown Copyright
+Copyright 2018-2021 Crown Copyright
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,21 +14,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 --->
-
-
 # <img src="logos/logo.svg" width="180">
 
-### Scalable Data Access Policy Management and Enforcement
+## A Tool for Complex and Scalable Data Access Policy Enforcement
 
-## Status
-<span style="color:red">
-This is not the main Palisade Repository, this is the Repository for Palisade Common. For more information, please visit Palisade
-</span>
-
-## Documentation
-
-The documentation for the latest release can be found [here](https://gchq.github.io/Palisade).
-
+# Palisade Common
 
 ### Prerequisites
 1. [Git](https://git-scm.com/)
@@ -134,13 +124,10 @@ cd Palisade-common
 </p>
 </details>
 
-
-
 You are then ready to build with Maven:
 ```bash
 mvn install
 ```
-
 
 ## License
 
@@ -153,4 +140,5 @@ We welcome contributions to the project. Detailed information on our ways of wor
 
 ## FAQ
 
-What versions of Java are supported? We are currently using Java 11.
+Q: What versions of Java are supported?  
+A: We are currently using Java 11.

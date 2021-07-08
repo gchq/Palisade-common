@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Crown Copyright
+ * Copyright 2018-2021 Crown Copyright
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,41 +16,27 @@
 
 package uk.gov.gchq.palisade.resource;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 
-import uk.gov.gchq.palisade.resource.impl.FileResource;
+import java.io.Serializable;
 
 /**
  * A high level API to define a resource, where a resource could be a system, directory, file, stream, etc.
  * A resource is expected to have a unique identifier.
  */
-@JsonPropertyOrder(value = {"class", "id"}, alphabetic = true)
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.CLASS,
-        include = As.EXISTING_PROPERTY,
-        property = "class",
-        defaultImpl = FileResource.class
-)
-public interface Resource extends Comparable<Resource> {
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
+public interface Resource extends Comparable<Resource>, Serializable {
 
+    /**
+     * Set the id value of the resource.
+     *
+     * @param id the id value to be set
+     * @return the {@link Resource} object.
+     */
     Resource id(String id);
 
     String getId();
 
     void setId(final String id);
-
-    @JsonGetter("class")
-    default String getClassName() {
-        return getClass().getName();
-    }
-
-    @JsonSetter("class")
-    default void setClassName(final String className) {
-        // do nothing.
-    }
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Crown Copyright
+ * Copyright 2018-2021 Crown Copyright
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,12 @@ import java.util.StringJoiner;
 
 import static java.util.Objects.requireNonNull;
 
+/**
+ * A DirectoryResource is a Palisade representation of a directory and can have Children and Parent resources
+ * {@code eg. "file:/dev/Palisade/pom.xml" = System "/" -> Directory "/dev/" -> Directory "/dev/Palisade/" -> File "/dev/Palisade/pom.xml" }
+ */
 public class DirectoryResource extends AbstractResource implements ChildResource, ParentResource {
+    private static final long serialVersionUID = 1L;
 
     private ParentResource parent;
 

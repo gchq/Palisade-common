@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Crown Copyright
+ * Copyright 2018-2021 Crown Copyright
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,12 +17,17 @@
 package uk.gov.gchq.palisade.resource.impl;
 
 import uk.gov.gchq.palisade.resource.AbstractLeafResource;
+import uk.gov.gchq.palisade.resource.ConnectionDetail;
 import uk.gov.gchq.palisade.resource.ParentResource;
-import uk.gov.gchq.palisade.service.ConnectionDetail;
 
 import java.util.Map;
 
+/**
+ * A FileResource is the Palisade representation of a file, which extends a LeafResource.
+ * {@code eg. "file:/dev/Palisade/pom.xml" = System "/" -> Directory "/dev/" -> Directory "/dev/Palisade/" -> File "/dev/Palisade/pom.xml" }
+ */
 public class FileResource extends AbstractLeafResource {
+    private static final long serialVersionUID = 1L;
 
     public FileResource() {
         //no-args constructor needed for serialization only
@@ -49,12 +54,12 @@ public class FileResource extends AbstractLeafResource {
     }
 
     @Override
-    public FileResource attributes(final Map<String, Object> attributes) {
+    public FileResource attributes(final Map<String, String> attributes) {
         return (FileResource) super.attributes(attributes);
     }
 
     @Override
-    public FileResource attribute(final String attributeKey, final Object attributeValue) {
+    public FileResource attribute(final String attributeKey, final String attributeValue) {
         return (FileResource) super.attribute(attributeKey, attributeValue);
     }
 

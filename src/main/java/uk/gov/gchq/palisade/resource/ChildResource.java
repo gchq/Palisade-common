@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Crown Copyright
+ * Copyright 2018-2021 Crown Copyright
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,12 @@ package uk.gov.gchq.palisade.resource;
  */
 public interface ChildResource extends Resource {
 
+    /**
+     * Sets the parent resource value on an {@link ChildResource}
+     *
+     * @param parent the resource to be set as the parent
+     * @return the {@link ChildResource} object
+     */
     ChildResource parent(ParentResource parent);
 
     ParentResource getParent();

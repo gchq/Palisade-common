@@ -16,11 +16,21 @@
 
 package uk.gov.gchq.palisade.resource;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+import java.io.Serializable;
+
 /**
- * This interface indicates that a resource has child resources which can be
- * found by using the resource service to getResourcesByResource passing in the
- * current resource
+ * A High level API for passing details of how to connect to a resource
  */
-public interface ParentResource extends Resource {
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
+public interface ConnectionDetail extends Serializable {
+
+    /**
+     * Create a connection.
+     *
+     * @return a connection string for a service, this may be a full URL, a DNS name or a key to be used for lookup elsewhere.
+     */
+    String createConnection();
 
 }

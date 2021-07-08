@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Crown Copyright
+ * Copyright 2018-2021 Crown Copyright
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,11 +46,16 @@ import static java.util.Objects.requireNonNull;
 public class AvroSerialiser<O> implements Serialiser<O> {
     private static final long serialVersionUID = 1L;
     private static final Logger LOGGER = LoggerFactory.getLogger(AvroSerialiser.class);
-    private final ReflectDatumWriter<O> datumWriter;
+    private final transient ReflectDatumWriter<O> datumWriter;
 
     private final Class<O> domainClass;
-    private final Schema schema;
+    private final transient Schema schema;
 
+    /**
+     * Constructor for the {@link AvroSerialiser}
+     *
+     * @param domainClass the class for the serialiser
+     */
     @JsonCreator
     public AvroSerialiser(@JsonProperty("domainClass") final Class<O> domainClass) {
         requireNonNull(domainClass, "domainClass is required");
@@ -75,9 +80,8 @@ public class AvroSerialiser<O> implements Serialiser<O> {
         if (nonNull(objects)) {
             //create a data file writer around the output stream
             //since we didn't create the output stream, we shouldn't close it either, someone else might want it afterwards!
-            final DataFileWriter<O> dataFileWriter = new DataFileWriter<>(datumWriter);
-            LOGGER.debug("Creating data file writer");
-            try {
+            try (DataFileWriter<O> dataFileWriter = new DataFileWriter<>(datumWriter)) {
+                LOGGER.debug("Creating data file writer");
                 dataFileWriter.create(schema, output);
                 //iterate and append items -- we can't use forEach on the stream as the lambda can't throw an IOException
                 Iterator<O> objectIt = objects.iterator();
@@ -87,16 +91,8 @@ public class AvroSerialiser<O> implements Serialiser<O> {
                     dataFileWriter.append(next);
                 }
 
-            } catch (Exception ex) {
-                LOGGER.error("Error occurred: {}", ex.getMessage());
-                throw new RuntimeException(ex);
-            } finally {
-                try {
-                    dataFileWriter.flush();
-                } catch (IOException e) {
-                    LOGGER.warn("Unable to flush Avro DataFileWriter", e);
-                }
-                dataFileWriter.close();
+            } catch (IOException ex) {
+                throw new IOException("An error occurred during serialisation", ex);
             }
         }
     }
