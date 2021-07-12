@@ -21,6 +21,8 @@ import org.slf4j.LoggerFactory;
 
 import uk.gov.gchq.palisade.resource.Resource;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ServiceLoader;
@@ -80,14 +82,36 @@ public abstract class AbstractResourceBuilder {
      * @return a newly created resource with the id of the uri.
      */
     public Resource buildNormal(final URI uri) {
-        try {
-            URI normal = UriBuilder.create(uri)
+        var absoluteResourceId = uri;
+
+        if (!uri.getSchemeSpecificPart().startsWith("/")) {
+            var localResource = new File(uri.getSchemeSpecificPart());
+            String path;
+            try {
+                path = localResource.getCanonicalPath();
+            } catch (IOException e) {
+                LOGGER.warn("Unable to get the Canonical path value", e);
+                path = localResource.getAbsolutePath();
+            }
+
+            if (!path.startsWith("/")) {
+                path = "/" + path;
+            }
+
+            // Check if the resource is a directory and the path does not end with a "/"
+            if (localResource.isDirectory() && !path.endsWith("/")) {
+                path += "/";
+            }
+            absoluteResourceId = UriBuilder.create(uri)
                     .withoutScheme()
                     .withoutAuthority()
-                    .withoutPath()
+                    .withPath(path)
                     .withoutQuery()
                     .withoutFragment();
-            return build(normal);
+        }
+
+        try {
+            return build(absoluteResourceId);
         } catch (RuntimeException e) {
             LOGGER.error("Unable to build a normal URI", e);
             return build(uri);
