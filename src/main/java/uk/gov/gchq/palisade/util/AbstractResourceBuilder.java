@@ -81,6 +81,7 @@ public abstract class AbstractResourceBuilder {
      * @param uri the uri of the resource you want built
      * @return a newly created resource with the id of the uri.
      */
+    @SuppressWarnings("java:S1075") //Suppress hardcoded path separator code smell
     public Resource buildNormal(final URI uri) {
         var absoluteResourceId = uri;
 
