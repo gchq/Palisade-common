@@ -83,7 +83,7 @@ public abstract class AbstractResourceBuilder {
      */
     @SuppressWarnings("java:S1075") //Suppress hardcoded path separator code smell
     public Resource buildNormal(final URI uri) {
-        var absoluteResourceId = uri;
+        URI absoluteResourceId;
 
         if (!uri.getSchemeSpecificPart().startsWith("/")) {
             var localResource = new File(uri.getSchemeSpecificPart());
@@ -107,6 +107,13 @@ public abstract class AbstractResourceBuilder {
                     .withoutScheme()
                     .withoutAuthority()
                     .withPath(path)
+                    .withoutQuery()
+                    .withoutFragment();
+        } else {
+            absoluteResourceId = UriBuilder.create(uri)
+                    .withoutScheme()
+                    .withoutAuthority()
+                    .withoutPath()
                     .withoutQuery()
                     .withoutFragment();
         }
