@@ -37,25 +37,53 @@ import java.util.stream.Stream;
 public interface Serialiser<T> {
     Logger LOGGER = LoggerFactory.getLogger(Serialiser.class);
 
-    // Cannot reasonably type this due to Java's generics and type erasure
+    /**
+     * Try to create a serialiser instance from a serialiser class and domainClass name (from {@link Class#getName()})
+     *
+     * @param serialiserClass the serialiser class to construct an instance of
+     * @param domainClass     the domainClass {@link T} for the {@code Serialiser<T>}
+     * @param <T>             the domainClass of the serialiser (type of objects the serialiser accepts)
+     * @return a new {@link Serialiser} of the given class and domainClass
+     */
+    // Cannot reasonably type this due to Java's generics and type erasure, suppress cast to Serialiser<T> on class reflection
     @SuppressWarnings("unchecked")
     static <T> Serialiser<T> create(Class<Serialiser<?>> serialiserClass, Class<T> domainClass) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         return (Serialiser<T>) serialiserClass.getDeclaredConstructor(Class.class)
                 .newInstance(domainClass);
     }
 
+    /**
+     * Try to create a serialiser instance from a serialiser class and domainClass name (from {@link Class#getName()})
+     *
+     * @param serialiserClass the serialiser class to construct an instance of
+     * @param domainClassName the class name of the domainClass {@link T} for the {@code Serialiser<T>}
+     * @param <T>             the domainClass of the serialiser (type of objects the serialiser accepts)
+     * @return {@link Optional#of(Object)} if the serialiser was constructed successfully, {@link Optional#empty()} otherwise and log the error that occurred.
+     */
+    // Suppress unchecked cast for domainClassName to Class<T> for some T
     @SuppressWarnings("unchecked")
     static <T> Optional<Serialiser<T>> tryCreate(Class<Serialiser<?>> serialiserClass, String domainClassName) {
         try {
-            return Optional.of(Serialiser.<T>create(serialiserClass, (Class<T>) Class.forName(domainClassName)));
+            return Optional.of(Serialiser.create(serialiserClass, (Class<T>) Class.forName(domainClassName)));
         } catch (Exception ex) {
             LOGGER.warn("Failed to construct serialiser for serialiserClass '{}' and domainClassName '{}'", serialiserClass, domainClassName, ex);
             return Optional.empty();
         }
     }
 
+    /**
+     * Convert a stream of objects into serialised bytes
+     *
+     * @param objects the incoming stream of objects to serialise
+     * @return an outgoing stream of serialised bytes
+     */
     InputStream serialise(final Stream<T> objects);
 
+    /**
+     * Convert a stream of objects into serialised bytes
+     *
+     * @return an akka {@link Flow} converting objects into their serialised {@link ByteString} counterparts
+     */
     default Flow<T, ByteString, CompletionStage<NotUsed>> serialiseFlow() {
         return Flow.fromMaterializer((Materializer mat, Attributes attrs) -> {
             Flow<Stream<T>, InputStream, NotUsed> fn = Flow.fromFunction(this::serialise);
@@ -67,8 +95,19 @@ public interface Serialiser<T> {
         });
     }
 
+    /**
+     * Convert a stream of bytes into deserialised objects
+     *
+     * @param stream the incoming stream of bytes to deserialise
+     * @return an outgoing stream of objects
+     */
     Stream<T> deserialise(final InputStream stream);
 
+    /**
+     * Convert a stream of bytes into deserialised objects
+     *
+     * @return an akka {@link Flow} converting {@link ByteString}s into their deserialised object counterparts
+     */
     default Flow<ByteString, T, CompletionStage<NotUsed>> deserialiseFlow() {
         return Flow.fromMaterializer((Materializer mat, Attributes attrs) -> {
             Flow<InputStream, Stream<T>, NotUsed> fn = Flow.fromFunction(this::deserialise);
