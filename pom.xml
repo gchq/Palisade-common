@@ -73,11 +73,9 @@
         <source.plugin.version>3.2.1</source.plugin.version>
 
         <!-- Dependency versions -->
-        <jackson.version>2.10.0</jackson.version>
-        <slf4j.api.version>1.7.25</slf4j.api.version>
+        <scala.version>2.13</scala.version>
+        <akka.version>2.6.10</akka.version>
         <jackson.version>2.11.0</jackson.version>
-        <commons-io.version>2.6</commons-io.version>
-        <commons-lang3.version>3.8.1</commons-lang3.version>
         <avro.version>1.8.2</avro.version>
 
         <!-- Testing versions -->
@@ -114,6 +112,17 @@
     </distributionManagement>
 
     <dependencies>
+        <!--
+        ~ Akka Reactive Streams
+        -->
+        <dependency>
+            <!-- Core Akka streaminga API -->
+            <groupId>com.typesafe.akka</groupId>
+            <artifactId>akka-stream_${scala.version}</artifactId>
+            <version>${akka.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!--
         ~ JSON Serialisation/De-serialisation Dependencies
         -->
