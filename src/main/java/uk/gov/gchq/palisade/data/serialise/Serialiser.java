@@ -29,6 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
 import java.util.concurrent.CompletionStage;
@@ -44,12 +45,17 @@ public interface Serialiser<T> {
      * @param domainClass     the domainClass {@link T} for the {@code Serialiser<T>}
      * @param <T>             the domainClass of the serialiser (type of objects the serialiser accepts)
      * @return a new {@link Serialiser} of the given class and domainClass
+     * @throws NoSuchMethodException     if no single-element constructor for the {@code Class<T>} type was found
+     * @throws IllegalAccessException    if the constructor had an inaccessible access modifier (e.g. {@code private})
+     * @throws InvocationTargetException if the constructor threw an exception, where the cause can be found with {@link InvocationTargetException#getTargetException()}
+     * @throws InstantiationException    if the {@link java.lang.reflect.Constructor#newInstance(Object...)} method fails for any other reason,
+     *                                   e.g. the class represents an abstract class or interface that is not instantiable
      */
     // Cannot reasonably type this due to Java's generics and type erasure, suppress cast to Serialiser<T> on class reflection
     @SuppressWarnings("unchecked")
     static <T> Serialiser<T> create(Class<Serialiser<?>> serialiserClass, Class<T> domainClass) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        return (Serialiser<T>) serialiserClass.getDeclaredConstructor(Class.class)
-                .newInstance(domainClass);
+        Constructor<Serialiser<?>> constructor = serialiserClass.getDeclaredConstructor(Class.class);
+        return (Serialiser<T>) constructor.newInstance(domainClass);
     }
 
     /**
