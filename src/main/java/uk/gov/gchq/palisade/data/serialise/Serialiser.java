@@ -48,7 +48,7 @@ public interface Serialiser<T> {
      * @throws NoSuchMethodException     if no single-element constructor for the {@code Class<T>} type was found
      * @throws IllegalAccessException    if the constructor had an inaccessible access modifier (e.g. {@code private})
      * @throws InvocationTargetException if the constructor threw an exception, where the cause can be found with {@link InvocationTargetException#getTargetException()}
-     * @throws InstantiationException    if the {@link java.lang.reflect.Constructor#newInstance(Object...)} method fails for any other reason,
+     * @throws InstantiationException    if the {@link Constructor#newInstance(Object...)} method fails for any other reason,
      *                                   e.g. the class represents an abstract class or interface that is not instantiable
      */
     // Cannot reasonably type this due to Java's generics and type erasure, suppress cast to Serialiser<T> on class reflection
