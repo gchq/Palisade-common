@@ -52,7 +52,7 @@ public interface Serialiser<T> {
      *                                   e.g. the class represents an abstract class or interface that is not instantiable
      */
     // Cannot reasonably type this due to Java's generics and type erasure, suppress cast to Serialiser<T> on class reflection
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked"})
     static <T> Serialiser<T> create(Class<Serialiser<?>> serialiserClass, Class<T> domainClass) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         Constructor<Serialiser<?>> constructor = serialiserClass.getDeclaredConstructor(Class.class);
         return (Serialiser<T>) constructor.newInstance(domainClass);
@@ -67,7 +67,8 @@ public interface Serialiser<T> {
      * @return {@link Optional#of(Object)} if the serialiser was constructed successfully, {@link Optional#empty()} otherwise and log the error that occurred.
      */
     // Suppress unchecked cast for domainClassName to Class<T> for some T
-    @SuppressWarnings("unchecked")
+    // Suppress warnings for dynamic class loading from String domainClassName to Class domainClass
+    @SuppressWarnings({"unchecked", "java:S2658"})
     static <T> Optional<Serialiser<T>> tryCreate(Class<Serialiser<?>> serialiserClass, String domainClassName) {
         try {
             return Optional.of(Serialiser.create(serialiserClass, (Class<T>) Class.forName(domainClassName)));
