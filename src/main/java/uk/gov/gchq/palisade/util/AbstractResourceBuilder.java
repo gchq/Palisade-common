@@ -36,6 +36,7 @@ import java.util.ServiceLoader.Provider;
 public abstract class AbstractResourceBuilder {
     private static final ServiceLoader<AbstractResourceBuilder> LOADER = ServiceLoader.load(AbstractResourceBuilder.class);
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractResourceBuilder.class);
+    private static final String URI_PATH_SEPARATOR = "/";
 
     /**
      * Clears this loader's provider cache so that all providers will be reloaded.
@@ -85,7 +86,7 @@ public abstract class AbstractResourceBuilder {
     public Resource buildNormal(final URI uri) {
         URI absoluteResourceId;
 
-        if (!uri.getSchemeSpecificPart().startsWith("/")) {
+        if (!uri.getSchemeSpecificPart().startsWith(URI_PATH_SEPARATOR)) {
             var localResource = new File(uri.getSchemeSpecificPart());
             String path;
             try {
@@ -95,13 +96,13 @@ public abstract class AbstractResourceBuilder {
                 path = localResource.getAbsolutePath();
             }
 
-            if (!path.startsWith("/")) {
-                path = "/" + path;
+            if (!path.startsWith(URI_PATH_SEPARATOR)) {
+                path = URI_PATH_SEPARATOR + path;
             }
 
             // Check if the resource is a directory and the path does not end with a "/"
-            if (localResource.isDirectory() && !path.endsWith("/")) {
-                path += "/";
+            if (localResource.isDirectory() && !path.endsWith(URI_PATH_SEPARATOR)) {
+                path += URI_PATH_SEPARATOR;
             }
             absoluteResourceId = UriBuilder.create(uri)
                     .withoutScheme()
