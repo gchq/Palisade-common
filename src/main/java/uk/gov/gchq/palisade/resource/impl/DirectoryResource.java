@@ -16,15 +16,12 @@
 
 package uk.gov.gchq.palisade.resource.impl;
 
-import uk.gov.gchq.palisade.Generated;
 import uk.gov.gchq.palisade.resource.AbstractResource;
 import uk.gov.gchq.palisade.resource.ChildResource;
 import uk.gov.gchq.palisade.resource.ParentResource;
+import uk.gov.gchq.palisade.util.AbstractResourceBuilder;
 
-import java.util.Objects;
-import java.util.StringJoiner;
-
-import static java.util.Objects.requireNonNull;
+import java.net.URI;
 
 /**
  * A DirectoryResource is a Palisade representation of a directory and can have Children and Parent resources
@@ -33,10 +30,13 @@ import static java.util.Objects.requireNonNull;
 public class DirectoryResource extends AbstractResource implements ChildResource, ParentResource {
     private static final long serialVersionUID = 1L;
 
-    private ParentResource parent;
-
     public DirectoryResource() {
         //no-args constructor needed for serialization only
+    }
+
+    @Override
+    public ParentResource getParent() {
+        return (ParentResource) AbstractResourceBuilder.create(URI.create(id).resolve(".."));
     }
 
     @Override
@@ -48,52 +48,4 @@ public class DirectoryResource extends AbstractResource implements ChildResource
         }
     }
 
-    public DirectoryResource parent(final ParentResource parent) {
-        this.setParent(parent);
-        return this;
-    }
-
-    @Override
-    @Generated
-    public ParentResource getParent() {
-        return parent;
-    }
-
-    @Override
-    @Generated
-    public void setParent(final ParentResource parent) {
-        requireNonNull(parent);
-        this.parent = parent;
-    }
-
-    @Override
-    @Generated
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof DirectoryResource)) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
-        final DirectoryResource that = (DirectoryResource) o;
-        return Objects.equals(parent, that.parent);
-    }
-
-    @Override
-    @Generated
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), parent);
-    }
-
-    @Override
-    @Generated
-    public String toString() {
-        return new StringJoiner(", ", DirectoryResource.class.getSimpleName() + "[", "]")
-                .add("parent=" + parent)
-                .add(super.toString())
-                .toString();
-    }
 }
