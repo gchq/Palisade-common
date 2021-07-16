@@ -21,6 +21,8 @@ import org.slf4j.LoggerFactory;
 
 import uk.gov.gchq.palisade.resource.Resource;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ServiceLoader;
@@ -34,6 +36,7 @@ import java.util.ServiceLoader.Provider;
 public abstract class AbstractResourceBuilder {
     private static final ServiceLoader<AbstractResourceBuilder> LOADER = ServiceLoader.load(AbstractResourceBuilder.class);
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractResourceBuilder.class);
+    private static final String URI_PATH_SEPARATOR = "/";
 
     /**
      * Clears this loader's provider cache so that all providers will be reloaded.
@@ -79,15 +82,45 @@ public abstract class AbstractResourceBuilder {
      * @param uri the uri of the resource you want built
      * @return a newly created resource with the id of the uri.
      */
+    @SuppressWarnings("java:S1075") //Suppress hardcoded path separator code smell
     public Resource buildNormal(final URI uri) {
-        try {
-            URI normal = UriBuilder.create(uri)
+        URI absoluteResourceId;
+
+        if (!uri.getSchemeSpecificPart().startsWith(URI_PATH_SEPARATOR)) {
+            var localResource = new File(uri.getSchemeSpecificPart());
+            String path;
+            try {
+                path = localResource.getCanonicalPath();
+            } catch (IOException e) {
+                LOGGER.warn("Unable to get the Canonical path value", e);
+                path = localResource.getAbsolutePath();
+            }
+
+            if (!path.startsWith(URI_PATH_SEPARATOR)) {
+                path = URI_PATH_SEPARATOR + path;
+            }
+
+            // Check if the resource is a directory and the path does not end with a "/"
+            if (localResource.isDirectory() && !path.endsWith(URI_PATH_SEPARATOR)) {
+                path += URI_PATH_SEPARATOR;
+            }
+            absoluteResourceId = UriBuilder.create(uri)
+                    .withoutScheme()
+                    .withoutAuthority()
+                    .withPath(path)
+                    .withoutQuery()
+                    .withoutFragment();
+        } else {
+            absoluteResourceId = UriBuilder.create(uri)
                     .withoutScheme()
                     .withoutAuthority()
                     .withoutPath()
                     .withoutQuery()
                     .withoutFragment();
-            return build(normal);
+        }
+
+        try {
+            return build(absoluteResourceId);
         } catch (RuntimeException e) {
             LOGGER.error("Unable to build a normal URI", e);
             return build(uri);
