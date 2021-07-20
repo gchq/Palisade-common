@@ -19,7 +19,6 @@ package uk.gov.gchq.palisade.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import uk.gov.gchq.palisade.resource.ParentResource;
 import uk.gov.gchq.palisade.resource.Resource;
 import uk.gov.gchq.palisade.resource.impl.DirectoryResource;
 import uk.gov.gchq.palisade.resource.impl.FileResource;
@@ -69,14 +68,12 @@ public class FileResourceBuilder extends AbstractResourceBuilder {
 
     private static FileResource fileResource(final URI uri) {
         return new FileResource()
-                .id(uri.normalize().toString())
-                .parent((ParentResource) filesystemScheme(uri.resolve(".")));
+                .id(uri.normalize().toString());
     }
 
     private static DirectoryResource directoryResource(final URI uri) {
         return new DirectoryResource()
-                .id(uri.normalize().toString())
-                .parent((ParentResource) filesystemScheme(uri.resolve("..")));
+                .id(uri.normalize().toString());
     }
 
     private static SystemResource systemResource(final URI uri) {
@@ -104,29 +101,7 @@ public class FileResourceBuilder extends AbstractResourceBuilder {
 
     @Override
     public Resource build(final URI resourceUri) {
-        URI absoluteResourceId = resourceUri;
-
-        // Check if the path is not complete, and therefore needs enriching to locate resources
-        if (!Path.of(resourceUri.getSchemeSpecificPart()).isAbsolute()) {
-            File localResource = new File(resourceUri.getSchemeSpecificPart());
-            String path;
-            try {
-                path = localResource.getCanonicalPath();
-            } catch (IOException e) {
-                LOGGER.warn("Unable to get the Canonical path value", e);
-                path = localResource.getAbsolutePath();
-            }
-
-            // Check if the resource is a directory and the path does not end with a "/"
-            if (localResource.isDirectory() && !path.endsWith("/")) {
-                path += "/";
-            }
-            absoluteResourceId = UriBuilder.create(resourceUri)
-                    .withoutScheme().withoutAuthority()
-                    .withPath(path)
-                    .withoutQuery().withoutFragment();
-        }
-        return filesystemScheme(absoluteResourceId);
+        return filesystemScheme(resourceUri);
     }
 
     @Override
