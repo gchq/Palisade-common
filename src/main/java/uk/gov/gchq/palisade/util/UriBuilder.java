@@ -161,11 +161,28 @@ public class UriBuilder {
      */
     private IScheme build() {
         return scheme -> authority -> path -> query -> (String fragment) -> {
-            String thisScheme = Optional.ofNullable(scheme).or(() -> baseUri.map(URI::getScheme)).orElseThrow();
-            String thisAuth = Optional.ofNullable(authority).or(() -> baseUri.map(URI::getAuthority)).orElse(null);
-            String thisPath = Optional.ofNullable(path).or(() -> baseUri.map(URI::getPath)).orElseThrow();
-            String thisQuery = Optional.ofNullable(query).or(() -> baseUri.map(URI::getQuery)).orElse(null);
-            String thisFrag = Optional.ofNullable(fragment).or(() -> baseUri.map(URI::getFragment)).orElse(null);
+            String thisScheme = Optional.ofNullable(scheme)
+                    .or(() -> baseUri.map(URI::getScheme))
+                    .orElseThrow();
+
+            String thisAuth = Optional.ofNullable(authority)
+                    .filter(auth -> !auth.isEmpty())
+                    .or(() -> baseUri.map(URI::getAuthority))
+                    .orElse(null);
+
+            String thisPath = Optional.ofNullable(path)
+                    .or(() -> baseUri.map(URI::getPath))
+                    .orElseThrow();
+
+            String thisQuery = Optional.ofNullable(query)
+                    .filter(qry -> !qry.isEmpty())
+                    .or(() -> baseUri.map(URI::getQuery))
+                    .orElse(null);
+
+            String thisFrag = Optional.ofNullable(fragment)
+                    .filter(frag -> !frag.isEmpty())
+                    .or(() -> baseUri.map(URI::getFragment))
+                    .orElse(null);
             try {
                 return new URI(
                         thisScheme,
