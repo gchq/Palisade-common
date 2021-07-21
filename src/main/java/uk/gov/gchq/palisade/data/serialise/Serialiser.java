@@ -35,6 +35,15 @@ import java.util.Optional;
 import java.util.concurrent.CompletionStage;
 import java.util.stream.Stream;
 
+/**
+ * Serialisers are the part of Palisade that convert from a particular data serialised format to a stream of objects and back again.
+ * The interface offers some static methods allowing dyamically creating a {@link Serialiser} instance from a resource type and format.
+ * <p>
+ * Also present are default implementations of the akka methods, which are backed by their Java stdlib alternatives.
+ * These may suffice for some implementations, but others may wish to override these defaults with more performant custom implementations.
+ *
+ * @param <T> the domain object type
+ */
 public interface Serialiser<T> {
     Logger LOGGER = LoggerFactory.getLogger(Serialiser.class);
 
