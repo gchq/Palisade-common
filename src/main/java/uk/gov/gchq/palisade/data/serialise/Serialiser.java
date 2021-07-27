@@ -45,7 +45,9 @@ import java.util.stream.Stream;
  * @param <T> the domain object type
  */
 public interface Serialiser<T> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Serialiser.class);
+    // private static final Logger field is redundant in `interface`
+    @SuppressWarnings("java:S1312")
+    Logger LOGGER = LoggerFactory.getLogger(Serialiser.class);
 
     /**
      * Try to create a serialiser instance from a serialiser class and domainClass name (from {@link Class#getName()})
@@ -63,7 +65,7 @@ public interface Serialiser<T> {
      */
     // Cannot reasonably type this due to Java's generics and type erasure, suppress cast to Serialiser<T> on class reflection
     @SuppressWarnings({"unchecked"})
-    static <T> Serialiser<T> create(Class<Serialiser<?>> serialiserClass, Class<T> domainClass) throws {
+    static <T> Serialiser<T> create(Class<Serialiser<?>> serialiserClass, Class<T> domainClass) {
         try {
             Constructor<Serialiser<?>> constructor = serialiserClass.getDeclaredConstructor(Class.class);
             return (Serialiser<T>) constructor.newInstance(domainClass);
@@ -86,7 +88,7 @@ public interface Serialiser<T> {
     static <T> Optional<Serialiser<T>> tryCreate(Class<Serialiser<?>> serialiserClass, String domainClassName) {
         try {
             return Optional.of(Serialiser.create(serialiserClass, (Class<T>) Class.forName(domainClassName)));
-        } catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException | ClassNotFoundException ex) {
             LOGGER.warn("Failed to construct serialiser for serialiserClass '{}' and domainClassName '{}'", serialiserClass, domainClassName, ex);
             return Optional.empty();
         }
