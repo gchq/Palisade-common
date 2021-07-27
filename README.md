@@ -27,7 +27,7 @@ For Windows developer environments, we recommend setting up [WSL](https://docs.m
 2. [Maven](https://maven.apache.org/)
 
 ## Getting started
-For an overview of Palisade, start with root documentation [Palisade README](https://github.com/gchq/Palisade#readme).
+For an overview of Palisade, start with the root documentation [Palisade README](https://github.com/gchq/Palisade#readme).
 
 To get started, clone the Palisade Common repo: 
 
