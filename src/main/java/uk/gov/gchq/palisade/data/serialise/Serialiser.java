@@ -45,7 +45,7 @@ import java.util.stream.Stream;
  * @param <T> the domain object type
  */
 public interface Serialiser<T> {
-    Logger LOGGER = LoggerFactory.getLogger(Serialiser.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Serialiser.class);
 
     /**
      * Try to create a serialiser instance from a serialiser class and domainClass name (from {@link Class#getName()})
@@ -54,17 +54,22 @@ public interface Serialiser<T> {
      * @param domainClass     the domainClass {@link T} for the {@code Serialiser<T>}
      * @param <T>             the domainClass of the serialiser (type of objects the serialiser accepts)
      * @return a new {@link Serialiser} of the given class and domainClass
-     * @throws NoSuchMethodException     if no single-element constructor for the {@code Class<T>} type was found
-     * @throws IllegalAccessException    if the constructor had an inaccessible access modifier (e.g. {@code private})
-     * @throws InvocationTargetException if the constructor threw an exception, where the cause can be found with {@link InvocationTargetException#getTargetException()}
-     * @throws InstantiationException    if the {@link Constructor#newInstance(Object...)} method fails for any other reason,
-     *                                   e.g. the class represents an abstract class or interface that is not instantiable
+     * @throws IllegalArgumentException wrapping an exception thrown on reflection:
+     *                                  {@link NoSuchMethodException}     if no single-element constructor for the {@code Class<T>} type was found,
+     *                                  {@link IllegalAccessException}    if the constructor had an inaccessible access modifier (e.g. {@code private}),
+     *                                  {@link InvocationTargetException} if the constructor threw an exception, where the cause can be found with {@link InvocationTargetException#getTargetException()},
+     *                                  {@link InstantiationException}    if the {@link Constructor#newInstance(Object...)} method fails for any other reason -
+     *                                  e.g. the class represents an abstract class or interface that is not instantiable
      */
     // Cannot reasonably type this due to Java's generics and type erasure, suppress cast to Serialiser<T> on class reflection
     @SuppressWarnings({"unchecked"})
-    static <T> Serialiser<T> create(Class<Serialiser<?>> serialiserClass, Class<T> domainClass) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        Constructor<Serialiser<?>> constructor = serialiserClass.getDeclaredConstructor(Class.class);
-        return (Serialiser<T>) constructor.newInstance(domainClass);
+    static <T> Serialiser<T> create(Class<Serialiser<?>> serialiserClass, Class<T> domainClass) throws {
+        try {
+            Constructor<Serialiser<?>> constructor = serialiserClass.getDeclaredConstructor(Class.class);
+            return (Serialiser<T>) constructor.newInstance(domainClass);
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException ex) {
+            throw new IllegalArgumentException("Failed to construct serialiser " + serialiserClass.getSimpleName() + " with domain " + domainClass.getSimpleName(), ex);
+        }
     }
 
     /**
@@ -81,7 +86,7 @@ public interface Serialiser<T> {
     static <T> Optional<Serialiser<T>> tryCreate(Class<Serialiser<?>> serialiserClass, String domainClassName) {
         try {
             return Optional.of(Serialiser.create(serialiserClass, (Class<T>) Class.forName(domainClassName)));
-        } catch (Exception ex) {
+        } catch (IllegalArgumentException ex) {
             LOGGER.warn("Failed to construct serialiser for serialiserClass '{}' and domainClassName '{}'", serialiserClass, domainClassName, ex);
             return Optional.empty();
         }
