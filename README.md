@@ -27,6 +27,7 @@ For Windows developer environments, we recommend setting up [WSL](https://docs.m
 2. [Maven](https://maven.apache.org/)
 
 ## Getting started
+For an overview of Palisade, start with the root documentation [Palisade README](https://github.com/gchq/Palisade#readme).
 
 To get started, clone the Palisade Common repo: 
 
@@ -66,7 +67,7 @@ cd Palisade-common
         <activeByDefault>true</activeByDefault> 
       </activation> 
       <properties> 
-        <release.url*nexusurl*/maven-releases/</release.url>
+        <release.url>*nexusurl*/maven-releases/</release.url>
         <snapshot.url>*nexusurl*/maven-snapshots/</snapshot.url> 
       </properties> 
     </profile> 
@@ -121,7 +122,7 @@ cd Palisade-common
 
 You are then ready to build with Maven:
 ```bash
-mvn install
+mvn clean install
 ```
 
 ## License
