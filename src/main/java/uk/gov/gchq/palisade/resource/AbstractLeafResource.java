@@ -37,7 +37,6 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
     private String type;
     private String serialisedFormat;
     private ConnectionDetail connectionDetail;
-    private ParentResource parent;
     private HashMap<String, String> attributes = new HashMap<>();
 
     protected AbstractLeafResource() {
@@ -86,12 +85,6 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
         return this;
     }
 
-    @Generated
-    public AbstractLeafResource parent(final ParentResource parent) {
-        this.setParent(parent);
-        return this;
-    }
-
     @Override
     @Generated
     public String getType() {
@@ -129,19 +122,6 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
     public void setConnectionDetail(final ConnectionDetail connectionDetail) {
         requireNonNull(connectionDetail);
         this.connectionDetail = connectionDetail;
-    }
-
-    @Override
-    @Generated
-    public ParentResource getParent() {
-        return parent;
-    }
-
-    @Override
-    @Generated
-    public void setParent(final ParentResource parent) {
-        requireNonNull(parent);
-        this.parent = parent;
     }
 
     @Generated
@@ -207,14 +187,13 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
         return Objects.equals(type, that.type) &&
                 Objects.equals(serialisedFormat, that.serialisedFormat) &&
                 Objects.equals(connectionDetail, that.connectionDetail) &&
-                Objects.equals(parent, that.parent) &&
                 Objects.equals(attributes, that.attributes);
     }
 
     @Override
     @Generated
     public int hashCode() {
-        return Objects.hash(super.hashCode(), type, serialisedFormat, connectionDetail, parent, attributes);
+        return Objects.hash(super.hashCode(), type, serialisedFormat, connectionDetail, attributes);
     }
 
     @Override
@@ -224,7 +203,6 @@ public abstract class AbstractLeafResource extends AbstractResource implements L
                 .add("type='" + type + "'")
                 .add("serialisedFormat='" + serialisedFormat + "'")
                 .add("connectionDetail=" + connectionDetail)
-                .add("parent=" + parent)
                 .add("attributes=" + attributes)
                 .add(super.toString())
                 .toString();

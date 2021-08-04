@@ -21,7 +21,7 @@
 
     <groupId>uk.gov.gchq.palisade</groupId>
     <artifactId>common</artifactId>
-    <version>0.5.0-${revision}</version>
+    <version>0.5.1-${revision}</version>
     <description>Palisade common data-types shared between multiple services</description>
     <url>https://github.com/gchq/Palisade-common</url>
     <name>GCHQ Palisade Common Library</name>
@@ -73,12 +73,10 @@
         <source.plugin.version>3.2.1</source.plugin.version>
 
         <!-- Dependency versions -->
-        <jackson.version>2.10.0</jackson.version>
-        <slf4j.api.version>1.7.25</slf4j.api.version>
+        <scala.version>2.13</scala.version>
+        <akka.version>2.6.10</akka.version>
         <jackson.version>2.11.0</jackson.version>
-        <commons-io.version>2.6</commons-io.version>
-        <commons-lang3.version>3.8.1</commons-lang3.version>
-        <avro.version>1.8.2</avro.version>
+        <slf4j.api.version>1.7.25</slf4j.api.version>
 
         <!-- Testing versions -->
         <checkstyle.plugin.version>3.1.0</checkstyle.plugin.version>
@@ -115,6 +113,17 @@
 
     <dependencies>
         <!--
+        ~ Akka Reactive Streams
+        -->
+        <dependency>
+            <!-- Core Akka streaming API -->
+            <groupId>com.typesafe.akka</groupId>
+            <artifactId>akka-stream_${scala.version}</artifactId>
+            <version>${akka.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!--
         ~ JSON Serialisation/De-serialisation Dependencies
         -->
         <dependency>
@@ -126,9 +135,9 @@
 
         <dependency>
             <!-- Avro core components -->
-            <groupId>org.apache.avro</groupId>
-            <artifactId>avro</artifactId>
-            <version>${avro.version}</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.api.version}</version>
         </dependency>
     </dependencies>
 
@@ -388,8 +397,8 @@
                      Format is "<preferred license name> :: <file name>|<license name>|<license name>|..."
                     -->
                     <licenseMerges>
-                        <licenseMerge>Apache Software License 2.0 :: apache_software_license_2.0.txt|Apache Software License, Version 2.0|The Apache Software License, Version 2.0|Apache License, Version 2.0|Apache License 2.0|Apache 2|Apache 2.0</licenseMerge>
-                        <licenseMerge>MIT License :: mit_license.txt|MIT License|The MIT License|MIT X11 License</licenseMerge>
+                        <licenseMerge>Apache Software License 2.0 :: apache_software_license_2.0.txt|Apache Software License, Version 2.0|The Apache Software License, Version 2.0|Apache License, Version 2.0|Apache License 2.0|Apache 2|Apache 2.0|Apache-2.0</licenseMerge>
+                        <licenseMerge>MIT License :: mit_license.html|MIT License|The MIT License|MIT X11 License</licenseMerge>
                         <licenseMerge>Eclipse Public License 1.0 :: eclipse_public_license_1.0.html|Eclipse Public License 1.0|The Eclipse Public License 1.0|Eclipse Public License - v 1.0|Eclipse Distribution License - v 1.0</licenseMerge>
                         <licenseMerge>BSD License 3 :: bsd_license_3.html|BSD Licence 3</licenseMerge>
                         <licenseMerge>GNU Lesser General Public License 2.1 :: gnu_lgpl_2.1.html|GNU Lesser General Public License</licenseMerge>
