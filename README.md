@@ -17,10 +17,16 @@ limitations under the License.
 # <img src="logos/logo.svg" width="180">
 
 ## A Tool for Complex and Scalable Data Access Policy Enforcement
+
+# Palisade Common
+
+## Status
+<span style="color:red">Palisade is no longer under active development.</span>
+
 Windows is not an explicitly supported environment, although where possible Palisade has been made compatible.  
 For Windows developer environments, we recommend setting up [WSL](https://docs.microsoft.com/en-us/windows/wsl/).
 
-# Palisade Common
+For an overview of Palisade, start with the Palisade introduction and the accompanying guides: QuickStart Guide; and Developer Guide which are found in the [Palisade README](https://github.com/gchq/Palisade/README.md).
 
 ### Prerequisites
 1. [Git](https://git-scm.com/)
